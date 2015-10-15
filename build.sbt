@@ -34,3 +34,7 @@ dependencyOverrides ++= Set(
   "com.google.guava" % "guava" % "19.0-rc2",
   "junit" % "junit" % "4.12"
 )
+
+// By default, the run task runs in the same JVM as sbt.
+// To enable forking run tasks
+fork in run := true

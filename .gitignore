@@ -8,8 +8,9 @@ target
 /.settings
 /RUNNING_PID
 
-## activator
+## activator, sbt
 activator*
+.sbtserver/
 
 ## windows
 Thumbs.db
