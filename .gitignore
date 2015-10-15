@@ -10,7 +10,8 @@ target
 
 ## activator, sbt
 activator*
-.sbtserver/
+.sbtserver
+.sbtserver.lock
 
 ## windows
 Thumbs.db

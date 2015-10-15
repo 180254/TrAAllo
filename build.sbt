@@ -38,3 +38,5 @@ dependencyOverrides ++= Set(
 // By default, the run task runs in the same JVM as sbt.
 // To enable forking run tasks
 fork in run := true
+
+fork in run := true
