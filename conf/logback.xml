@@ -1,22 +1,25 @@
-<configuration>
-    
-  <conversionRule conversionWord="coloredLevel" converterClass="play.api.Logger$ColoredLevel" />
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration scan="true">
 
-  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-    <encoder>
-      <pattern>%coloredLevel - %logger - %message%n%xException</pattern>
-    </encoder>
-  </appender>
+    <conversionRule conversionWord="coloredLevel" converterClass="play.api.Logger$ColoredLevel"/>
 
-  <!--
-    The logger name is typically the Java/Scala package name.
-    This configures the log level to log at for a package and its children packages.
-  -->
-  <logger name="play" level="INFO" />
-  <logger name="application" level="DEBUG" />
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+                %d{HH:mm:ss.SSS} [%-7.7thread] %-5level [ %-32.32logger{32} ] - %msg%n%xException
+            </pattern>
+        </encoder>
+    </appender>
 
-  <root level="ERROR">
-    <appender-ref ref="STDOUT" />
-  </root>
+    <jmxConfigurator/>
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+    </root>
 
+    <logger name="play" level="INFO"/>
+    <logger name="application" level="DEBUG"/>
+
+    <logger name="controllers" level="DEBUG"/>
+    <logger name="models" level="DEBUG"/>
+    <logger name="views" level="DEBUG"/>
 </configuration>

@@ -8,10 +8,16 @@ target
 /.settings
 /RUNNING_PID
 
-## activator, sbt
+## activator
 activator*
+
+## sbt
 .sbtserver
-.sbtserver.lock
+*.lock
+
+## database
+database/
+conf/evolutions
 
 ## windows
 Thumbs.db
