@@ -14,7 +14,8 @@
         <div class="row">
             <div class="input-field col s12">
                 <label for="username">@Messages("page.login.label.username")</label>
-                <input id="username" name="username" type="text" value="@form.field("username").value()" />
+                <input id="username" name="username" type="text"
+                value="@form.field("username").value()" autofocus="autofocus"/>
             </div>
         </div>
 
@@ -47,7 +48,7 @@
                     @for((field, value) <- form.data()) {
                         @for(err <- form(field.toString).errors) {
                             <li>@Messages("page.login.label." + field.toString):
-                                @Messages(err.message, err.arguments())</li>
+                                @Messages(err.message, err.arguments(): _*)</li>
                         }
                     }
                 </ul>
