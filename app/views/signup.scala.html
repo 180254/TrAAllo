@@ -7,7 +7,7 @@
     <div class="row box signup">
 
         <p class="header">
-        @Messages("page.signup.header")
+            @Messages("page.signup.header")
         </p>
 
         @helper.form(action = controllers.authentication.routes.AuthSignUp.register, 'class -> "col s12") {
@@ -15,7 +15,7 @@
             <div class="row">
                 <div class="input-field col s12">
                     <label for="username">@Messages("page.signup.label.username")</label>
-                    <input id="username" name="username" type="text" value="@form.field("username").value()" />
+                    <input id="username" name="username" type="text" value="@form.field("username").value()" autofocus="autofocus"/>
                 </div>
             </div>
 
@@ -31,6 +31,7 @@
                 @Messages("page.signup.submit")
                 </button>
             </div>
+
             <div class="alternative">
                 <a href="@controllers.authentication.routes.AuthLogin.login()">@Messages("page.signup.alternative")</a>
             </div>
@@ -47,16 +48,12 @@
                         @for((field, value) <- form.data()) {
                             @for(err <- form(field.toString).errors) {
                                 <li>@Messages("page.signup.label." + field.toString):
-                                    @Messages(err.message, err.arguments().get(0))</li>
+                                    @Messages(err.message, err.arguments(): _*)</li>
                             }
                         }
                     </ul>
                 </div>
             }
-
         }
-
     </div>
-
 }
-
