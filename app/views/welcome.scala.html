@@ -1,0 +1,21 @@
+@()
+
+@header(Messages("page.welcome.title"))
+
+<div class="row box welcome">
+    <p class="msg">
+    @Messages("page.welcome.msg")
+    </p>
+
+    <p>
+        @Messages("page.welcome.start")
+
+        <a href="@routes.Application.index()">
+        @Messages("page.welcome.go")
+        </a>
+    </p>
+
+
+</div>
+
+@footer()

@@ -1,7 +1,9 @@
-@(message: String)
+@(param: String, userID: String)
 
-@main("Welcome to Play") {
+@header(Messages("page.title.index"))
 
-    @play20.welcome(message, style = "Java")
+<p>@param</p>
+<p>User ID: @userID</p>
+<a href="/logout">logout</a>
 
-}
+@footer()

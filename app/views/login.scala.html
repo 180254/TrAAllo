@@ -1,0 +1,59 @@
+@import controllers.authentication.AuthLogin
+@(form: Form[AuthLogin.Login])
+
+@header(Messages("page.login.title"))
+
+<div class="row box login">
+
+    <p class="header">
+    @Messages("page.login.header")
+    </p>
+
+    @helper.form(action = controllers.authentication.routes.AuthLogin.authenticate, 'class -> "col s12") {
+
+        <div class="row">
+            <div class="input-field col s12">
+                <label for="username">@Messages("page.login.label.username")</label>
+                <input id="username" name="username" type="text" value="@form.field("username").value()" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s12">
+                <label for="password">@Messages("page.login.label.password")</label>
+                <input id="password" name="password" type="password" />
+            </div>
+        </div>
+
+        <div>
+            <button class="btn waves-effect waves-light button-small" type="submit" name="action">
+            @Messages("page.login.submit")
+            </button>
+        </div>
+        <div class="alternative">
+            <a href="@controllers.authentication.routes.AuthSignUp.signup()">@Messages("page.login.alternative")</a>
+        </div>
+
+
+        @if(form.hasErrors) {
+            <div class="error">
+                <span><b>@Messages("page.login.error")</b></span>
+
+                <ul>
+                    @for(error <- form.globalErrors) {
+                        <li>@Messages(error.message)</li>
+                    }
+
+                    @for((field, value) <- form.data()) {
+                        @for(err <- form(field.toString).errors) {
+                            <li>@Messages("page.login.label." + field.toString):
+                                @Messages(err.message, err.arguments())</li>
+                        }
+                    }
+                </ul>
+            </div>
+        }
+    }
+
+</div>
+@footer()
