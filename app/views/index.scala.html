@@ -1,9 +1,9 @@
 @(param: String, userID: String)
 
-@header(Messages("page.title.index"))
+@main(Messages("page.title.index")){
 
-<p>@param</p>
-<p>User ID: @userID</p>
-<a href="/logout">logout</a>
+    <p>@param</p>
+    <p>User ID: @userID</p>
+    <a href="/logout">logout</a>
 
-@footer()
+}

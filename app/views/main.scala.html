@@ -4,12 +4,27 @@
 
 <html lang="en">
     <head>
-        <title>@title</title>
-        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("../../public/stylesheets/style.css")">
-        <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
-        <script src="@routes.Assets.versioned("javascripts/hello.js")" type="text/javascript"></script>
+        <meta charset="UTF-8" />
+        <title>TrAAllo - @title</title>
+
+        <link rel="shortcut icon" href="@routes.Assets.versioned("favicon.ico?")" />
+
+        <link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/custom.css")"/>
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/pure-min.css">
+        <link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/pureext.css")" />
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/css/materialize.min.css">
+        <link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/style.css")" />
+
+
+        <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js"></script>
+        <script src="@routes.Assets.versioned("javascripts/script.js")"></script>
     </head>
     <body>
-        @content
+        @navbar()
+        <main>
+            @content
+        </main>
+        @footer()
     </body>
 </html>
