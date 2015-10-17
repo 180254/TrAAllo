@@ -2,12 +2,85 @@ body {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
+
+    margin: 0;
+    padding: 0;
+    background-color: #0079bf;
+    font-size: 13pt;
+
+    font-family: GillSans, Calibri, Trebuchet, sans-serif;
+}
+
+#container {
+    margin: 2em;
 }
 
 main {
     flex: 1 0 auto;
 }
 
+nav, footer {
+    height: 48px;
+    line-height: 48px;
+}
+
+.brand-logo {
+    font-family: Impact, Charcoal, sans-serif;
+    font-size: 1.7em !important;
+    letter-spacing: 3px;
+    margin-left: 0.5em;
+}
+
+.brand-logo-AA {
+    color: #3F474A;
+}
+
 .page-footer {
     padding-top: 0 !important;
+}
+
+.box {
+    width: 40%;
+    min-width: 300px;
+
+    background-color: rgba(255, 255, 255, 0.87);
+    border-radius: 20px;
+    padding: 2em;
+    margin-top: 1em;
+}
+
+.box button {
+    width: 150px;
+    margin-left: 3em;
+}
+
+.box .header {
+    color: #4B4B4B;
+    font-family: monospace;
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+    margin: 30px 0;
+}
+
+.box .error {
+    color: #962828;
+    font-size: 1em;
+    margin-top: 1em;
+}
+
+.box .alternative {
+    text-align: right;
+}
+
+.welcome .msg {
+    font-size: 1.4em;
+    font-style: italic;
+    color: #C11F90;
+}
+
+.welcome a {
+    color: #8b1014;
+    text-shadow: 4px 4px 2px rgba(150, 150, 150, 1);
+    text-decoration: underline;
 }

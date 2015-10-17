@@ -2,12 +2,12 @@
 @(form: Form[AuthSignUp.Register])
 
 
-@main(Messages("page.signup.title")){
+@main(Messages("page.signup.title")) {
 
     <div class="row box signup">
 
         <p class="header">
-            @Messages("page.signup.header")
+        @Messages("page.signup.header")
         </p>
 
         @helper.form(action = controllers.authentication.routes.AuthSignUp.register, 'class -> "col s12") {

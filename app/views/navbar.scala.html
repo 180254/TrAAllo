@@ -1,15 +1,21 @@
-
 <nav>
     <div class="nav-wrapper">
-        <a href="#" class="brand-logo">TrAAllo</a>
+        <a href="@routes.Application.index()" class="brand-logo">
+            Tr<span class="brand-logo-AA">AA</span>llo</a>
+
         <ul id="nav-mobile" class="right hide-on-med-and-down">
 
-            @if(session().get("user.id") == null) {
-                <li><a href="/login">Login</a></li>
-            } else{
-                <li><a href="#">@session().get("user.username")</a></li>
-                <li><a href="/logout">Logout</a></li>
-            }
+        @if(session().get("user.id") == null) {
+
+            <li><a href="@controllers.authentication.routes.AuthLogin.login()">
+            @Messages("navbar.action.login")</a></li>
+
+        } else {
+            <li><a href="#">@User.loggedIn().username</a></li>
+
+            <li><a href="@controllers.authentication.routes.AuthLogout.logout()">
+            @Messages("navbar.action.logout")</a></li>
+        }
         </ul>
     </div>
 </nav>

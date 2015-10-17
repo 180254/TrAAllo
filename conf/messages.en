@@ -1,3 +1,6 @@
+navbar.action.login=Login
+navbar.action.logout=Logout
+
 page.title.index=Main page
 
 page.login.title=Log in

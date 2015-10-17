@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
 
+import static play.mvc.Controller.session;
+
 @Entity
 public class User extends Model {
 
@@ -33,5 +35,12 @@ public class User extends Model {
     public static boolean authenticate(String username, String password) {
         User user = find.where().eq("username", username).findUnique();
         return user != null && BCrypt.checkpw(password, user.password);
+    }
+
+    public static User loggedIn() {
+        String sid = session().get("user.id");
+        Integer id = Integer.valueOf(sid);
+
+        return find.byId(id);
     }
 }
