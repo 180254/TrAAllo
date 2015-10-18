@@ -1,21 +1,39 @@
+@isUserLogged=@{session().get("user.id") != null}
+
 <nav>
     <div class="nav-wrapper">
-        <a href="@routes.Application.index()" class="brand-logo">
+        <a href="@routes.Application.index()" class="brand-logo center">
             Tr<span class="brand-logo-AA">AA</span>llo</a>
 
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
-
-        @if(session().get("user.id") == null) {
-
-            <li><a href="@controllers.authentication.routes.AuthLogin.login()">
-            @Messages("navbar.action.login")</a></li>
-
-        } else {
-            <li><a href="#">@User.loggedIn().username</a></li>
-
-            <li><a href="@controllers.authentication.routes.AuthLogout.logout()">
-            @Messages("navbar.action.logout")</a></li>
+        @if(isUserLogged) {
+            <a class='dropdown-button btn boards-btn' href='#' data-activates='board-dropdown'>
+                <i class="material-icons left board-icon">dashboard</i>
+                @Messages("navbar.action.boards")
+            </a>
+            <ul id='board-dropdown' class='dropdown-content boards-btn'>
+                <li><a href="#!">one</a></li>
+                <li><a href="#!">two</a></li>
+                <li class="divider"></li>
+                <li>
+                    <a href="#new-board-modal" class="modal-trigger"> @Messages("navbar.action.addNewBoard")</a>
+                </li>
+            </ul>
+            @newBoardModal()
         }
+
+
+
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            @if(isUserLogged) {
+                <li><a href="#">@User.loggedIn().username</a></li>
+
+                <li><a href="@controllers.authentication.routes.AuthLogout.logout()">
+                @Messages("navbar.action.logout")</a></li>
+            } else {
+                <li><a href="@controllers.authentication.routes.AuthLogin.login()">
+                @Messages("navbar.action.login")</a></li>
+
+            }
         </ul>
     </div>
 </nav>

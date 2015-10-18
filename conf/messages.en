@@ -1,5 +1,7 @@
 navbar.action.login=Login
 navbar.action.logout=Logout
+navbar.action.boards=Boards
+navbar.action.addNewBoard=Add new board
 
 page.title.index=Main page
 
@@ -25,6 +27,11 @@ page.welcome.title=Welcome
 page.welcome.msg=Successfully registered. You are welcome!
 page.welcome.start=Log in and start using TrAAllo.
 page.welcome.go=GO!
+
+modal.newBoard.newBoard=New board
+modal.newBoard.title=title
+modal.newBoard.add=Add
+modal.newBoard.cancel=Cancel
 
 #
 # Copyright (C) 2009-2015 Typesafe Inc. <http://www.typesafe.com>

@@ -3,9 +3,10 @@ package models;
 import com.avaje.ebean.Model;
 import org.mindrot.jbcrypt.BCrypt;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static play.mvc.Controller.session;
 
@@ -21,6 +22,9 @@ public class User extends Model {
     public LocalDateTime registerTime;
     public LocalDateTime lastLoginTime;
 
+    @ManyToMany(cascade =  CascadeType.ALL)
+    public List<Board> boards;
+
     public static void register(String username, String password) {
         String salt = BCrypt.gensalt();
         String hashPw = BCrypt.hashpw(password, salt);
@@ -29,6 +33,7 @@ public class User extends Model {
         user.username = username;
         user.password = hashPw;
         user.registerTime = LocalDateTime.now();
+        user.boards = new ArrayList<>();
         user.save();
     }
 

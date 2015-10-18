@@ -35,6 +35,19 @@ nav, footer {
     color: #3F474A;
 }
 
+.boards-btn {
+    margin-left: 5px;
+}
+
+.board-icon {
+    height: 36px !important;
+    line-height: 36px !important;
+}
+
+.modal-content {
+    color: black;
+}
+
 .page-footer {
     padding-top: 0 !important;
 }
