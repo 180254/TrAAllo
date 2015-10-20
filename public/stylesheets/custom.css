@@ -48,6 +48,10 @@ nav, footer {
     color: black;
 }
 
+.radio-btn-margin {
+    margin-right: 20px;
+}
+
 .page-footer {
     padding-top: 0 !important;
 }

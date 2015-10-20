@@ -28,10 +28,19 @@ page.welcome.msg=Successfully registered. You are welcome!
 page.welcome.start=Log in and start using TrAAllo.
 page.welcome.go=GO!
 
+page.boardController.nameAndTypeIsRequired=Board name and type are required
+page.boardController.boardNotFound=Board not found
+page.board.renameBoard=Rename board
+
 modal.newBoard.newBoard=New board
 modal.newBoard.title=title
 modal.newBoard.add=Add
 modal.newBoard.cancel=Cancel
+modal.newBoard.agree=Agree
+modal.newBoard.newName=New name
+modal.newBoard.name=name
+modal.newBoard.private=Private
+modal.newBoard.public=Public
 
 #
 # Copyright (C) 2009-2015 Typesafe Inc. <http://www.typesafe.com>

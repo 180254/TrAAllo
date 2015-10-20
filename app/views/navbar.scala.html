@@ -11,17 +11,24 @@
                 @Messages("navbar.action.boards")
             </a>
             <ul id='board-dropdown' class='dropdown-content boards-btn'>
-                <li><a href="#!">one</a></li>
-                <li><a href="#!">two</a></li>
+                @for(board <- User.loggedIn().boards){
+                    <li>
+                        <a href="@controllers.boards.routes.BoardController.showBoard(board.id).url">
+                            @if(board.isPrivate()) {
+                                <i class="material-icons left board-icon">lock_open</i>
+                            } else{
+                                <i class="material-icons left board-icon">lock</i>
+                            }
+                            @board.name
+                        </a>
+                    </li>
+                }
                 <li class="divider"></li>
                 <li>
                     <a href="#new-board-modal" class="modal-trigger"> @Messages("navbar.action.addNewBoard")</a>
                 </li>
             </ul>
-            @newBoardModal()
         }
-
-
 
         <ul id="nav-mobile" class="right hide-on-med-and-down">
             @if(isUserLogged) {
@@ -37,3 +44,7 @@
         </ul>
     </div>
 </nav>
+
+@if(isUserLogged){
+    @newBoardModal()
+}

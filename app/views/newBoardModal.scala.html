@@ -1,11 +1,25 @@
-<div id="new-board-modal" class="modal">
+<form id="new-board-modal" class="modal">
     <div class="modal-content">
         <h4>@Messages("modal.newBoard.newBoard")</h4>
 
-
+        <div class="row"></div>
+        <div class="row">
+            <div class="input-field">
+                <input id="name" name="name" type="text" class="validate">
+                <label for="name">@Messages("modal.newBoard.name")</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field">
+                <input name="boardType" type="radio" id="privateBoard" value="0" checked/>
+                <label class="radio-btn-margin" for="privateBoard">@Messages("modal.newBoard.private")</label>
+                <input name="boardType" type="radio" id="publicBoard" value="1"/>
+                <label class="radio-btn-margin" for="publicBoard">@Messages("modal.newBoard.public")</label>
+            </div>
+        </div>
     </div>
     <div class="modal-footer">
-        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">@Messages("modal.newBoard.add")</a>
+        <a href="#!" class=" modal-action waves-effect waves-green btn-flat" onclick="addBoard()">@Messages("modal.newBoard.add")</a>
         <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">@Messages("modal.newBoard.cancel")</a>
     </div>
-</div>
+</form>

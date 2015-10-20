@@ -11,8 +11,13 @@ GET         /logout            controllers.authentication.AuthLogout.logout()
 GET         /signup            controllers.authentication.AuthSignUp.signup()
 POST        /signup            controllers.authentication.AuthSignUp.register()
 GET         /welcome           controllers.authentication.AuthSignUp.welcome()
+POST        /addBoard          controllers.boards.BoardController.addBoard()
+POST        /renameBoard          controllers.boards.BoardController.renameBoard()
+POST        /deleteBoard          controllers.boards.BoardController.deleteBoard()
+GET         /showBoard/:boardId         controllers.boards.BoardController.showBoard(boardId: Integer)
 
 GET         /rest/users        controllers.rest.RestUser.list()
+GET         /rest/boards       controllers.rest.RestBoard.list()
 
 # Map static resources from the /public folder to the /assets URL path
 GET         /*file             controllers.Assets.versioned(path="/public", file: Asset)

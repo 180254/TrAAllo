@@ -1,0 +1,40 @@
+@(board: Board)
+
+@main(board.name) {
+    <div class="row"></div>
+    <nav>
+        <div class="nav-wrapper">
+            <ul id="nav-mobile" class="hide-on-med-and-down">
+                <li><a class="waves-effect waves-light btn modal-trigger boards-btn" href="#edit-board-modal">@board.name</a></li>
+                <li>
+                    <form action="@controllers.boards.routes.BoardController.deleteBoard().url" method="post" >
+                        <input type="hidden" name="boardId" value="@board.id"/>
+                        <button type="submit" class="btn-floating waves-effect waves-light boards-btn red">
+                            <i class="board-icon material-icons">delete</i>
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <form id="edit-board-modal" class="modal">
+        <div class="modal-content">
+            <h4>@Messages("page.board.renameBoard")</h4>
+            <div class="row"></div>
+            <div class="row">
+                <div class="input-field">
+                    <input name="name" type="text" class="validate" value="@board.name">
+                    <label for="name">@Messages("modal.newBoard.newName")</label>
+                    <input type="hidden" name="renameId" value="@board.id">
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat" onclick="renameBoard()">
+                @Messages("modal.newBoard.agree")
+            </a>
+            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">@Messages("modal.newBoard.cancel")</a>
+        </div>
+    </form>
+}
