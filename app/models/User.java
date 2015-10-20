@@ -23,7 +23,6 @@ public class User extends Model {
     public LocalDateTime lastLoginTime;
 
     @ManyToMany(mappedBy="users", cascade = CascadeType.ALL)
-    //@ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
     public List<Board> boards;
 
     public static void register(String username, String password) {
