@@ -36,7 +36,7 @@ public class AuthSignUp extends Controller {
 
         @Constraints.Required
         @Constraints.MinLength(5)
-        @Constraints.MaxLength(10)
+        @Constraints.MaxLength(20)
         @Constraints.Pattern(value = "^[A-Za-z0-9-]+$", message = "page.validation.onlyAlphanumeric")
         @Constraints.ValidateWith(UniqueUsernameValidator.class)
         private String username;

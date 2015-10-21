@@ -93,7 +93,8 @@ public class BoardController extends Controller {
     public static class NewBoard {
         @Constraints.Required
         @Constraints.MinLength(4)
-        @Constraints.MaxLength(10)
+        @Constraints.MaxLength(15)
+        @Constraints.Pattern(value = "^[A-Za-z0-9-]+$", message = "page.validation.onlyAlphanumeric")
         @Constraints.ValidateWith(UniqueBoardNameValidator.class)
         public String name;
 
@@ -110,7 +111,8 @@ public class BoardController extends Controller {
 
         @Constraints.Required
         @Constraints.MinLength(4)
-        @Constraints.MaxLength(10)
+        @Constraints.MaxLength(15)
+        @Constraints.Pattern(value = "^[A-Za-z0-9-]+$", message = "page.validation.onlyAlphanumeric")
         public String name;
 
         @Constraints.Required
