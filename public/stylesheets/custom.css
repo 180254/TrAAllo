@@ -134,3 +134,17 @@ nav, footer, .footer-copyright, .other-nav ul, .other-nav li {
     background-color: rgba(175, 200, 44, 0.92);
     margin-top: 0.3em;
 }
+
+.dropdown-content {
+    width: 15em !important;
+}
+
+#toast-container {
+    right: 50% !important;
+}
+
+.succ-done {
+    background-color: rgba(55, 167, 68, 0.84);
+    color: #f1f1f1;
+    font-size: 1.3em;
+}

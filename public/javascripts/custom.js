@@ -16,11 +16,13 @@ function postAndProcessForm(url, form) {
         url: url,
         data: form.serialize(),
         success: function () {
-            location.reload();
-            $('#new-board-modal')[0].reset();
+            Materialize.toast("Successfully done!", 1000, 'succ-done', function () {
+                location.reload();
+            });
         },
+
         error: function (xhr) {
-            Materialize.toast(xhr.responseText, 5000);
+            Materialize.toast(xhr.responseText, 1500);
         }
     });
 }
