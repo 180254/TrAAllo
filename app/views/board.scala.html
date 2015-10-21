@@ -7,7 +7,7 @@
             <ul id="nav-mobile" class="hide-on-med-and-down">
                 <li><a class="waves-effect waves-light btn modal-trigger boards-btn" href="#edit-board-modal">@board.name</a></li>
                 <li>
-                    <form action="@controllers.boards.routes.BoardController.deleteBoard().url" method="post" >
+                    <form action="@controllers.boards.routes.BoardController.delete().url" method="post" >
                         <input type="hidden" name="boardId" value="@board.id"/>
                         <button type="submit" class="btn-floating waves-effect waves-light boards-btn red">
                             <i class="board-icon material-icons">delete</i>
@@ -20,21 +20,21 @@
 
     <form id="edit-board-modal" class="modal">
         <div class="modal-content">
-            <h4>@Messages("page.board.renameBoard")</h4>
+            <h4>@Messages("modal.board.crud.header.rename")</h4>
             <div class="row"></div>
             <div class="row">
                 <div class="input-field">
                     <input name="name" type="text" class="validate" value="@board.name">
-                    <label for="name">@Messages("modal.newBoard.newName")</label>
+                    <label for="name">@Messages("modal.board.crud.label.newName")</label>
                     <input type="hidden" name="renameId" value="@board.id">
                 </div>
             </div>
         </div>
         <div class="modal-footer">
-            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat" onclick="renameBoard()">
-                @Messages("modal.newBoard.agree")
+            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat" onclick="boardRename()">
+            @Messages("modal.board.crud.confirm")
             </a>
-            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">@Messages("modal.newBoard.cancel")</a>
+            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">@Messages("modal.board.crud.button.cancel")</a>
         </div>
     </form>
 }

@@ -13,7 +13,7 @@
             <ul id='board-dropdown' class='dropdown-content boards-btn'>
                 @for(board <- User.loggedIn().boards){
                     <li>
-                        <a href="@controllers.boards.routes.BoardController.showBoard(board.id).url">
+                        <a href="@controllers.boards.routes.BoardController.show(board.id).url">
                             @if(board.isPrivate()) {
                                 <i class="material-icons left board-icon">lock_open</i>
                             } else{
@@ -45,6 +45,29 @@
     </div>
 </nav>
 
-@if(isUserLogged){
-    @newBoardModal()
-}
+<form id="new-board-modal" class="modal">
+    <div class="modal-content">
+        <h4>@Messages("modal.board.crud.header.new")</h4>
+
+        <div class="row"></div>
+        <div class="row">
+            <div class="input-field">
+                <input id="name" name="name" type="text" class="validate">
+                <label for="name">@Messages("modal.board.crud.label.name")</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field">
+                <input name="type" type="radio" id="privateBoard" value="0" checked/>
+                <label class="radio-btn-margin" for="privateBoard">@Messages("modal.board.crud.label.private")</label>
+                <input name="type" type="radio" id="publicBoard" value="1"/>
+                <label class="radio-btn-margin" for="publicBoard">@Messages("modal.board.crud.label.public")</label>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class=" modal-action waves-effect waves-green btn-flat" onclick="boardAdd()">@Messages("modal.board.crud.button.add")</a>
+        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">@Messages("modal.board.crud.button.cancel")</a>
+    </div>
+</form>
+

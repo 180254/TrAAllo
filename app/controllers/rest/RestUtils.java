@@ -11,6 +11,7 @@ public class RestUtils {
     public static String asJson(Object object) {
         Json.mapper().registerModule(new JSR310Module());
         Json.mapper().configure(WRITE_DATES_AS_TIMESTAMPS, false);
+
         JsonNode jsonNode = Json.toJson(object);
         return Json.prettyPrint(jsonNode);
     }

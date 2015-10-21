@@ -1,16 +1,16 @@
+page.index.title=Main page
+
 navbar.action.login=Login
 navbar.action.logout=Logout
 navbar.action.boards=Boards
 navbar.action.addNewBoard=Add new board
-
-page.title.index=Main page
 
 page.login.title=Log in
 page.login.header=Log in to TrAAlo
 page.login.error=Something went wrong!
 page.login.label.username=Username
 page.login.label.password=Password
-page.login.submit=Log In
+page.login.button.submit=Log In
 page.login.alternative=i want new one TrAAlo account
 page.login.validate.authenticateError=Invalid username or password!
 
@@ -19,7 +19,7 @@ page.signup.header=Create an TrAAlo Account
 page.signup.error=Something went wrong!
 page.signup.label.username=Username
 page.signup.label.password=Password
-page.signup.submit=Sign up
+page.signup.button.submit=Sign up
 page.signup.alternative=i have a TrAAlo account
 page.signup.validate.alreadyExist=User with given username already exists!
 
@@ -28,27 +28,19 @@ page.welcome.msg=Successfully registered. You are welcome!
 page.welcome.start=Log in and start using TrAAllo.
 page.welcome.go=GO!
 
-page.boardController.nameAndTypeIsRequired=Board name and type are required
-page.boardController.boardNotFound=Board not found
-page.board.renameBoard=Rename board
+page.board.notFound=Board not found
 
-modal.newBoard.newBoard=New board
-modal.newBoard.title=title
-modal.newBoard.add=Add
-modal.newBoard.cancel=Cancel
-modal.newBoard.agree=Agree
-modal.newBoard.newName=New name
-modal.newBoard.name=name
-modal.newBoard.private=Private
-modal.newBoard.public=Public
+modal.board.crud.header.new=New board
+modal.board.crud.header.rename=Rename board
+modal.board.crud.label.name=Name
+modal.board.crud.label.private=Private
+modal.board.crud.label.public=Public
+modal.board.crud.label.newName=New name
 
-#
-# Copyright (C) 2009-2015 Typesafe Inc. <http://www.typesafe.com>
-#
+modal.board.crud.button.add=Add
+modal.board.crud.button.cancel=Cancel
+modal.board.crud.confirm=Confirm
 
-# Default messages
-
-# --- Constraints
 constraint.required=Required
 constraint.min=Minimum value: {0}
 constraint.max=Maximum value: {0}
@@ -56,13 +48,11 @@ constraint.minLength=Minimum length: {0}
 constraint.maxLength=Maximum length: {0}
 constraint.email=Email
 
-# --- Formats
 format.date=Date (''{0}'')
 format.numeric=Numeric
 format.real=Real
 format.uuid=UUID
 
-# --- Errors
 error.invalid=Invalid value
 error.invalid.java.util.Date=Invalid date value
 error.required=This field is required

@@ -1,6 +1,7 @@
 package controllers.boards;
 
 import models.Board;
+import models.User;
 import play.data.Form;
 import play.data.validation.Constraints;
 import play.i18n.Messages;
@@ -10,28 +11,28 @@ import views.html.board;
 
 public class BoardController extends Controller{
 
-    public static Result addBoard() {
+    public static Result add() {
         Form<NewBoard> boardForm = Form.form(NewBoard.class).bindFromRequest();
 
         if (boardForm.hasErrors()) {
             return badRequest(Messages.get("page.boardController.nameAndTypeIsRequired"));
         } else {
-            Board.create(boardForm.get().name, boardForm.get().boardType);
+            Board.create(boardForm.get().name, boardForm.get().boardType, User.loggedIn());
         }
         return ok();
     }
 
-    public static Result showBoard(Integer boardId) {
+    public static Result show(Integer boardId) {
         Board findedBoard = Board.find.where().eq("id", boardId).findUnique();
 
         if(findedBoard == null){
-            return badRequest(Messages.get("page.boardController.boardNotFound"));
+            return badRequest(Messages.get("page.board.notFound"));
         }
 
         return ok(board.render(findedBoard));
     }
 
-    public static Result renameBoard() {
+    public static Result rename() {
         Form<NewBoard> boardForm = Form.form(NewBoard.class).bindFromRequest();
 
         if (boardForm.hasErrors()) {
@@ -42,7 +43,7 @@ public class BoardController extends Controller{
                 .where().eq("id", boardForm.get().renameId)
                 .findUnique();
         if(board == null){
-            return badRequest(Messages.get("page.boardController.boardNotFound"));
+            return badRequest(Messages.get("page.board.notFound"));
         }
 
         board.name = boardForm.get().name;
@@ -51,12 +52,12 @@ public class BoardController extends Controller{
         return ok();
     }
 
-    public static Result deleteBoard() {
+    public static Result delete() {
         Integer boardId = Integer.parseInt(Form.form().bindFromRequest().get("boardId"));
         Board boardObj = Board.find.where().eq("id", boardId).findUnique();
 
         if(boardObj == null){
-            return badRequest(Messages.get("page.boardController.boardNotFound"));
+            return badRequest(Messages.get("page.board.notFound"));
         }
 
         boardObj.delete();

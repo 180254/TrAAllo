@@ -10,11 +10,17 @@ public class LoggedIn extends Security.Authenticator {
     @Override
     public String getUsername(Http.Context ctx) {
         String userIDs = ctx.session().get("user.id");
-        if (userIDs == null) return null;
+        if (userIDs == null) {
+            ctx.session().clear();
+            return null;
+        }
 
         Integer userID = Integer.valueOf(userIDs);
         User user = User.find.byId(userID);
-        if (user == null) return null;
+        if (user == null) {
+            ctx.session().clear();
+            return null;
+        }
 
         return user.username;
     }

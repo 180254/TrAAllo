@@ -1,25 +1,25 @@
-$(document).ready(function(){
+$(document).ready(function () {
     $('.modal-trigger').leanModal();
 });
 
-function addBoard(){
-    postAndProcessForm('/addBoard', $('#new-board-modal').serialize())
+function boardAdd() {
+    postAndProcessForm('/board/add', $('#new-board-modal').serialize())
 }
 
-function renameBoard(){
-    postAndProcessForm('/renameBoard', $('#edit-board-modal').serialize())
+function boardRename() {
+    postAndProcessForm('/board/rename', $('#edit-board-modal').serialize())
 }
 
-function postAndProcessForm(url, data){
+function postAndProcessForm(url, data) {
     $.ajax({
         type: 'POST',
         url: url,
         data: data,
-        success: function(){
+        success: function () {
             location.reload();
         },
-        error: function(xhr){
-            Materialize.toast(xhr.responseText, 2000)
+        error: function (xhr) {
+            Materialize.toast(xhr.responseText, 2000);
         }
     });
 }

@@ -22,8 +22,11 @@ public class User extends Model {
     public LocalDateTime registerTime;
     public LocalDateTime lastLoginTime;
 
-    @ManyToMany(mappedBy="users", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="owner")
     public List<Board> boards;
+
+    protected User() {
+    }
 
     public static void register(String username, String password) {
         String salt = BCrypt.gensalt();
