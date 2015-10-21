@@ -1,16 +1,20 @@
-@(board: Board)
+@(board: Board, hasEditRights: Boolean)
 
 @main(board.name) {
     <nav class="other-nav">
         <div class="nav-wrapper">
             <ul>
-                <li><a class="btm waves-effect waves-light btn modal-trigger boards-btn" href="#edit-board-modal">
-                    @if(board.isPrivate) {
-                        <i class="material-icons left board-icon">lock</i>
-                    } else {
-                        <i class="material-icons left board-icon">lock_open</i>
-                    }
-                    @board.name</a></li>
+            @if(hasEditRights) {
+                <li>
+                    <a class="btm waves-effect waves-light btn modal-trigger boards-btn" href="#edit-board-modal">
+                        @if(board.isPrivate) {
+                            <i class="material-icons left board-icon">lock</i>
+                        } else {
+                            <i class="material-icons left board-icon">lock_open</i>
+                        }
+                        @board.name
+                    </a>
+                </li>
                 <li>
                     <form action="@controllers.boards.routes.BoardController.delete" method="post" >
                         <input type="hidden" name="boardID" value="@board.id"/>
@@ -19,6 +23,18 @@
                         </button>
                     </form>
                 </li>
+            } else {
+                <li>
+                    <span class="btm waves-effect waves-light btn boards-btn">
+                        @if(board.isPrivate) {
+                            <i class="material-icons left board-icon">lock</i>
+                        } else {
+                            <i class="material-icons left board-icon">lock_open</i>
+                        }
+                        @board.name
+                    </span>
+                </li>
+            }
             </ul>
         </div>
     </nav>

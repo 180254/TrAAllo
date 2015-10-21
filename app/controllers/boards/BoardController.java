@@ -48,7 +48,8 @@ public class BoardController extends Controller {
             return unauthorized(Messages.get("page.unauthorized"));
         }
 
-        return ok(board.render(foundBoard));
+        boolean hasEditRights = checkBoardOwnerValidator.isValid(foundBoard.id);
+        return ok(board.render(foundBoard, hasEditRights));
     }
 
     @Security.Authenticated(LoggedInAuthenticator.class)
