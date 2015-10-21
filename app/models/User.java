@@ -22,7 +22,7 @@ public class User extends Model {
     public LocalDateTime registerTime;
     public LocalDateTime lastLoginTime;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="owner")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "owner")
     public List<Board> boards;
 
     protected User() {
@@ -45,7 +45,11 @@ public class User extends Model {
         return user != null && BCrypt.checkpw(password, user.password);
     }
 
-    public static User loggedIn() {
+    public static boolean isLoggedIn() {
+        return session().get("user.id") != null;
+    }
+
+    public static User loggedInUser() {
         String sid = session().get("user.id");
         Integer id = Integer.valueOf(sid);
 

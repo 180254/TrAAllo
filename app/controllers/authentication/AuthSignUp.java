@@ -5,6 +5,7 @@ import play.data.Form;
 import play.data.validation.Constraints;
 import play.mvc.Controller;
 import play.mvc.Result;
+import utils.validators.UniqueUsernameValidator;
 import views.html.signup;
 import views.html.welcome;
 
@@ -23,7 +24,7 @@ public class AuthSignUp extends Controller {
         } else {
             Register register = registerForm.get();
             User.register(register.username, register.password);
-            return redirect("/welcome");
+            return redirect(controllers.authentication.routes.AuthSignUp.welcome());
         }
     }
 
@@ -36,21 +37,14 @@ public class AuthSignUp extends Controller {
         @Constraints.Required
         @Constraints.MinLength(5)
         @Constraints.MaxLength(10)
+        @Constraints.Pattern(value = "^[A-Za-z0-9-]+$", message = "page.validation.onlyAlphanumeric")
+        @Constraints.ValidateWith(UniqueUsernameValidator.class)
         private String username;
 
         @Constraints.Required
         @Constraints.MinLength(5)
         @Constraints.MaxLength(50)
         private String password;
-
-        public String validate() {
-            int usernameRowCount = User.find.where().eq("username", this.username).findRowCount();
-            boolean alreadyExist = usernameRowCount > 0;
-
-            return alreadyExist
-                    ? "page.signup.validate.alreadyExist"
-                    : null;
-        }
 
         public String getUsername() {
             return username;

@@ -1,11 +1,11 @@
-package controllers.authenticators;
+package utils.authenticators;
 
 import models.User;
 import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Security;
 
-public class LoggedIn extends Security.Authenticator {
+public class LoggedInAuthenticator extends Security.Authenticator {
 
     @Override
     public String getUsername(Http.Context ctx) {
@@ -27,6 +27,6 @@ public class LoggedIn extends Security.Authenticator {
 
     @Override
     public Result onUnauthorized(Http.Context ctx) {
-        return redirect("/login");
+        return redirect(controllers.authentication.routes.AuthLogin.login());
     }
 }

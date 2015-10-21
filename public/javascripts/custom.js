@@ -3,23 +3,24 @@ $(document).ready(function () {
 });
 
 function boardAdd() {
-    postAndProcessForm('/board/add', $('#new-board-modal').serialize())
+    postAndProcessForm('/board/add', $('#new-board-modal'))
 }
 
-function boardRename() {
-    postAndProcessForm('/board/rename', $('#edit-board-modal').serialize())
+function boardEdit() {
+    postAndProcessForm('/board/edit', $('#edit-board-modal'))
 }
 
-function postAndProcessForm(url, data) {
+function postAndProcessForm(url, form) {
     $.ajax({
         type: 'POST',
         url: url,
-        data: data,
+        data: form.serialize(),
         success: function () {
             location.reload();
+            $('#new-board-modal')[0].reset();
         },
         error: function (xhr) {
-            Materialize.toast(xhr.responseText, 2000);
+            Materialize.toast(xhr.responseText, 5000);
         }
     });
 }

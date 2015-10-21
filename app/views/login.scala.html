@@ -1,4 +1,5 @@
 @import controllers.authentication.AuthLogin
+@import utils.other.ValidationErrorsHelper
 @(form: Form[AuthLogin.Login])
 
 @main(Messages("page.login.title")) {
@@ -37,20 +38,8 @@
 
             @if(form.hasErrors) {
                 <div class="error">
-                    <span><b>@Messages("page.login.error")</b></span>
-
-                    <ul>
-                        @for(error <- form.globalErrors) {
-                            <li>@Messages(error.message)</li>
-                        }
-
-                        @for((field, value) <- form.data()) {
-                            @for(err <- form(field.toString).errors) {
-                                <li>@Messages("page.login.label." + field.toString):
-                                    @Messages(err.message, err.arguments(): _*)</li>
-                            }
-                        }
-                    </ul>
+                    <span><b>@Messages("page.validation.error")</b></span>
+                    @Html(ValidationErrorsHelper.get("page.login.label.", form).getAsList)
                 </div>
             }
         }

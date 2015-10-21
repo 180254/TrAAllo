@@ -7,6 +7,6 @@ public class AuthLogout extends Controller {
 
     public static Result logout() {
         session().clear();
-        return redirect("/login");
+        return redirect(controllers.authentication.routes.AuthLogin.login());
     }
 }

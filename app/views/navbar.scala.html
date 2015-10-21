@@ -1,23 +1,21 @@
-@isUserLogged=@{session().get("user.id") != null}
-
 <nav>
     <div class="nav-wrapper">
         <a href="@routes.Application.index()" class="brand-logo center">
             Tr<span class="brand-logo-AA">AA</span>llo</a>
 
-        @if(isUserLogged) {
-            <a class='dropdown-button btn boards-btn' href='#' data-activates='board-dropdown'>
+        @if(User.isLoggedIn) {
+            <a class="dropdown-button btn boards-btn" href="#" data-activates="board-dropdown">
                 <i class="material-icons left board-icon">dashboard</i>
                 @Messages("navbar.action.boards")
             </a>
-            <ul id='board-dropdown' class='dropdown-content boards-btn'>
-                @for(board <- User.loggedIn().boards){
+            <ul id="board-dropdown" class="dropdown-content boards-btn">
+                @for(board <- User.loggedInUser().boards) {
                     <li>
                         <a href="@controllers.boards.routes.BoardController.show(board.id).url">
-                            @if(board.isPrivate()) {
-                                <i class="material-icons left board-icon">lock_open</i>
-                            } else{
+                            @if(board.isPrivate) {
                                 <i class="material-icons left board-icon">lock</i>
+                            } else {
+                                <i class="material-icons left board-icon">lock_open</i>
                             }
                             @board.name
                         </a>
@@ -31,16 +29,16 @@
         }
 
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-            @if(isUserLogged) {
-                <li><a href="#">@User.loggedIn().username</a></li>
+        @if(User.isLoggedIn) {
+            <li><a href="#">@User.loggedInUser().username</a></li>
 
-                <li><a href="@controllers.authentication.routes.AuthLogout.logout()">
-                @Messages("navbar.action.logout")</a></li>
-            } else {
-                <li><a href="@controllers.authentication.routes.AuthLogin.login()">
-                @Messages("navbar.action.login")</a></li>
+            <li><a href="@controllers.authentication.routes.AuthLogout.logout()">
+            @Messages("navbar.action.logout")</a></li>
+        } else {
+            <li><a href="@controllers.authentication.routes.AuthLogin.login()">
+            @Messages("navbar.action.login")</a></li>
 
-            }
+        }
         </ul>
     </div>
 </nav>
@@ -56,18 +54,26 @@
                 <label for="name">@Messages("modal.board.crud.label.name")</label>
             </div>
         </div>
+
         <div class="row">
             <div class="input-field">
-                <input name="type" type="radio" id="privateBoard" value="0" checked/>
-                <label class="radio-btn-margin" for="privateBoard">@Messages("modal.board.crud.label.private")</label>
-                <input name="type" type="radio" id="publicBoard" value="1"/>
-                <label class="radio-btn-margin" for="publicBoard">@Messages("modal.board.crud.label.public")</label>
+                <input name="typeCode" type="radio" id="private" value="1" checked="checked"/>
+                <label class="radio-btn-margin" for="private">@Messages("modal.board.crud.label.private")</label>
+                <input name="typeCode" type="radio" id="public" value="0"/>
+                <label class="radio-btn-margin" for="public">@Messages("modal.board.crud.label.public")</label>
             </div>
         </div>
     </div>
+
     <div class="modal-footer">
-        <a href="#!" class=" modal-action waves-effect waves-green btn-flat" onclick="boardAdd()">@Messages("modal.board.crud.button.add")</a>
-        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">@Messages("modal.board.crud.button.cancel")</a>
+        <a href="#!" class=" modal-action waves-effect waves-green btn-flat" onclick="boardAdd()">
+        @Messages("modal.board.crud.button.add")
+        </a>
+
+        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">
+        @Messages("modal.board.crud.button.cancel")
+        </a>
     </div>
 </form>
+
 

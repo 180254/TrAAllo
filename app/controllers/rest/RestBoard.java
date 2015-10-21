@@ -17,7 +17,7 @@ public class RestBoard {
     }
 
     public static Result listForCurrentUser() {
-        List<Board> findResult = User.loggedIn().boards;
+        List<Board> findResult = User.loggedInUser().boards;
         return ok(asJson(findResult));
     }
 }

@@ -16,7 +16,7 @@ public class Board extends Model {
     public Type type;
 
     @JsonIgnore
-    @ManyToOne(fetch= FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     public User owner;
 
     protected Board() {
@@ -49,10 +49,6 @@ public class Board extends Model {
             this.code = code;
         }
 
-        public int getCode() {
-            return code;
-        }
-
         public static Type fromCode(int code) {
             for (Type type : Type.values()) {
                 if (type.getCode() == code) {
@@ -60,6 +56,10 @@ public class Board extends Model {
                 }
             }
             return null;
+        }
+
+        public int getCode() {
+            return code;
         }
     }
 }

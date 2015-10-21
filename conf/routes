@@ -3,22 +3,23 @@
 # ~~~~
 
 # Home page
-GET         /                      controllers.Application.index()
+GET         /                        controllers.Application.index()
 
-GET         /login                 controllers.authentication.AuthLogin.login()
-POST        /login                 controllers.authentication.AuthLogin.authenticate()
-GET         /logout                controllers.authentication.AuthLogout.logout()
-GET         /signup                controllers.authentication.AuthSignUp.signup()
-POST        /signup                controllers.authentication.AuthSignUp.register()
-GET         /welcome               controllers.authentication.AuthSignUp.welcome()
+GET         /login                   controllers.authentication.AuthLogin.login()
+POST        /login                   controllers.authentication.AuthLogin.authenticate()
+GET         /logout                  controllers.authentication.AuthLogout.logout()
+GET         /signup                  controllers.authentication.AuthSignUp.signup()
+POST        /signup                  controllers.authentication.AuthSignUp.register()
+GET         /welcome                 controllers.authentication.AuthSignUp.welcome()
 
-GET         /board/show/:id        controllers.boards.BoardController.show(id: Integer)
-POST        /board/add             controllers.boards.BoardController.add()
-POST        /board/rename          controllers.boards.BoardController.rename()
-POST        /board/delete          controllers.boards.BoardController.delete()
+GET         /board/show/:id          controllers.boards.BoardController.show(id: Integer)
+POST        /board/add               controllers.boards.BoardController.add()
+POST        /board/edit              controllers.boards.BoardController.edit()
+POST        /board/delete            controllers.boards.BoardController.delete()
 
-GET         /rest/users            controllers.rest.RestUser.list()
-GET         /rest/boards           controllers.rest.RestBoard.list()
+GET         /rest/users              controllers.rest.RestUser.list()
+GET         /rest/users/clean        controllers.rest.RestUser.clean()
+GET         /rest/boards             controllers.rest.RestBoard.list()
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /*file                 controllers.Assets.versioned(path="/public", file: Asset)
+GET         /*file                   controllers.Assets.versioned(path="/public", file: Asset)

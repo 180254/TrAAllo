@@ -31,7 +31,7 @@ public class AuthLogin extends Controller {
 
             session().clear();
             session("user.id", Integer.toString(user.id));
-            return redirect("/");
+            return redirect(controllers.routes.Application.index());
         }
     }
 

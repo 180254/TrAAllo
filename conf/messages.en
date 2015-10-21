@@ -1,3 +1,4 @@
+page.unauthorized=401 Unauthorized
 page.index.title=Main page
 
 navbar.action.login=Login
@@ -5,9 +6,12 @@ navbar.action.logout=Logout
 navbar.action.boards=Boards
 navbar.action.addNewBoard=Add new board
 
+page.validation.error=Something went wrong!
+page.validation.unauthorized=You are unauthorized!
+page.validation.onlyAlphanumeric=The only allowed chars are: letters, numbers, and minus!
+
 page.login.title=Log in
 page.login.header=Log in to TrAAlo
-page.login.error=Something went wrong!
 page.login.label.username=Username
 page.login.label.password=Password
 page.login.button.submit=Log In
@@ -31,7 +35,7 @@ page.welcome.go=GO!
 page.board.notFound=Board not found
 
 modal.board.crud.header.new=New board
-modal.board.crud.header.rename=Rename board
+modal.board.crud.header.edit=Edit board
 modal.board.crud.label.name=Name
 modal.board.crud.label.private=Private
 modal.board.crud.label.public=Public
@@ -40,6 +44,8 @@ modal.board.crud.label.newName=New name
 modal.board.crud.button.add=Add
 modal.board.crud.button.cancel=Cancel
 modal.board.crud.confirm=Confirm
+
+modal.board.validate.notUnique=You are already have board with given name.
 
 constraint.required=Required
 constraint.min=Minimum value: {0}

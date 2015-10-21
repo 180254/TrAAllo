@@ -4,10 +4,16 @@
     <nav class="other-nav">
         <div class="nav-wrapper">
             <ul>
-                <li><a class="btm waves-effect waves-light btn modal-trigger boards-btn" href="#edit-board-modal">@board.name</a></li>
+                <li><a class="btm waves-effect waves-light btn modal-trigger boards-btn" href="#edit-board-modal">
+                    @if(board.isPrivate) {
+                        <i class="material-icons left board-icon">lock</i>
+                    } else {
+                        <i class="material-icons left board-icon">lock_open</i>
+                    }
+                    @board.name</a></li>
                 <li>
-                    <form action="@controllers.boards.routes.BoardController.delete().url" method="post" >
-                        <input type="hidden" name="boardId" value="@board.id"/>
+                    <form action="@controllers.boards.routes.BoardController.delete" method="post" >
+                        <input type="hidden" name="boardID" value="@board.id"/>
                         <button type="submit" class="btn btn-floating waves-effect waves-light boards-btn red">
                             <i class="board-icon material-icons">delete</i>
                         </button>
@@ -19,21 +25,47 @@
 
     <form id="edit-board-modal" class="modal">
         <div class="modal-content">
-            <h4>@Messages("modal.board.crud.header.rename")</h4>
+            <h4>@Messages("modal.board.crud.header.edit")</h4>
+
             <div class="row"></div>
             <div class="row">
                 <div class="input-field">
-                    <label for="name">@Messages("modal.board.crud.label.newName")</label>
-                    <input id="name" name="name" type="text" class="validate" value="@board.name">
-                    <input type="hidden" name="renameId" value="@board.id">
+                    <label for="nameEdit">@Messages("modal.board.crud.label.newName")</label>
+                    <input id="nameEdit" name="name" type="text" class="validate" value="@board.name">
+                    <input type="hidden" name="modifiedID" value="@board.id">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field">
+
+                    @if(board.isPrivate) {
+                        <input name="typeCode" type="radio" id="privateEdit" value="1" checked="checked"/>
+                    } else {
+                        <input name="typeCode" type="radio" id="privateEdit" value="1"/>
+                    }
+
+                    <label class="radio-btn-margin" for="privateEdit">@Messages("modal.board.crud.label.private")</label>
+
+                    @if(!board.isPrivate) {
+                        <input name="typeCode" type="radio" id="publicEdit" value="0" checked="checked"/>
+                    } else {
+                        <input name="typeCode" type="radio" id="publicEdit" value="0"/>
+                    }
+                    <label class="radio-btn-margin" for="publicEdit">@Messages("modal.board.crud.label.public")</label>
                 </div>
             </div>
         </div>
+
         <div class="modal-footer">
-            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat" onclick="boardRename()">
+            <a href="#!" class=" modal-action waves-effect waves-green btn-flat" onclick="boardEdit()">
             @Messages("modal.board.crud.confirm")
             </a>
-            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">@Messages("modal.board.crud.button.cancel")</a>
+
+            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">
+            @Messages("modal.board.crud.button.cancel")
+            </a>
         </div>
     </form>
+
 }
