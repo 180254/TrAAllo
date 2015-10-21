@@ -18,6 +18,7 @@ function postAndProcessForm(url, form) {
         success: function () {
             Materialize.toast("Successfully done!", 1000, 'succ-done', function () {
                 location.reload();
+                form[0].reset();
             });
         },
 
