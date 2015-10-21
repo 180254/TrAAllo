@@ -19,9 +19,9 @@ main {
     flex: 1 0 auto;
 }
 
-nav, footer {
-    height: 48px;
-    line-height: 48px;
+footer .footer-copyright {
+    text-align: right;
+    padding-right: 1em;
 }
 
 .brand-logo {
@@ -35,13 +35,25 @@ nav, footer {
     color: #3F474A;
 }
 
+.copy-left {
+    display: inline-block;
+    text-align: right;
+    margin: 0;
+    -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    -ms-filter: "FlipH";
+}
+
 .boards-btn {
     margin-left: 5px;
 }
 
 .board-icon {
-    height: 36px !important;
-    line-height: 36px !important;
+    font-size: 1.1em !important;
+    height: 32px !important;
+    line-height: 32px !important;
 }
 
 .modal-content {
@@ -90,14 +102,35 @@ nav, footer {
     text-align: right;
 }
 
+.welcome {
+    font-family: Tahoma, Geneva, sans-serif;
+    letter-spacing: 2px;
+}
+
 .welcome .msg {
     font-size: 1.4em;
-    font-style: italic;
     color: #C11F90;
 }
 
 .welcome a {
-    color: #8b1014;
-    text-shadow: 4px 4px 2px rgba(150, 150, 150, 1);
+    font-size: 1.05em;
+    color: black;
     text-decoration: underline;
+}
+
+nav, footer, .footer-copyright, .other-nav ul, .other-nav li {
+    height: 40px !important;
+    line-height: 40px !important;
+}
+
+.btn, .btn-large, .btn-flat {
+    font-size: 0.9em !important;
+    height: 30px !important;
+    line-height: 30px !important;
+    vertical-align: middle !important;
+}
+
+.other-nav {
+    background-color: rgba(175, 200, 44, 0.92);
+    margin-top: 0.3em;
 }

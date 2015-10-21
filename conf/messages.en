@@ -25,7 +25,7 @@ page.signup.validate.alreadyExist=User with given username already exists!
 
 page.welcome.title=Welcome
 page.welcome.msg=Successfully registered. You are welcome!
-page.welcome.start=Log in and start using TrAAllo.
+page.welcome.start=You can log in and start using TrAAllo. Click
 page.welcome.go=GO!
 
 page.board.notFound=Board not found

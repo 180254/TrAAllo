@@ -1,15 +1,14 @@
 @(board: Board)
 
 @main(board.name) {
-    <div class="row"></div>
-    <nav>
+    <nav class="other-nav">
         <div class="nav-wrapper">
-            <ul id="nav-mobile" class="hide-on-med-and-down">
-                <li><a class="waves-effect waves-light btn modal-trigger boards-btn" href="#edit-board-modal">@board.name</a></li>
+            <ul>
+                <li><a class="btm waves-effect waves-light btn modal-trigger boards-btn" href="#edit-board-modal">@board.name</a></li>
                 <li>
                     <form action="@controllers.boards.routes.BoardController.delete().url" method="post" >
                         <input type="hidden" name="boardId" value="@board.id"/>
-                        <button type="submit" class="btn-floating waves-effect waves-light boards-btn red">
+                        <button type="submit" class="btn btn-floating waves-effect waves-light boards-btn red">
                             <i class="board-icon material-icons">delete</i>
                         </button>
                     </form>
@@ -24,8 +23,8 @@
             <div class="row"></div>
             <div class="row">
                 <div class="input-field">
-                    <input name="name" type="text" class="validate" value="@board.name">
                     <label for="name">@Messages("modal.board.crud.label.newName")</label>
+                    <input id="name" name="name" type="text" class="validate" value="@board.name">
                     <input type="hidden" name="renameId" value="@board.id">
                 </div>
             </div>
