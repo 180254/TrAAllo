@@ -19,7 +19,7 @@ public class Board extends Model {
     @Column(nullable = false) public User owner;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "board")
-    @OrderBy("sortPosition ASC")
+    @OrderBy("sortPosition ASC, id ASC")
     @JsonIgnore
     public List<BList> bLists;
 

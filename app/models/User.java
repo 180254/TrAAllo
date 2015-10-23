@@ -22,6 +22,7 @@ public class User extends Model {
     @Column(nullable = true) public LocalDateTime lastLoginTime;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "owner")
+    @OrderBy("name ASC, id ASC")
     public List<Board> boards;
 
     protected User() {

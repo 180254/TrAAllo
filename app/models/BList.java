@@ -21,9 +21,12 @@ public class BList extends Model {
     }
 
     public static BList create(Board board, String name) {
+        BList maxSortBList = BList.find.orderBy("sortPosition DESC").setMaxRows(1).findUnique();
+
         BList bList = new BList();
         bList.name = name;
         bList.board = board;
+        bList.sortPosition = maxSortBList.sortPosition + 1;
         bList.save();
 
         return bList;
