@@ -12,6 +12,11 @@ $(document).ready(function () {
         bListRenameOpenClose($(this));
     });
 
+    $('#board-delete-form').on('submit', function () {
+        return postAndProcessForm('/board/delete', $(this), false, function() {
+            location.replace("/");
+        });
+    });
 
     $('#bList-add-form').on('submit', function () {
         return postAndProcessForm('/bList/add', $(this), true);
@@ -47,7 +52,7 @@ function boardEdit() {
     postAndProcessForm('/board/edit', $('#edit-board-modal'), true)
 }
 
-function postAndProcessForm(url, form, reload) {
+function postAndProcessForm(url, form, reload, callbackOnSuccess) {
     $.ajax({
         type: 'POST',
         url: url,
@@ -60,6 +65,10 @@ function postAndProcessForm(url, form, reload) {
 
                 if (url.indexOf('/board') !== -1) {
                     form[0].reset();
+                }
+
+                if(callbackOnSuccess !== undefined) {
+                    callbackOnSuccess();
                 }
 
             });
