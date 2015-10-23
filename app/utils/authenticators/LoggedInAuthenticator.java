@@ -15,7 +15,7 @@ public class LoggedInAuthenticator extends Security.Authenticator {
             return null;
         }
 
-        Integer userID = Integer.valueOf(userIDs);
+        Long userID = Long.valueOf(userIDs);
         User user = User.find.byId(userID);
         if (user == null) {
             ctx.session().clear();

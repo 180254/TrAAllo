@@ -12,10 +12,14 @@ GET         /signup                  controllers.authentication.AuthSignUp.signu
 POST        /signup                  controllers.authentication.AuthSignUp.register()
 GET         /welcome                 controllers.authentication.AuthSignUp.welcome()
 
-GET         /board/show/:id          controllers.boards.BoardController.show(id: Integer)
+GET         /board/show/:id          controllers.boards.BoardController.show(id: Long)
 POST        /board/add               controllers.boards.BoardController.add()
 POST        /board/edit              controllers.boards.BoardController.edit()
 POST        /board/delete            controllers.boards.BoardController.delete()
+
+POST        /bList/add                controllers.boards.BListController.add()
+POST        /bList/edit               controllers.boards.BListController.edit()
+POST        /bList/delete             controllers.boards.BListController.delete()
 
 GET         /rest/users              controllers.rest.RestUser.list()
 GET         /rest/users/clean        controllers.rest.RestUser.clean()

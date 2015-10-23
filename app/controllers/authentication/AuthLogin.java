@@ -30,7 +30,7 @@ public class AuthLogin extends Controller {
             user.save();
 
             session().clear();
-            session("user.id", Integer.toString(user.id));
+            session("user.id", Long.toString(user.id));
             return redirect(controllers.routes.Application.index());
         }
     }

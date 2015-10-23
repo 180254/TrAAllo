@@ -4,6 +4,7 @@ import com.avaje.ebean.Model;
 import org.mindrot.jbcrypt.BCrypt;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,13 +14,12 @@ import static play.mvc.Controller.session;
 @Entity
 public class User extends Model {
 
-    public static Finder<Integer, User> find = new Finder<>(User.class);
+    public static Finder<Long, User> find = new Finder<>(User.class);
 
-    @Id
-    public Integer id;
-    public String username;
-    public String password;
-    public LocalDateTime registerTime;
+    @Id public Long id;
+    @NotNull public String username;
+    @NotNull public String password;
+    @NotNull public LocalDateTime registerTime;
     public LocalDateTime lastLoginTime;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "owner")
@@ -28,7 +28,7 @@ public class User extends Model {
     protected User() {
     }
 
-    public static void register(String username, String password) {
+    public static User register(String username, String password) {
         String salt = BCrypt.gensalt();
         String hashPw = BCrypt.hashpw(password, salt);
 
@@ -38,6 +38,8 @@ public class User extends Model {
         user.registerTime = LocalDateTime.now();
         user.boards = new ArrayList<>();
         user.save();
+
+        return user;
     }
 
     public static boolean authenticate(String username, String password) {
@@ -51,7 +53,7 @@ public class User extends Model {
 
     public static User loggedInUser() {
         String sid = session().get("user.id");
-        Integer id = Integer.valueOf(sid);
+        Long id = Long.valueOf(sid);
 
         return find.byId(id);
     }

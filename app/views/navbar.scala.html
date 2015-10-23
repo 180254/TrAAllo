@@ -11,7 +11,7 @@
             <ul id="board-dropdown" class="dropdown-content boards-btn">
                 @for(board <- User.loggedInUser().boards) {
                     <li>
-                        <a href="@controllers.boards.routes.BoardController.show(board.id).url">
+                        <a href="@controllers.boards.routes.BoardController.show(board.id)">
                             @if(board.isPrivate) {
                                 <i class="material-icons left board-icon">lock</i>
                             } else {

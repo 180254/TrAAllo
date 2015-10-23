@@ -9,6 +9,9 @@ navbar.action.addNewBoard=Add new board
 page.validation.error=Something went wrong!
 page.validation.unauthorized=You are unauthorized!
 page.validation.onlyAlphanumeric=The only allowed chars are: letters, numbers, and minus!
+page.validation.onlyAlphanumericAndSpace=The only allowed chars are: letters, numbers, space, and minus!
+
+page.validation.noSuchBoard=No such board!
 
 page.login.title=Log in
 page.login.header=Log in to TrAAlo
@@ -46,6 +49,14 @@ modal.board.crud.button.cancel=Cancel
 modal.board.crud.confirm=Confirm
 
 modal.board.validate.notUnique=You are already have board with given name.
+
+page.board.bList.add.label.name=List name
+page.board.bList.add=Add a list...
+page.board.bList.add.button.submit=Save
+page.board.bList.add.validate.notUnique=You are already have list with given name in this board.
+
+page.board.bList.edit.label.newName=List new name
+page.board.bList.edit.button.submit=Rename
 
 constraint.required=Required
 constraint.min=Minimum value: {0}

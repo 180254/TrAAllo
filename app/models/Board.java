@@ -4,34 +4,39 @@ import com.avaje.ebean.Model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 public class Board extends Model {
 
-    public static Finder<Integer, Board> find = new Finder<>(Board.class);
+    public static Finder<Long, Board> find = new Finder<>(Board.class);
 
-    @Id
-    public Integer id;
-    public String name;
-    public Type type;
+    @Id public Long id;
+    @NotNull public String name;
+    @NotNull public Type type;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @JsonIgnore @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     public User owner;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "board")
+    public List<BList> bLists;
 
     protected Board() {
     }
 
-    public static void create(String name, int typeCode, User owner) {
-        create(name, Type.fromCode(typeCode), owner);
+    public static Board create(User owner, String name, int typeCode) {
+        return create(owner, name, Type.fromCode(typeCode));
     }
 
-    public static void create(String name, Type type, User owner) {
+    public static Board create(User owner, String name, Type type) {
         Board board = new Board();
         board.name = name;
         board.type = type;
         board.owner = owner;
         board.save();
+
+        return board;
     }
 
     public boolean isPrivate() {

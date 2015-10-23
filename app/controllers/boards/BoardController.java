@@ -16,7 +16,7 @@ import views.html.board;
 
 public class BoardController extends Controller {
 
-    private static Constraints.Validator<Integer> checkBoardOwnerValidator = new CheckBoardOwnerValidator();
+    private static Constraints.Validator<Long> checkBoardOwnerValidator = new CheckBoardOwnerValidator();
 
     private static boolean hasViewAccess(Board bord) {
         return !bord.isPrivate() || checkBoardOwnerValidator.isValid(bord.id);
@@ -31,14 +31,14 @@ public class BoardController extends Controller {
                     new ValidationErrorsHelper("modal.board.crud.label.", boardForm).getWithNLAsBR());
 
         } else {
-            Board.create(boardForm.get().name, boardForm.get().typeCode, User.loggedInUser());
+            Board.create(User.loggedInUser(), boardForm.get().name, boardForm.get().typeCode);
         }
 
         return ok();
     }
 
-    public static Result show(Integer boardId) {
-        Board foundBoard = Board.find.where().eq("id", boardId).findUnique();
+    public static Result show(Long boardId) {
+        Board foundBoard = Board.find.byId(boardId);
 
         if (foundBoard == null) {
             return badRequest(Messages.get("page.board.notFound"));
@@ -77,8 +77,8 @@ public class BoardController extends Controller {
 
     @Security.Authenticated(LoggedInAuthenticator.class)
     public static Result delete() {
-        Integer boardId = Integer.parseInt(Form.form().bindFromRequest().get("boardID"));
-        Board boardObj = Board.find.where().eq("id", boardId).findUnique();
+        Long boardId = Long.parseLong(Form.form().bindFromRequest().get("boardID"));
+        Board boardObj = Board.find.byId(boardId);
 
         if (boardObj == null) {
             return badRequest(Messages.get("page.board.notFound"));
@@ -95,7 +95,7 @@ public class BoardController extends Controller {
         @Constraints.Required
         @Constraints.MinLength(4)
         @Constraints.MaxLength(15)
-        @Constraints.Pattern(value = "^[A-Za-z0-9-]+$", message = "page.validation.onlyAlphanumeric")
+        @Constraints.Pattern(value = "^[A-Za-z0-9- ]+$", message = "page.validation.onlyAlphanumericAndSpace")
         @Constraints.ValidateWith(UniqueBoardNameValidator.class)
         public String name;
 
@@ -108,12 +108,12 @@ public class BoardController extends Controller {
     public static class EditBoard {
         @Constraints.Required
         @Constraints.ValidateWith(CheckBoardOwnerValidator.class)
-        public Integer modifiedID;
+        public Long modifiedID;
 
         @Constraints.Required
         @Constraints.MinLength(4)
         @Constraints.MaxLength(15)
-        @Constraints.Pattern(value = "^[A-Za-z0-9-]+$", message = "page.validation.onlyAlphanumeric")
+        @Constraints.Pattern(value = "^[A-Za-z0-9- ]+$", message = "page.validation.onlyAlphanumericAndSpace")
         public String name;
 
         @Constraints.Required
