@@ -1,15 +1,23 @@
-@(board: Board)
+@(board: Board, hasEditRights: Boolean)
+
+@sortable() = @{
+    if(hasEditRights) "sortable" else ""
+}
 
 <div class="bList-container">
+    <ul id="bList-list" class="@sortable">
 
-    <ul id="bList-list" class="sortable">
-        @for(bList <- board.bLists) {
-            <li id="bList-one-@bList.id" class="bList-one ui-state-default">
-                <div id="bList-one-div-name-@bList.id" class="bList-one-div-name">
-                    <span class="bList-one-name">@bList.name</span>
+    @for(bList <- board.bLists) {
+        <li id="bList-one-@bList.id" class="bList-one ui-state-default">
+            <div id="bList-one-div-name-@bList.id" class="bList-one-div-name">
+                <span class="bList-one-name">@bList.name</span>
+
+                @if(hasEditRights) {
                     <a class="bList-one-del" data-id="@bList.id" href="#">x</a>
-                </div>
+                }
+            </div>
 
+            @if(hasEditRights) {
                 <div id="bList-one-edit-@bList.id" class="bList-add hidden-add">
                     <form class="bList-one-edit-form pure-form">
                         <input type="hidden" name="modifiedID" value="@bList.id"/>
@@ -27,29 +35,30 @@
                         </div>
                     </form>
                 </div>
+            }
 
-                @cards(bList)
-            </li>
-        }
+            @cards(bList, hasEditRights)
+        </li>
+    }
     </ul>
 
-    <div id="bList-add-pre-div" class="bList-one bList-add-pre">
-        <a id="bList-add-open" href="#">@Messages("page.board.bList.add")</a>
-    </div>
+    @if(hasEditRights) {
+        <div id="bList-add-pre-div" class="bList-one bList-add-pre">
+            <a id="bList-add-open" href="#">@Messages("page.board.bList.add")</a></div>
 
-    <div id="bList-add-div" class="bList-one bList-add hidden-add">
-        <form id="bList-add-form" class="pure-form">
-            <input type="hidden" name="boardID" value="@board.id"/>
+        <div id="bList-add-div" class="bList-one bList-add hidden-add">
+            <form id="bList-add-form" class="pure-form">
+                <input type="hidden" name="boardID" value="@board.id"/>
 
-            <input id="bList-add-form-input" type="text" name="name" placeholder="@Messages("page.board.bList.add")"/>
-            <div class="separator">
-                <button type="submit" class="button-success pure-button">
-                @Messages("page.board.bList.add.button.submit")
-                </button>
+                <input id="bList-add-form-input" type="text" name="name" placeholder="@Messages("page.board.bList.add")"/>
+                <div class="separator">
+                    <button type="submit" class="button-success pure-button">
+                    @Messages("page.board.bList.add.button.submit")
+                    </button>
 
-                <a id="bList-add-close" href="#"><i class="material-icons board-icon">close</i></a>
-            </div>
-        </form>
-    </div>
-
+                    <a id="bList-add-close" href="#"><i class="material-icons board-icon">close</i></a>
+                </div>
+            </form>
+        </div>
+    }
 </div>

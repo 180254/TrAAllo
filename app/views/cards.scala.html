@@ -1,7 +1,11 @@
-@(bList: BList)
+@(bList: BList, hasEditRights: Boolean)
+
+@sortable() = @{
+    if(hasEditRights) "sortable" else ""
+}
 
 <div class="bList-card-container">
-    <ul id="bList-cards-list" class="sortable">
+    <ul id="bList-cards-list" class="@sortable">
         @if(new Random().nextInt(2) == 0) {
             <li class="bList-card ui-state-default">
                 JUST SOME DUMMY TEXT<br/>

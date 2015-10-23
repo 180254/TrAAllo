@@ -1,40 +1,40 @@
 @(board: Board, hasEditRights: Boolean)
 
+    @isPrivateIcon = @{
+        if(board.isPrivate) "lock" else "lock_open"
+    }
+
+    @editLinkOrNot() = @{
+        if(hasEditRights) "#edit-board-modal" else "#"
+    }
+
+    @workingButtonOrNot() = @{
+        if(hasEditRights) "modal-trigger" else ""
+    }
+
     @main(board.name) {
+
         <nav class="other-nav">
             <div class="nav-wrapper">
                 <ul>
-                @if(hasEditRights) {
                     <li>
-                        <a class="btm waves-effect waves-light btn modal-trigger boards-btn" href="#edit-board-modal">
-                            @if(board.isPrivate) {
-                                <i class="material-icons left board-icon">lock</i>
-                            } else {
-                                <i class="material-icons left board-icon">lock_open</i>
-                            }
+                        <a class="btm waves-effect waves-light btn @workingButtonOrNot boards-btn" href="@editLinkOrNot">
+                            <i class="material-icons left board-icon">@isPrivateIcon</i>
                             @board.name
                         </a>
                     </li>
-                    <li>
-                        <form action="@controllers.boards.routes.BoardController.delete" method="post" >
-                            <input type="hidden" name="boardID" value="@board.id"/>
-                            <button type="submit" class="btn btn-floating waves-effect waves-light boards-btn red">
-                                <i class="board-icon material-icons">delete</i>
-                            </button>
-                        </form>
-                    </li>
-                } else {
-                    <li>
-                        <span class="btm waves-effect waves-light btn boards-btn">
-                            @if(board.isPrivate) {
-                                <i class="material-icons left board-icon">lock</i>
-                            } else {
-                                <i class="material-icons left board-icon">lock_open</i>
-                            }
-                            @board.name
-                        </span>
-                    </li>
-                }
+
+                    @if(hasEditRights) {
+                        <li>
+                            <form id="board-delete-form"
+                            action="@controllers.boards.routes.BoardController.delete" method="post">
+                                <input type="hidden" name="boardID" value="@board.id"/>
+                                <button type="submit" class="btn btn-floating waves-effect waves-light boards-btn red">
+                                    <i class="board-icon material-icons">delete</i>
+                                </button>
+                            </form>
+                        </li>
+                    }
                 </ul>
             </div>
         </nav>
@@ -60,7 +60,6 @@
                         } else {
                             <input name="typeCode" type="radio" id="privateEdit" value="1"/>
                         }
-
                         <label class="radio-btn-margin" for="privateEdit">@Messages("modal.board.crud.label.private")</label>
 
                         @if(!board.isPrivate) {
@@ -84,5 +83,5 @@
             </div>
         </form>
 
-        @bLists(board)
+        @bLists(board, hasEditRights)
     }
