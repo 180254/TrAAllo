@@ -1,7 +1,10 @@
 package controllers.boards;
 
+import com.avaje.ebean.Ebean;
 import models.BList;
 import models.Board;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import play.data.Form;
 import play.data.validation.Constraints;
 import play.i18n.Messages;
@@ -13,12 +16,14 @@ import utils.authenticators.LoggedInAuthenticator;
 import utils.other.ValidationErrorsHelper;
 import utils.validators.CheckBListOwnerValidator;
 import utils.validators.CheckBoardOwnerValidator;
+import utils.validators.CheckStringIsLongValidator;
 import utils.validators.UniqueBListNameValidator;
 
 public class BListController extends Controller {
 
     private static UniqueBListNameValidator uniqueBListNameValidator = new UniqueBListNameValidator();
     private static CheckBListOwnerValidator checkBListOwnerValidator = new CheckBListOwnerValidator();
+    private static CheckStringIsLongValidator checkStringIsLongValidator = new CheckStringIsLongValidator();
 
     @Security.Authenticated(LoggedInAuthenticator.class)
     public static Result add() {
@@ -61,7 +66,12 @@ public class BListController extends Controller {
 
     @Security.Authenticated(LoggedInAuthenticator.class)
     public static Result delete() {
-        Long bListID = Long.parseLong(Form.form().bindFromRequest().get("bListID"));
+        String bListIDString = Form.form().bindFromRequest().get("bListID");
+        if (!checkStringIsLongValidator.isValid(bListIDString)) {
+            return badRequest(Messages.get("page.badRequest"));
+        }
+
+        Long bListID = Long.parseLong(bListIDString);
         BList bListObj = BList.find.byId(bListID);
 
         if (bListObj == null) {
@@ -73,6 +83,43 @@ public class BListController extends Controller {
 
         bListObj.delete();
         return redirect(controllers.routes.Application.index());
+    }
+
+    @Security.Authenticated(LoggedInAuthenticator.class)
+    public static Result sort() {
+        Ebean.beginTransaction();
+
+        String sortedBLists = Form.form().bindFromRequest().get("sortedBLists");
+        String[] ids = sortedBLists.split(",");
+
+        Logger logger = LoggerFactory.getLogger(BListController.class);
+        logger.info(sortedBLists);
+
+        long sortPos = 0;
+        for (String idString : ids) {
+            if (!checkStringIsLongValidator.isValid(idString)) {
+                logger.error("/" + idString);
+                Ebean.rollbackTransaction();
+                return badRequest(Messages.get("page.badRequest"));
+            }
+
+            Long id = Long.valueOf(idString);
+            if (!checkBListOwnerValidator.isValid(id)) {
+                logger.error("//" + idString);
+                Ebean.rollbackTransaction();
+                return unauthorized(Messages.get("page.unauthorized"));
+            }
+
+            BList bList = BList.find.byId(id);
+            bList.sortPosition = sortPos;
+            bList.save();
+
+            sortPos++;
+        }
+
+        Ebean.commitTransaction();
+        Ebean.endTransaction();
+        return ok();
     }
 
     public static class NewBList {

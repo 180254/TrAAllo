@@ -11,12 +11,14 @@ import play.mvc.Security;
 import utils.authenticators.LoggedInAuthenticator;
 import utils.other.ValidationErrorsHelper;
 import utils.validators.CheckBoardOwnerValidator;
+import utils.validators.CheckStringIsLongValidator;
 import utils.validators.UniqueBoardNameValidator;
 import views.html.board;
 
 public class BoardController extends Controller {
 
-    private static Constraints.Validator<Long> checkBoardOwnerValidator = new CheckBoardOwnerValidator();
+    private static CheckBoardOwnerValidator checkBoardOwnerValidator = new CheckBoardOwnerValidator();
+    private static CheckStringIsLongValidator checkStringIsLongValidator = new CheckStringIsLongValidator();
 
     private static boolean hasViewAccess(Board bord) {
         return !bord.isPrivate() || checkBoardOwnerValidator.isValid(bord.id);
@@ -77,7 +79,12 @@ public class BoardController extends Controller {
 
     @Security.Authenticated(LoggedInAuthenticator.class)
     public static Result delete() {
-        Long boardId = Long.parseLong(Form.form().bindFromRequest().get("boardID"));
+        String boardIDString = Form.form().bindFromRequest().get("boardID");
+        if (!checkStringIsLongValidator.isValid(boardIDString)) {
+            return badRequest(Messages.get("page.badRequest"));
+        }
+
+        Long boardId = Long.parseLong(boardIDString);
         Board boardObj = Board.find.byId(boardId);
 
         if (boardObj == null) {

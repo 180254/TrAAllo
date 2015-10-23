@@ -4,7 +4,6 @@ import com.avaje.ebean.Model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 @Entity
 public class BList extends Model {
@@ -12,10 +11,11 @@ public class BList extends Model {
     public static Model.Finder<Long, BList> find = new Model.Finder<>(BList.class);
 
     @Id public Long id;
-    @NotNull public String name;
+    @Column(nullable = false) public String name;
+    @Column(nullable = false) public Long sortPosition = 0L;
 
     @JsonIgnore @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-    public Board board;
+    @Column(nullable = false) public Board board;
 
     protected BList() {
     }

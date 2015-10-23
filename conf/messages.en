@@ -1,4 +1,5 @@
 page.unauthorized=401 Unauthorized
+page.badRequest=400 Bad Request
 page.index.title=Main page
 
 navbar.action.login=Login
@@ -10,7 +11,6 @@ page.validation.error=Something went wrong!
 page.validation.unauthorized=You are unauthorized!
 page.validation.onlyAlphanumeric=The only allowed chars are: letters, numbers, and minus!
 page.validation.onlyAlphanumericAndSpace=The only allowed chars are: letters, numbers, space, and minus!
-
 page.validation.noSuchBoard=No such board!
 
 page.login.title=Log in

@@ -4,7 +4,6 @@ import com.avaje.ebean.Model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
@@ -13,13 +12,15 @@ public class Board extends Model {
     public static Finder<Long, Board> find = new Finder<>(Board.class);
 
     @Id public Long id;
-    @NotNull public String name;
-    @NotNull public Type type;
+    @Column(nullable = false) public String name;
+    @Column(nullable = false) public Type type;
 
     @JsonIgnore @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-    public User owner;
+    @Column(nullable = false) public User owner;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "board")
+    @OrderBy("sortPosition ASC")
+    @JsonIgnore
     public List<BList> bLists;
 
     protected Board() {
@@ -39,6 +40,7 @@ public class Board extends Model {
         return board;
     }
 
+    @JsonIgnore
     public boolean isPrivate() {
         return type == Type.Private;
     }

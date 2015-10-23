@@ -1,24 +1,26 @@
 @(bList: BList)
 
 <div class="bList-card-container">
-    @if(new Random().nextInt(2) == 0) {
-        <div class="bList-card">
-            JUST SOME DUMMY TEXT<br/>
-            it is just place for cards<br/>
-            ala ma kota<br/>
-        </div>
-    }
-    @if(new Random().nextInt(2) == 0) {
-        <div class="bList-card">
-            other card<br/>
-            it is just place for cards<br/>
-            ala ma kota<br/>
-            hie hie<br/>
-        </div>
-    }
-    @if(new Random().nextInt(2) == 0) {
-        <div class="bList-card">
-            and this one is another
-        </div>
-    }
+    <ul id="bList-cards-list" class="sortable">
+        @if(new Random().nextInt(2) == 0) {
+            <li class="bList-card ui-state-default">
+                JUST SOME DUMMY TEXT<br/>
+                it is just place for cards<br/>
+                ala ma kota<br/>
+            </li>
+        }
+        @if(new Random().nextInt(2) == 0) {
+            <li class="bList-card ui-state-default">
+                other card<br/>
+                it is just place for cards<br/>
+                ala ma kota<br/>
+                hie hie<br/>
+            </li>
+        }
+        @if(new Random().nextInt(2) == 0) {
+            <li class="bList-card ui-state-default">
+                and this one is another
+            </li>
+        }
+    </ul>
 </div>

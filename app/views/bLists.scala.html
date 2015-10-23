@@ -2,36 +2,36 @@
 
 <div class="bList-container">
 
-    @for(bList <- board.bLists) {
-        <div id="bList-one-@bList.id" class="bList-one">
-            <div id="bList-one-div-name-@bList.id" class="bList-one-div-name">
-                <span class="bList-one-name">@bList.name</span>
-                <a class="bList-one-del" data-id="@bList.id" href="#">x</a>
-            </div>
+    <ul id="bList-list" class="sortable">
+        @for(bList <- board.bLists) {
+            <li id="bList-one-@bList.id" class="bList-one ui-state-default">
+                <div id="bList-one-div-name-@bList.id" class="bList-one-div-name">
+                    <span class="bList-one-name">@bList.name</span>
+                    <a class="bList-one-del" data-id="@bList.id" href="#">x</a>
+                </div>
 
-            <div id="bList-one-edit-@bList.id" class="bList-add hidden-add">
-                <form class="bList-one-edit-form pure-form">
-                    <input type="hidden" name="modifiedID" value="@bList.id"/>
+                <div id="bList-one-edit-@bList.id" class="bList-add hidden-add">
+                    <form class="bList-one-edit-form pure-form">
+                        <input type="hidden" name="modifiedID" value="@bList.id"/>
 
-                    <input id="bList-one-edit-input-@bList.id" type="text" name="newName" value="@bList.name"
-                    placeholder="@Messages("page.board.bList.edit.label.newName")"/>
-                    <div class="separator">
-                        <button type="submit" class="button-success pure-button">
-                        @Messages("page.board.bList.edit.button.submit")
-                        </button>
+                        <input id="bList-one-edit-input-@bList.id" type="text" name="newName" value="@bList.name"
+                        placeholder="@Messages("page.board.bList.edit.label.newName")"/>
+                        <div class="separator">
+                            <button type="submit" class="button-success pure-button">
+                            @Messages("page.board.bList.edit.button.submit")
+                            </button>
 
-                        <a id="bList-one-close-@bList.id"
-                        class="bList-one-close"
-                        href="#"><i class="material-icons board-icon">close</i></a>
-                    </div>
-                </form>
-            </div>
+                            <a id="bList-one-close-@bList.id"
+                            class="bList-one-close"
+                            href="#"><i class="material-icons board-icon">close</i></a>
+                        </div>
+                    </form>
+                </div>
 
-            @cards(bList)
-        </div>
-
-
-    }
+                @cards(bList)
+            </li>
+        }
+    </ul>
 
     <div id="bList-add-pre-div" class="bList-one bList-add-pre">
         <a id="bList-add-open" href="#">@Messages("page.board.bList.add")</a>

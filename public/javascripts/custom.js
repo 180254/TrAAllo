@@ -5,7 +5,7 @@ $(document).ready(function () {
     $('#bList-add-open').click(bListAddOpenClose);
     $('#bList-add-close').click(bListAddOpenClose);
 
-    $('.bList-one-name').click(function () {
+    $('.bList-one-name').dblclick(function () {
         bListRenameOpenClose($(this));
     });
     $('.bList-one-close').click(function () {
@@ -14,33 +14,50 @@ $(document).ready(function () {
 
 
     $('#bList-add-form').on('submit', function () {
-        return postAndProcessForm('/bList/add', $(this));
+        return postAndProcessForm('/bList/add', $(this), true);
     });
     $('.bList-one-edit-form').on('submit', function () {
-        return postAndProcessForm('/bList/edit', $(this));
+        return postAndProcessForm('/bList/edit', $(this), true);
     });
 
     $('.bList-one-del').click(function () {
         bListDel($(this));
-    })
+    });
+
+    var $sortable = $('.sortable');
+    $sortable.sortable({
+        update: function (event, ui) {
+            var $item = ui.item;
+            var $id = $item.attr('id');
+
+            if ($id !== undefined && $id.indexOf('bList-one') !== -1) {
+                bListSorted();
+            }
+
+        }
+    });
+    $sortable.disableSelection();
 });
 
 function boardAdd() {
-    postAndProcessForm('/board/add', $('#new-board-modal'))
+    postAndProcessForm('/board/add', $('#new-board-modal'), true)
 }
 
 function boardEdit() {
-    postAndProcessForm('/board/edit', $('#edit-board-modal'))
+    postAndProcessForm('/board/edit', $('#edit-board-modal'), true)
 }
 
-function postAndProcessForm(url, form) {
+function postAndProcessForm(url, form, reload) {
     $.ajax({
         type: 'POST',
         url: url,
         data: form.serialize(),
         success: function () {
             Materialize.toast('Successfully done!', 1000, 'succ-done', function () {
-                location.reload();
+                if (reload) {
+                    location.reload();
+                }
+
                 if (url.indexOf('/board') !== -1) {
                     form[0].reset();
                 }
@@ -110,5 +127,24 @@ function bListDel($a) {
         )
     );
 
-    postAndProcessForm('/bList/delete', form)
+    postAndProcessForm('/bList/delete', form, true);
+}
+
+function bListSorted() {
+    var sortedBLists = [];
+    $('#bList-list').children('li').each(function () {
+        sortedBLists.push($(this).attr('id').replace(/[^0-9]/g, ''));
+    });
+
+    var $form = $('<form/>');
+    $form.append(
+        $('<input/>',
+            {
+                name: 'sortedBLists',
+                value: sortedBLists
+            }
+        )
+    );
+
+    postAndProcessForm('/bList/sort', $form, false);
 }
