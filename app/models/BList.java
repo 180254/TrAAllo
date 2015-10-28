@@ -22,11 +22,12 @@ public class BList extends Model {
 
     public static BList create(Board board, String name) {
         BList maxSortBList = BList.find.orderBy("sortPosition DESC").setMaxRows(1).findUnique();
+        long nextSortPos = (maxSortBList != null) ? (maxSortBList.sortPosition + 1) : 1;
 
         BList bList = new BList();
         bList.name = name;
         bList.board = board;
-        bList.sortPosition = maxSortBList.sortPosition + 1;
+        bList.sortPosition = nextSortPos;
         bList.save();
 
         return bList;
