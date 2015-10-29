@@ -14,20 +14,20 @@ page.validation.onlyAlphanumericAndSpace=The only allowed chars are: letters, nu
 page.validation.noSuchBoard=No such board!
 
 page.login.title=Log in
-page.login.header=Log in to TrAAlo
+page.login.header=Log in to TrAAllo
 page.login.label.username=Username
 page.login.label.password=Password
 page.login.button.submit=Log In
-page.login.alternative=i want new one TrAAlo account
+page.login.alternative=i want new one TrAAllo account
 page.login.validate.authenticateError=Invalid username or password!
 
 page.signup.title=Sign up
-page.signup.header=Create an TrAAlo Account
+page.signup.header=Create an TrAAllo Account
 page.signup.error=Something went wrong!
 page.signup.label.username=Username
 page.signup.label.password=Password
 page.signup.button.submit=Sign up
-page.signup.alternative=i have a TrAAlo account
+page.signup.alternative=i have a TrAAllo account
 page.signup.validate.alreadyExist=User with given username already exists!
 
 page.welcome.title=Welcome
