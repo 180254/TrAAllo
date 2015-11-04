@@ -9,11 +9,11 @@ import java.util.List;
 @Entity
 public class Board extends Model {
 
-    public static Finder<Long, Board> find = new Finder<>(Board.class);
+    public static final Model.Finder<Long, Board> find = new Model.Finder<>(Board.class);
 
     @Id public Long id;
     @Column(nullable = false) public String name;
-    @Column(nullable = false) public Type type;
+    @Column(nullable = false) public Board.Type type;
 
     @JsonIgnore @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     @Column(nullable = false) public User owner;
@@ -27,10 +27,10 @@ public class Board extends Model {
     }
 
     public static Board create(User owner, String name, int typeCode) {
-        return create(owner, name, Type.fromCode(typeCode));
+        return create(owner, name, Board.Type.fromCode(typeCode));
     }
 
-    public static Board create(User owner, String name, Type type) {
+    public static Board create(User owner, String name, Board.Type type) {
         Board board = new Board();
         board.name = name;
         board.type = type;
@@ -42,7 +42,7 @@ public class Board extends Model {
 
     @JsonIgnore
     public boolean isPrivate() {
-        return type == Type.Private;
+        return type == Board.Type.Private;
     }
 
     public enum Type {
@@ -56,8 +56,8 @@ public class Board extends Model {
             this.code = code;
         }
 
-        public static Type fromCode(int code) {
-            for (Type type : Type.values()) {
+        public static Board.Type fromCode(int code) {
+            for (Board.Type type : Board.Type.values()) {
                 if (type.getCode() == code) {
                     return type;
                 }

@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Entity
 public class BList extends Model {
 
-    public static Model.Finder<Long, BList> find = new Model.Finder<>(BList.class);
+    public static final Model.Finder<Long, BList> find = new Model.Finder<>(BList.class);
 
     @Id public Long id;
     @Column(nullable = false) public String name;
@@ -22,7 +22,7 @@ public class BList extends Model {
 
     public static BList create(Board board, String name) {
         BList maxSortBList = BList.find.orderBy("sortPosition DESC").setMaxRows(1).findUnique();
-        long nextSortPos = (maxSortBList != null) ? (maxSortBList.sortPosition + 1) : 1;
+        long nextSortPos = (maxSortBList != null) ? (maxSortBList.sortPosition + 1L) : 1L;
 
         BList bList = new BList();
         bList.name = name;

@@ -13,7 +13,7 @@ import static play.mvc.Controller.session;
 @Entity
 public class User extends Model {
 
-    public static Finder<Long, User> find = new Finder<>(User.class);
+    public static final Model.Finder<Long, User> find = new Model.Finder<>(User.class);
 
     @Id public Long id;
     @Column(nullable = false) public String username;
@@ -36,7 +36,7 @@ public class User extends Model {
         user.username = username;
         user.password = hashPw;
         user.registerTime = LocalDateTime.now();
-        user.boards = new ArrayList<>();
+        user.boards = new ArrayList<>(10);
         user.save();
 
         return user;
@@ -44,7 +44,7 @@ public class User extends Model {
 
     public static boolean authenticate(String username, String password) {
         User user = find.where().eq("username", username).findUnique();
-        return user != null && BCrypt.checkpw(password, user.password);
+        return (user != null) && BCrypt.checkpw(password, user.password);
     }
 
     public static boolean isLoggedIn() {
