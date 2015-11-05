@@ -1,28 +1,41 @@
-import org.junit.*;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.chrome.ChromeDriver;
 
-import play.mvc.*;
-import play.test.*;
-import play.libs.F.*;
-
+import static org.junit.Assert.assertTrue;
 import static play.test.Helpers.*;
-import static org.junit.Assert.*;
-
-import static org.fluentlenium.core.filter.FilterConstructor.*;
 
 public class IntegrationTest {
 
-    /**
-     * add your integration test here
-     * in this example we just check if the welcome page is being shown
-     */
+    @BeforeClass
+    public static void beforeClass() {
+        System.setProperty("webdriver.chrome.driver",
+                "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe");
+    }
+
     @Test
-    public void test() {
-        running(testServer(3333, fakeApplication(inMemoryDatabase())), HTMLUNIT, new Callback<TestBrowser>() {
-            public void invoke(TestBrowser browser) {
-                browser.goTo("http://localhost:3333");
-                assertTrue(browser.pageSource().contains("Your new application is ready."));
-            }
+    public void appStart() {
+        running(testServer(4000, fakeApplication(inMemoryDatabase())), ChromeDriver.class, browser -> {
+            browser.getDriver().get("http://127.0.0.1:4000");
+            assertTrue(browser.pageSource().contains("TrAAllo"));
         });
     }
 
+    @Test
+    public void afterRegisterICanLogIn() {
+        running(testServer(4000, fakeApplication(inMemoryDatabase())), ChromeDriver.class, browser -> {
+            browser.goTo("http://127.0.0.1:4000/signup");
+            browser.getDriver().findElement(By.id("username")).sendKeys("nowyUzytkownik33");
+            browser.getDriver().findElement(By.id("password")).sendKeys("bardzoSlabeHaslo1");
+            browser.getDriver().findElement(By.tagName("form")).submit();
+
+            browser.goTo("http://127.0.0.1:3333/login");
+            browser.getDriver().findElement(By.id("username")).sendKeys("nowyUzytkownik33");
+            browser.getDriver().findElement(By.id("password")).sendKeys("bardzoSlabeHaslo1");
+            browser.getDriver().findElement(By.tagName("form")).submit();
+
+            assertTrue(browser.pageSource().contains("You're logged in!"));
+        });
+    }
 }

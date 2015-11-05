@@ -6,7 +6,7 @@ organization := "pl.lodz.p.iis"
 
 version := "0.1"
 
-lazy val root = (project in file(".")).enablePlugins(PlayJava, PlayEbean)
+lazy val root = (project in file(".")).enablePlugins(PlayJava, PlayEbean, PlayEnhancer)
 
 scalaVersion := "2.11.7"
 
@@ -44,4 +44,17 @@ dependencyOverrides ++= Set(
   "commons-logging" % "commons-logging" % "1.2",
   "com.google.guava" % "guava" % "19.0-rc2",
   "junit" % "junit" % "4.12"
+)
+
+//update selenium, as bundled	2.44.0 was released 23-Oct-2014
+dependencyOverrides ++= Set(
+  "org.seleniumhq.selenium" % "selenium-api" % "2.48.2",
+  "org.seleniumhq.selenium" % "selenium-chrome-driver" % "2.48.2",
+  "org.seleniumhq.selenium" % "selenium-firefox-driver" % "2.48.2",
+  "org.seleniumhq.selenium" % "selenium-htmlunit-driver" % "2.48.2",
+  "org.seleniumhq.selenium" % "selenium-ie-driver" % "2.48.2",
+  "org.seleniumhq.selenium" % "selenium-java" % "2.48.2",
+  "org.seleniumhq.selenium" % "selenium-remote-driver" % "2.48.2",
+  "org.seleniumhq.selenium" % "selenium-safari-driver" % "2.48.2",
+  "org.seleniumhq.selenium" % "selenium-support" % "2.48.2"
 )
