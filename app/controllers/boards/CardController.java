@@ -1,17 +1,26 @@
 package controllers.boards;
 
+import com.avaje.ebean.Ebean;
 import models.BList;
 import models.Card;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import play.data.Form;
 import play.data.validation.Constraints;
+import play.i18n.Messages;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
 import utils.authenticators.LoggedInAuthenticator;
 import utils.other.ValidationErrorsHelper;
 import utils.validators.CheckBListOwnerValidator;
+import utils.validators.CheckCardOwnerValidator;
+import utils.validators.CheckStringIsLongValidator;
 
 public class CardController extends Controller {
+
+    private static CheckStringIsLongValidator checkStringIsLongValidator = new CheckStringIsLongValidator();
+    private static CheckCardOwnerValidator checkCardOwnerValidator = new CheckCardOwnerValidator();
 
     @Security.Authenticated(LoggedInAuthenticator.class)
     public static Result add() {
@@ -28,6 +37,43 @@ public class CardController extends Controller {
             Card.create(bList, newCard.name);
         }
 
+        return ok();
+    }
+
+    @Security.Authenticated(LoggedInAuthenticator.class)
+    public static Result sort() {
+        Ebean.beginTransaction();
+
+        String sortedCards = Form.form().bindFromRequest().get("sortedCards");
+        String[] ids = sortedCards.split(",");
+
+        Logger logger = LoggerFactory.getLogger(CardController.class);
+        logger.info(sortedCards);
+
+        long sortPos = 0;
+        for (String idString : ids) {
+            if (!checkStringIsLongValidator.isValid(idString)) {
+                logger.error("/" + idString);
+                Ebean.rollbackTransaction();
+                return badRequest(Messages.get("page.badRequest"));
+            }
+
+            Long id = Long.valueOf(idString);
+            if (!checkCardOwnerValidator.isValid(id)) {
+                logger.error("//" + idString);
+                Ebean.rollbackTransaction();
+                return unauthorized(Messages.get("page.unauthorized"));
+            }
+
+            Card card = Card.find.byId(id);
+            card.sortPosition = sortPos;
+            card.save();
+
+            sortPos++;
+        }
+
+        Ebean.commitTransaction();
+        Ebean.endTransaction();
         return ok();
     }
 

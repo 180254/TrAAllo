@@ -47,12 +47,19 @@ $(document).ready(function () {
     $sortable.sortable({
         update: function (event, ui) {
             var $item = ui.item;
-            var $id = $item.attr('id');
+            if($item.hasClass('bList-one')){
+                var $id = $item.attr('id');
 
-            if ($id !== undefined && $id.indexOf('bList-one') !== -1) {
-                bListSorted();
+                if ($id !== undefined && $id.indexOf('bList-one') !== -1) {
+                    bListSorted();
+                }
             }
-
+            else if ($item.hasClass('bList-card')) {
+                var $id = $item.attr('data-id');
+                if ($id != undefined) {
+                    cardsSorted($item.closest('.bList-card-container'));
+                }
+            }
         }
     });
     $sortable.disableSelection();
@@ -170,4 +177,23 @@ function bListSorted() {
     );
 
     postAndProcessForm('/bList/sort', $form, false);
+}
+
+function cardsSorted(parent) {
+    var sortedCards = [];
+    parent.find('.bList-cards-list').children('li').each(function () {
+        sortedCards.push($(this).attr('data-id'));
+    });
+
+    var $form = $('<form/>');
+    $form.append(
+        $('<input/>',
+            {
+                name: 'sortedCards',
+                value: sortedCards
+            }
+        )
+    );
+
+    postAndProcessForm('/card/sort', $form, false);
 }

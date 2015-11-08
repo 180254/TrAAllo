@@ -5,9 +5,9 @@
 }
 
 <div class="bList-card-container">
-    <ul id="bList-cards-list" class="@sortable">
+    <ul class="bList-cards-list @sortable">
         @for(card <- bList.cards) {
-            <li class="bList-card ui-state-default">
+            <li class="bList-card ui-state-default" data-id="@card.id">
                 @card.name
             </li>
         }
