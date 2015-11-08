@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import play.data.Form;
 import play.data.validation.Constraints;
 import play.i18n.Messages;
+import play.libs.F;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
@@ -36,6 +37,25 @@ public class CardController extends Controller {
             BList bList = BList.find.byId(newCard.listId);
             Card.create(bList, newCard.name);
         }
+
+        return ok();
+    }
+
+    public static Result edit() {
+        Form<EditCard> cardForm = Form.form(EditCard.class).bindFromRequest();
+
+        if (cardForm.hasErrors()) {
+            return badRequest(
+                    new ValidationErrorsHelper("page.board.card.edit.label.", cardForm).getWithNLAsBR());
+        }
+
+        Card card = Card.find.byId(cardForm.get().cardId);
+        if (card == null) {
+            return badRequest(Messages.get("page.board.notFound"));
+        }
+
+        card.name = cardForm.get().newName;
+        card.save();
 
         return ok();
     }
@@ -87,5 +107,21 @@ public class CardController extends Controller {
         @Constraints.MaxLength(15)
         @Constraints.Pattern(value = "^[A-Za-z0-9- ]+$", message = "page.validation.onlyAlphanumericAndSpace")
         public String name;
+    }
+
+    public static class EditCard {
+        @Constraints.Required
+        @Constraints.ValidateWith(CheckBListOwnerValidator.class)
+        public Long listId;
+
+        @Constraints.Required
+        @Constraints.ValidateWith(CheckCardOwnerValidator.class)
+        public Long cardId;
+
+        @Constraints.Required
+        @Constraints.MinLength(4)
+        @Constraints.MaxLength(15)
+        @Constraints.Pattern(value = "^[A-Za-z0-9- ]+$", message = "page.validation.onlyAlphanumericAndSpace")
+        public String newName;
     }
 }

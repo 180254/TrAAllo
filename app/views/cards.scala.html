@@ -8,7 +8,21 @@
     <ul class="bList-cards-list @sortable">
         @for(card <- bList.cards) {
             <li class="bList-card ui-state-default" data-id="@card.id">
-                @card.name
+                <a class="card-name-js">@card.name</a>
+                <form class="card-edit-form card-edit-form-js pure-form" style="display: none">
+                    <input type="hidden" name="listId" value="@bList.id"/>
+                    <input type="hidden" name="cardId" value="@card.id"/>
+                    <input type="text" name="newName" value="@card.name"/>
+                    <div class="separator">
+                        <button type="submit" class="button-success pure-button">
+                            @Messages("page.board.card.edit.button.submit")
+                        </button>
+
+                        <a class="card-cancel card-cancel-edit-js" href="#">
+                            <i class="material-icons board-icon">close</i>
+                        </a>
+                    </div>
+                </form>
             </li>
         }
     </ul>
@@ -26,7 +40,7 @@
                         @Messages("page.board.card.add.button.submit")
                     </button>
 
-                    <a class="card-cancel" href="#">
+                    <a class="card-cancel card-cancel-add-js" href="#">
                         <i class="material-icons board-icon">close</i>
                     </a>
                 </div>

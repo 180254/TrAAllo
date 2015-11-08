@@ -61,6 +61,8 @@ page.board.bList.edit.button.submit=Rename
 page.board.card.add=Add a card...
 page.board.card.add.label.name=Card name
 page.board.card.add.button.submit=Save
+page.board.card.edit.label.newName=Card new name
+page.board.card.edit.button.submit=Rename
 
 constraint.required=Required
 constraint.min=Minimum value: {0}

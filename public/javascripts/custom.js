@@ -34,13 +34,31 @@ $(document).ready(function () {
         $(this).closest('.bList-card-container').find('.add-card').toggle();
     });
 
-    $('.card-cancel').click(function () {
+    $('.card-cancel-add-js').click(function () {
         $(this).closest('.add-card').toggle();
         $(this).closest('.bList-card-container').find('.add-new-card').toggle();
     });
 
     $('.card-edit-form').on('submit', function () {
         return postAndProcessForm('/card/add', $(this), true);
+    });
+
+    $('.card-edit-form-js').on('submit', function () {
+        return postAndProcessForm('/card/edit', $(this), true);
+    });
+
+    $('li.bList-card').on('click', function () {
+        var labelOfCardName = $(this).find('.card-name-js');
+        if(labelOfCardName.is(":visible")){
+            labelOfCardName.toggle();
+            $(this).find('.card-edit-form-js').toggle();
+        }
+    })
+
+    $('.card-cancel-edit-js').on('click', function (e) {
+        $(this).closest('.card-edit-form-js').toggle();
+        $(this).closest('.bList-card').find('.card-name-js').toggle();
+        return false;
     });
 
     var $sortable = $('.sortable');
