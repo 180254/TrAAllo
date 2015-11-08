@@ -6,24 +6,32 @@
 
 <div class="bList-card-container">
     <ul id="bList-cards-list" class="@sortable">
-        @if(new Random().nextInt(2) == 0) {
+        @for(card <- bList.cards) {
             <li class="bList-card ui-state-default">
-                JUST SOME DUMMY TEXT<br/>
-                it is just place for cards<br/>
-                ala ma kota<br/>
+            @card.name
             </li>
         }
-        @if(new Random().nextInt(2) == 0) {
-            <li class="bList-card ui-state-default">
-                other card<br/>
-                it is just place for cards<br/>
-                ala ma kota<br/>
-                hie hie<br/>
-            </li>
-        }
-        @if(new Random().nextInt(2) == 0) {
-            <li class="bList-card ui-state-default">
-                and this one is another
+        @if(hasEditRights){
+            <div class="card-add">
+                <a href="#">dodaj karte</a>
+            </div>
+
+            <li class="bList-card" style="display: none">
+                <form class="card-edit-form pure-form" >
+                    <input type="hidden" name="modifiedID"/>
+
+                    <input type="text" name="newName"
+                    placeholder="nazwa"/>
+                    <div class="separator">
+                        <button type="submit" class="button-success pure-button">
+                        zapisz
+                        </button>
+
+                        <a
+                        class="bList-one-close"
+                        href="#"><i class="material-icons board-icon">zamknij</i></a>
+                    </div>
+                </form>
             </li>
         }
     </ul>

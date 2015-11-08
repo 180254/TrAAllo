@@ -4,6 +4,7 @@ import com.avaje.ebean.Model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class BList extends Model {
@@ -16,6 +17,11 @@ public class BList extends Model {
 
     @JsonIgnore @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     @Column(nullable = false) public Board board;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "list")
+    @OrderBy("sortPosition ASC, id ASC")
+    @JsonIgnore
+    public List<Card> cards;
 
     protected BList() {
     }
