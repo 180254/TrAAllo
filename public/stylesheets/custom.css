@@ -252,8 +252,17 @@ nav, footer, .footer-copyright, .other-nav ul, .other-nav li {
     vertical-align: middle;
 }
 
-.card-add a {
+.add-new-card {
     color: #1ad5ac;
     font-size: 0.85em;
     text-decoration: underline;
+}
+
+.card-cancel {
+    color: black;
+    border: 0;
+}
+
+.card-cancel:hover {
+    color: red;
 }

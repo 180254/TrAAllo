@@ -29,6 +29,20 @@ $(document).ready(function () {
         bListDel($(this));
     });
 
+    $('.add-new-card').click(function () {
+        $(this).toggle();
+        $(this).closest('.bList-card-container').find('.add-card').toggle();
+    });
+
+    $('.card-cancel').click(function () {
+        $(this).closest('.add-card').toggle();
+        $(this).closest('.bList-card-container').find('.add-new-card').toggle();
+    });
+
+    $('.card-edit-form').on('submit', function () {
+        return postAndProcessForm('/card/add', $(this), true);
+    });
+
     var $sortable = $('.sortable');
     $sortable.sortable({
         update: function (event, ui) {

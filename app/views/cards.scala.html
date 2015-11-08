@@ -8,31 +8,29 @@
     <ul id="bList-cards-list" class="@sortable">
         @for(card <- bList.cards) {
             <li class="bList-card ui-state-default">
-            @card.name
-            </li>
-        }
-        @if(hasEditRights){
-            <div class="card-add">
-                <a href="#">dodaj karte</a>
-            </div>
-
-            <li class="bList-card" style="display: none">
-                <form class="card-edit-form pure-form" >
-                    <input type="hidden" name="modifiedID"/>
-
-                    <input type="text" name="newName"
-                    placeholder="nazwa"/>
-                    <div class="separator">
-                        <button type="submit" class="button-success pure-button">
-                        zapisz
-                        </button>
-
-                        <a
-                        class="bList-one-close"
-                        href="#"><i class="material-icons board-icon">zamknij</i></a>
-                    </div>
-                </form>
+                @card.name
             </li>
         }
     </ul>
+    @if(hasEditRights){
+        <div>
+            <a class="add-new-card" href="#">@Messages("page.board.card.add")</a>
+        </div>
+
+        <div class="bList-card add-card" style="display: none">
+            <form class="card-edit-form pure-form" >
+                <input type="hidden" name="listId" value="@bList.id"/>
+                <input type="text" name="name" placeholder="@Messages("page.board.card.add.label.name")"/>
+                <div class="separator">
+                    <button type="submit" class="button-success pure-button">
+                        @Messages("page.board.card.add.button.submit")
+                    </button>
+
+                    <a class="card-cancel" href="#">
+                        <i class="material-icons board-icon">close</i>
+                    </a>
+                </div>
+            </form>
+        </div>
+    }
 </div>

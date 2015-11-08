@@ -22,6 +22,8 @@ POST        /bList/edit              controllers.boards.BListController.edit()
 POST        /bList/delete            controllers.boards.BListController.delete()
 POST        /bList/sort              controllers.boards.BListController.sort()
 
+POST        /card/add                controllers.boards.CardController.add()
+
 GET         /rest/users              controllers.rest.RestUser.list()
 GET         /rest/users/clean        controllers.rest.RestUser.clean()
 
