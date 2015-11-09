@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import play.data.Form;
 import play.data.validation.Constraints;
 import play.i18n.Messages;
-import play.libs.F;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
@@ -95,6 +94,27 @@ public class CardController extends Controller {
         Ebean.commitTransaction();
         Ebean.endTransaction();
         return ok();
+    }
+
+    @Security.Authenticated(LoggedInAuthenticator.class)
+    public static Result delete() {
+        String cardIdAsString = Form.form().bindFromRequest().get("cardId");
+        if (!checkStringIsLongValidator.isValid(cardIdAsString)) {
+            return badRequest(Messages.get("page.badRequest"));
+        }
+
+        Long cardId = Long.parseLong(cardIdAsString);
+        Card card = Card.find.byId(cardId);
+
+        if (card == null) {
+            return badRequest(Messages.get("page.board.notFound"));
+        }
+        if (!checkCardOwnerValidator.isValid(card.id)) {
+            return unauthorized(Messages.get("page.unauthorized"));
+        }
+
+        card.delete();
+        return redirect(controllers.routes.Application.index());
     }
 
     public static class NewCard {

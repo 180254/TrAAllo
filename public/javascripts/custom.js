@@ -61,6 +61,11 @@ $(document).ready(function () {
         return false;
     });
 
+    $('.card-delete-btn').on('click', function(){
+        var form = buildForm('cardId', $(this).attr('data-id'))
+        postAndProcessForm('/card/delete', form, true);
+    });
+
     var $sortable = $('.sortable');
     $sortable.sortable({
         update: function (event, ui) {
@@ -165,16 +170,7 @@ function bListRenameOpenClose($a) {
 }
 
 function bListDel($a) {
-    var form = $('<form/>');
-    form.append(
-        $('<input/>',
-            {
-                name: 'bListID',
-                value: $a.attr('data-id')
-            }
-        )
-    );
-
+    var form = buildForm('bListID', $a.attr('data-id'))
     postAndProcessForm('/bList/delete', form, true);
 }
 
@@ -184,17 +180,8 @@ function bListSorted() {
         sortedBLists.push($(this).attr('id').replace(/[^0-9]/g, ''));
     });
 
-    var $form = $('<form/>');
-    $form.append(
-        $('<input/>',
-            {
-                name: 'sortedBLists',
-                value: sortedBLists
-            }
-        )
-    );
-
-    postAndProcessForm('/bList/sort', $form, false);
+    var form = buildForm('sortedBLists', sortedBLists)
+    postAndProcessForm('/bList/sort', form, false);
 }
 
 function cardsSorted(parent) {
@@ -203,15 +190,19 @@ function cardsSorted(parent) {
         sortedCards.push($(this).attr('data-id'));
     });
 
-    var $form = $('<form/>');
-    $form.append(
+    var form = buildForm('sortedCards', sortedCards)
+    postAndProcessForm('/card/sort', form, false);
+}
+
+function buildForm(name, value){
+    var form = $('<form/>');
+    form.append(
         $('<input/>',
             {
-                name: 'sortedCards',
-                value: sortedCards
+                name: name,
+                value: value
             }
         )
     );
-
-    postAndProcessForm('/card/sort', $form, false);
+    return form;
 }

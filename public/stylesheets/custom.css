@@ -261,8 +261,19 @@ nav, footer, .footer-copyright, .other-nav ul, .other-nav li {
 .card-cancel {
     color: black;
     border: 0;
+    float: right;
+    padding-top: 3px;
 }
 
 .card-cancel:hover {
     color: red;
+}
+
+.card-delete-btn-image{
+    font-size: 1.3rem !important;
+    line-height: inherit !important;
+}
+
+.card-delete-btn{
+    padding: 0px !important;
 }
