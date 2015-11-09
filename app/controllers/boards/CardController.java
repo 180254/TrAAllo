@@ -123,9 +123,8 @@ public class CardController extends Controller {
         public Long listId;
 
         @Constraints.Required
-        @Constraints.MinLength(4)
-        @Constraints.MaxLength(15)
-        @Constraints.Pattern(value = "^[A-Za-z0-9- ]+$", message = "page.validation.onlyAlphanumericAndSpace")
+        @Constraints.MinLength(1)
+        @Constraints.MaxLength(200)
         public String name;
     }
 
@@ -139,9 +138,8 @@ public class CardController extends Controller {
         public Long cardId;
 
         @Constraints.Required
-        @Constraints.MinLength(4)
-        @Constraints.MaxLength(15)
-        @Constraints.Pattern(value = "^[A-Za-z0-9- ]+$", message = "page.validation.onlyAlphanumericAndSpace")
+        @Constraints.MinLength(1)
+        @Constraints.MaxLength(200)
         public String newName;
     }
 }

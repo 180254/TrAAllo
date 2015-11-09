@@ -9,22 +9,24 @@
         @for(card <- bList.cards) {
             <li class="bList-card ui-state-default" data-id="@card.id">
                 <a class="card-name-js">@card.name</a>
-                <form class="card-edit-form card-edit-form-js pure-form" style="display: none">
-                    <input type="hidden" name="listId" value="@bList.id"/>
-                    <input type="hidden" name="cardId" value="@card.id"/>
-                    <input type="text" name="newName" value="@card.name"/>
-                    <div class="separator">
-                        <button type="submit" class="button-success pure-button">
+                @if(hasEditRights) {
+                    <form class="card-edit-form card-edit-form-js pure-form" style="display: none">
+                        <input type="hidden" name="listId" value="@bList.id"/>
+                        <input type="hidden" name="cardId" value="@card.id"/>
+                        <input type="text" name="newName" value="@card.name"/>
+                        <div class="separator">
+                            <button type="submit" class="button-success pure-button">
                             @Messages("page.board.card.edit.button.submit")
-                        </button>
-                        <button type="button" class="btn btn-floating waves-effect waves-light boards-btn red card-delete-btn" data-id="@card.id">
-                            <i class="board-icon material-icons btn-xs card-delete-btn-image">delete</i>
-                        </button>
-                        <a class="card-cancel card-cancel-edit-js" href="#">
-                            <i class="material-icons board-icon">close</i>
-                        </a>
-                    </div>
-                </form>
+                            </button>
+                            <button type="button" class="btn btn-floating waves-effect waves-light boards-btn red card-delete-btn" data-id="@card.id">
+                                <i class="board-icon material-icons btn-xs card-delete-btn-image">delete</i>
+                            </button>
+                            <a class="card-cancel card-cancel-edit-js" href="#">
+                                <i class="material-icons board-icon">close</i>
+                            </a>
+                        </div>
+                    </form>
+                }
             </li>
         }
     </ul>
@@ -34,7 +36,7 @@
         </div>
 
         <div class="bList-card add-card" style="display: none">
-            <form class="card-edit-form pure-form" >
+            <form class="card-add-form pure-form" >
                 <input type="hidden" name="listId" value="@bList.id"/>
                 <input type="text" name="name" placeholder="@Messages("page.board.card.add.label.name")"/>
                 <div class="separator">

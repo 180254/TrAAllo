@@ -229,12 +229,14 @@ nav, footer, .footer-copyright, .other-nav ul, .other-nav li {
     padding: 5px;
 }
 
-.card-edit-form {
+.card-edit-form,
+.card-add-form {
     height: 100%;
     color: white;
 }
 
-.card-edit-form input {
+.card-edit-form input,
+.card-add-form input {
     background-color: white;
     color: black;
     font-size: 0.9em;
@@ -243,12 +245,14 @@ nav, footer, .footer-copyright, .other-nav ul, .other-nav li {
     padding: 5px 7px !important;
 }
 
-.card-edit-form button {
+.card-edit-form button,
+.card-add-form button {
     height: 30px;
     padding: 3px 35px;
 }
 
-.card-edit-form i {
+.card-edit-form i,
+.card-add-form i {
     vertical-align: middle;
 }
 
@@ -269,11 +273,11 @@ nav, footer, .footer-copyright, .other-nav ul, .other-nav li {
     color: red;
 }
 
-.card-delete-btn-image{
+.card-delete-btn-image {
     font-size: 1.3rem !important;
     line-height: inherit !important;
 }
 
-.card-delete-btn{
+.card-delete-btn {
     padding: 0px !important;
 }

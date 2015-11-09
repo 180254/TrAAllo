@@ -13,7 +13,7 @@ $(document).ready(function () {
     });
 
     $('#board-delete-form').on('submit', function () {
-        return postAndProcessForm('/board/delete', $(this), false, function() {
+        return postAndProcessForm('/board/delete', $(this), false, function () {
             location.replace("/");
         });
     });
@@ -39,7 +39,7 @@ $(document).ready(function () {
         $(this).closest('.bList-card-container').find('.add-new-card').toggle();
     });
 
-    $('.card-edit-form').on('submit', function () {
+    $('.card-add-form').on('submit', function () {
         return postAndProcessForm('/card/add', $(this), true);
     });
 
@@ -47,13 +47,17 @@ $(document).ready(function () {
         return postAndProcessForm('/card/edit', $(this), true);
     });
 
-    $('li.bList-card').on('click', function () {
-        var labelOfCardName = $(this).find('.card-name-js');
-        if(labelOfCardName.is(":visible")){
-            labelOfCardName.toggle();
-            $(this).find('.card-edit-form-js').toggle();
+    $('li.bList-card').on('dblclick', function () {
+        var $labelOfCardName = $(this).find('.card-name-js'),
+            $editForm = $(this).find('.card-edit-form-js');
+
+
+        /* labelOfCardName will be empty array is user has not admin rights */
+        if ($editForm.length > 0 && $labelOfCardName.is(":visible")) {
+            $labelOfCardName.toggle();
+            $editForm.toggle();
         }
-    })
+    });
 
     $('.card-cancel-edit-js').on('click', function (e) {
         $(this).closest('.card-edit-form-js').toggle();
@@ -61,8 +65,8 @@ $(document).ready(function () {
         return false;
     });
 
-    $('.card-delete-btn').on('click', function(){
-        var form = buildForm('cardId', $(this).attr('data-id'))
+    $('.card-delete-btn').on('click', function () {
+        var form = buildForm('cardId', $(this).attr('data-id'));
         postAndProcessForm('/card/delete', form, true);
     });
 
@@ -70,22 +74,22 @@ $(document).ready(function () {
     $sortable.sortable({
         update: function (event, ui) {
             var $item = ui.item;
-            if($item.hasClass('bList-one')){
-                var $id = $item.attr('id');
+            var $id;
+            if ($item.hasClass('bList-one')) {
+                id = $item.attr('id');
 
                 if ($id !== undefined && $id.indexOf('bList-one') !== -1) {
                     bListSorted();
                 }
             }
             else if ($item.hasClass('bList-card')) {
-                var $id = $item.attr('data-id');
+                $id = $item.attr('data-id');
                 if ($id != undefined) {
                     cardsSorted($item.closest('.bList-card-container'));
                 }
             }
         }
     });
-    $sortable.disableSelection();
 });
 
 function boardAdd() {
@@ -111,7 +115,7 @@ function postAndProcessForm(url, form, reload, callbackOnSuccess) {
                     form[0].reset();
                 }
 
-                if(callbackOnSuccess !== undefined) {
+                if (callbackOnSuccess !== undefined) {
                     callbackOnSuccess();
                 }
 
@@ -170,7 +174,7 @@ function bListRenameOpenClose($a) {
 }
 
 function bListDel($a) {
-    var form = buildForm('bListID', $a.attr('data-id'))
+    var form = buildForm('bListID', $a.attr('data-id'));
     postAndProcessForm('/bList/delete', form, true);
 }
 
@@ -180,7 +184,7 @@ function bListSorted() {
         sortedBLists.push($(this).attr('id').replace(/[^0-9]/g, ''));
     });
 
-    var form = buildForm('sortedBLists', sortedBLists)
+    var form = buildForm('sortedBLists', sortedBLists);
     postAndProcessForm('/bList/sort', form, false);
 }
 
@@ -190,11 +194,11 @@ function cardsSorted(parent) {
         sortedCards.push($(this).attr('data-id'));
     });
 
-    var form = buildForm('sortedCards', sortedCards)
+    var form = buildForm('sortedCards', sortedCards);
     postAndProcessForm('/card/sort', form, false);
 }
 
-function buildForm(name, value){
+function buildForm(name, value) {
     var form = $('<form/>');
     form.append(
         $('<input/>',
