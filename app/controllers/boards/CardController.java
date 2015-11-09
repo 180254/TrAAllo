@@ -3,6 +3,9 @@ package controllers.boards;
 import com.avaje.ebean.Ebean;
 import models.BList;
 import models.Card;
+import models.HistoryItem;
+import models.HistoryItem.Action;
+import models.HistoryItem.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import play.data.Form;
@@ -34,7 +37,9 @@ public class CardController extends Controller {
 
             NewCard newCard = cardForm.get();
             BList bList = BList.find.byId(newCard.listId);
-            Card.create(bList, newCard.name);
+            Card card = Card.create(bList, newCard.name);
+
+            HistoryItem.create(card.list.board, Element.CARD, Action.CREATED, card.name, bList.name);
         }
 
         return ok();
@@ -52,6 +57,8 @@ public class CardController extends Controller {
         if (card == null) {
             return badRequest(Messages.get("page.board.notFound"));
         }
+
+        HistoryItem.create(card.list.board, Element.CARD, Action.RENAMED, card.name, cardForm.get().newName);
 
         card.name = cardForm.get().newName;
         card.save();
@@ -113,6 +120,8 @@ public class CardController extends Controller {
             return unauthorized(Messages.get("page.unauthorized"));
         }
 
+        HistoryItem.create(card.list.board, Element.CARD, Action.DELETED, card.name, null);
+
         card.delete();
         return redirect(controllers.routes.Application.index());
     }
@@ -124,7 +133,7 @@ public class CardController extends Controller {
 
         @Constraints.Required
         @Constraints.MinLength(1)
-        @Constraints.MaxLength(200)
+        @Constraints.MaxLength(100)
         public String name;
     }
 
@@ -139,7 +148,7 @@ public class CardController extends Controller {
 
         @Constraints.Required
         @Constraints.MinLength(1)
-        @Constraints.MaxLength(200)
+        @Constraints.MaxLength(100)
         public String newName;
     }
 }

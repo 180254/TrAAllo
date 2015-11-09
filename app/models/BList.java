@@ -38,5 +38,4 @@ public class BList extends Model {
 
         return bList;
     }
-
 }

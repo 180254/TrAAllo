@@ -1,6 +1,9 @@
 package controllers.boards;
 
 import models.Board;
+import models.HistoryItem;
+import models.HistoryItem.Action;
+import models.HistoryItem.Element;
 import models.User;
 import play.data.Form;
 import play.data.validation.Constraints;
@@ -33,7 +36,8 @@ public class BoardController extends Controller {
                     new ValidationErrorsHelper("modal.board.crud.label.", boardForm).getWithNLAsBR());
 
         } else {
-            Board.create(User.loggedInUser(), boardForm.get().name, boardForm.get().typeCode);
+            Board board = Board.create(User.loggedInUser(), boardForm.get().name, boardForm.get().typeCode);
+            HistoryItem.create(board, Element.BOARD, Action.CREATED, boardForm.get().name, null);
         }
 
         return ok();
@@ -70,8 +74,18 @@ public class BoardController extends Controller {
             return badRequest(Messages.get("page.board.notFound"));
         }
 
+        if (!board.name.equals(boardForm.get().name)) {
+            HistoryItem.create(board, Element.BOARD, Action.RENAMED, board.name, boardForm.get().name);
+        }
+
+        Board.Type newType = Board.Type.fromCode(boardForm.get().typeCode);
+        if (!board.type.equals(newType)) {
+            HistoryItem.create(board, Element.BOARD, Action.TYPECHANGED,
+                    board.type.getTypeName(), newType.getTypeName());
+        }
+
         board.name = boardForm.get().name;
-        board.type = Board.Type.fromCode(boardForm.get().typeCode);
+        board.type = newType;
         board.save();
 
         return ok();
@@ -93,6 +107,8 @@ public class BoardController extends Controller {
         if (!checkBoardOwnerValidator.isValid(boardObj.id)) {
             return unauthorized(Messages.get("page.unauthorized"));
         }
+
+        HistoryItem.create(boardObj, Element.BOARD, Action.DELETED, boardObj.name, null);
 
         boardObj.delete();
         return redirect(controllers.routes.Application.index());

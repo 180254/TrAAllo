@@ -4,6 +4,7 @@ import com.avaje.ebean.Model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
@@ -22,6 +23,10 @@ public class Board extends Model {
     @OrderBy("sortPosition ASC, id ASC")
     @JsonIgnore
     public List<BList> bLists;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "board")
+    @JsonIgnore
+    public List<HistoryItem> historyItems;
 
     protected Board() {
     }
@@ -45,24 +50,35 @@ public class Board extends Model {
         return type == Board.Type.Private;
     }
 
-    public enum Type {
-        Public(0),
-        Private(1),
-        Team(2);
+    public List<HistoryItem> getHistoryItems(int count) {
+        return HistoryItem.find.where().eq("board", this).order().desc("id").setMaxRows(count).findList();
+    }
 
+    public enum Type {
+        Public("Public", 0),
+        Private("Private", 1),
+        Team("Team", 2);
+
+        private String typeName;
         int code;
 
-        Type(int code) {
+        Type(String typeName, int code) {
+            this.typeName = typeName;
             this.code = code;
         }
 
+        @NotNull
         public static Board.Type fromCode(int code) {
             for (Board.Type type : Board.Type.values()) {
                 if (type.getCode() == code) {
                     return type;
                 }
             }
-            return null;
+            throw new RuntimeException();
+        }
+
+        public String getTypeName() {
+            return typeName;
         }
 
         public int getCode() {

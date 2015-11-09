@@ -3,6 +3,9 @@ package controllers.boards;
 import com.avaje.ebean.Ebean;
 import models.BList;
 import models.Board;
+import models.HistoryItem;
+import models.HistoryItem.Action;
+import models.HistoryItem.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import play.data.Form;
@@ -37,7 +40,9 @@ public class BListController extends Controller {
 
             NewBList newBList = boardForm.get();
             Board board = Board.find.byId(newBList.boardID);
-            BList.create(board, newBList.name);
+            BList bList = BList.create(board, newBList.name);
+
+            HistoryItem.create(bList.board, Element.BLIST, Action.CREATED, bList.name, null);
         }
 
         return ok();
@@ -57,6 +62,7 @@ public class BListController extends Controller {
             return badRequest(Messages.get("page.board.notFound"));
         }
 
+        HistoryItem.create(bList.board, Element.BLIST, Action.RENAMED, bList.name, bListForm.get().newName);
 
         bList.name = bListForm.get().newName;
         bList.save();
@@ -80,6 +86,8 @@ public class BListController extends Controller {
         if (!checkBListOwnerValidator.isValid(bListObj.id)) {
             return unauthorized(Messages.get("page.unauthorized"));
         }
+
+        HistoryItem.create(bListObj.board, Element.BLIST, Action.DELETED, bListObj.name, null);
 
         bListObj.delete();
         return redirect(controllers.routes.Application.index());

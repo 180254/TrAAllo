@@ -150,7 +150,7 @@ nav, footer, .footer-copyright, .other-nav ul, .other-nav li {
 }
 
 .bList-container {
-    padding: 15px;
+    padding: 10px 10px 0 15px;
 }
 
 .bList-one {
@@ -279,5 +279,37 @@ nav, footer, .footer-copyright, .other-nav ul, .other-nav li {
 }
 
 .card-delete-btn {
-    padding: 0px !important;
+    padding: 0 !important;
 }
+
+.card-name-js {
+    color: white;
+}
+
+.history-right {
+    background-color: gray;
+    float: right;
+    padding: 0.5em;
+    width: 300px;
+}
+
+.history-item {
+    background-color: rgba(121, 232, 192, 0.65);
+    border-top: 1px solid red;
+    font-size: 0.7em;
+    padding: 0.3em;
+}
+
+.history-item:nth-of-type(1) {
+    border: none !important;
+}
+
+.history-date {
+    font-size: 0.9em;
+    color: #130D15;
+}
+
+.history-text {
+    font-family: 'Trebuchet MS', Helvetica, sans-serif;
+}
+

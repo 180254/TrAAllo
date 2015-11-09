@@ -1,0 +1,12 @@
+@(board: Board)
+
+<div class="history-right">
+
+    @for( historyItem <- board.getHistoryItems(10)) {
+        <div class="history-item">
+            <span class="history-date">(@historyItem.dateTime)</span> <br/>
+            <span class="history-text">@historyItem.toString</span>
+        </div>
+    }
+
+</div>
