@@ -1,4 +1,3 @@
-aa = [];
 $(document).ready(function () {
     $('.modal-trigger').leanModal();
 
@@ -75,10 +74,12 @@ $(document).ready(function () {
     $sortable.sortable({
         update: function (event, ui) {
 
-
             // lets do magic !
-            var check1 = event.target.id === "bList-list",
-                check2 = event.target.contains(event.toElement),
+            var target = event.target,
+                toElement = event.toElement || event.originalEvent.target,
+
+                check1 = target.id === "bList-list",
+                check2 = target.contains(toElement),
                 check3 = ui.sender == null,
 
                 listMoved = (check1 && check2 && check3),
@@ -96,10 +97,10 @@ $(document).ready(function () {
             if (cardSorted) cardsSorted(ui.item.closest('.bList-card-container'));
 
             if (cardMoved1) {
-                var idBList1 = event.target.closest('li').id.replace(/[^0-9]/g, ''),
-                    idBList2 = event.toElement.closest('ul').closest('li').id.replace(/[^0-9]/g, '');
+                var idBList1 = $(target).closest('.bList-one').attr('id').replace(/[^0-9]/g, ''),
+                    idBList2 = $(toElement).closest('.bList-one').attr('id').replace(/[^0-9]/g, '');
 
-                console.log('blists id: ' + idBList1 + ' ' + idBList2)
+                console.log('blists id: ' + idBList1 + ' ' + idBList2);
                 // TODO
             }
         }
