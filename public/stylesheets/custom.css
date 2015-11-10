@@ -313,3 +313,7 @@ nav, footer, .footer-copyright, .other-nav ul, .other-nav li {
     font-family: 'Trebuchet MS', Helvetica, sans-serif;
 }
 
+.bList-cards-list {
+    padding-bottom: 1em;
+}
+

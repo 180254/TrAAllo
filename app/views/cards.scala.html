@@ -4,8 +4,12 @@
     if(hasEditRights) "sortable" else ""
 }
 
+@sortable2() = @{
+    if(hasEditRights) "sortable2" else ""
+}
+
 <div class="bList-card-container">
-    <ul class="bList-cards-list @sortable">
+    <ul class="bList-cards-list @sortable @sortable2">
         @for(card <- bList.cards) {
             <li class="bList-card ui-state-default" data-id="@card.id">
                 <a class="card-name-js">@card.name</a>

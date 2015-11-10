@@ -1,3 +1,4 @@
+aa = [];
 $(document).ready(function () {
     $('.modal-trigger').leanModal();
 
@@ -73,23 +74,40 @@ $(document).ready(function () {
     var $sortable = $('.sortable');
     $sortable.sortable({
         update: function (event, ui) {
-            var $item = ui.item;
-            var $id;
-            if ($item.hasClass('bList-one')) {
-                id = $item.attr('id');
 
-                if ($id !== undefined && $id.indexOf('bList-one') !== -1) {
-                    bListSorted();
-                }
-            }
-            else if ($item.hasClass('bList-card')) {
-                $id = $item.attr('data-id');
-                if ($id != undefined) {
-                    cardsSorted($item.closest('.bList-card-container'));
-                }
+
+            // lets do magic !
+            var check1 = event.target.id === "bList-list",
+                check2 = event.target.contains(event.toElement),
+                check3 = ui.sender == null,
+
+                listMoved = (check1 && check2 && check3),
+                cardSorted = (!check1 && check2 && check3),
+
+                cardMoved1 = (!check1 && !check2 && check3),
+                cardMoved2 = (!check1 && check2 && !check3);
+            // end of magic
+
+            if (listMoved) console.log('list moved');
+            if (cardSorted) console.log('card sorted');
+            if (cardMoved1) console.log('card moved');
+
+            if (listMoved) bListSorted();
+            if (cardSorted) cardsSorted(ui.item.closest('.bList-card-container'));
+
+            if (cardMoved1) {
+                var idBList1 = event.target.closest('li').id.replace(/[^0-9]/g, ''),
+                    idBList2 = event.toElement.closest('ul').closest('li').id.replace(/[^0-9]/g, '');
+
+                console.log('blists id: ' + idBList1 + ' ' + idBList2)
+                // TODO
             }
         }
     });
+
+    $('.sortable2').sortable({
+        connectWith: '.sortable2'
+    })
 });
 
 function boardAdd() {
@@ -101,6 +119,8 @@ function boardEdit() {
 }
 
 function postAndProcessForm(url, form, reload, callbackOnSuccess) {
+    console.log(form.serialize());
+
     $.ajax({
         type: 'POST',
         url: url,
