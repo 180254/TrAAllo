@@ -98,9 +98,11 @@ $(document).ready(function () {
 
             if (cardMoved1) {
                 var idBList1 = $(target).closest('.bList-one').attr('id').replace(/[^0-9]/g, ''),
-                    idBList2 = $(toElement).closest('.bList-one').attr('id').replace(/[^0-9]/g, '');
+                    idBList2 = $(toElement).closest('.bList-one').attr('id').replace(/[^0-9]/g, ''),
+                    whichCard = $(toElement).closest('.bList-card').attr('data-id');
 
-                console.log('blists id: ' + idBList1 + ' ' + idBList2);
+                console.log('(card.id = ' + whichCard + ') moved from ' +
+                    '(bList.id = ' + idBList1 + ') to (bList.id = ' + idBList2 + ')');
                 // TODO
             }
         }
