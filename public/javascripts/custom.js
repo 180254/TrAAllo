@@ -97,13 +97,10 @@ $(document).ready(function () {
             if (cardSorted) cardsSorted(ui.item.closest('.bList-card-container'));
 
             if (cardMoved1) {
-                var idBList1 = $(target).closest('.bList-one').attr('id').replace(/[^0-9]/g, ''),
-                    idBList2 = $(toElement).closest('.bList-one').attr('id').replace(/[^0-9]/g, ''),
+                var $bList1 = $(target).closest('.bList-one'),
+                    $bList2 = $(toElement).closest('.bList-one'),
                     whichCard = $(toElement).closest('.bList-card').attr('data-id');
-
-                console.log('(card.id = ' + whichCard + ') moved from ' +
-                    '(bList.id = ' + idBList1 + ') to (bList.id = ' + idBList2 + ')');
-                // TODO
+                cardMoved($bList1, $bList2, whichCard);
             }
         }
     });
@@ -211,18 +208,42 @@ function bListSorted() {
     postAndProcessForm('/bList/sort', form, false);
 }
 
-function cardsSorted(parent) {
+function sortCardUtil(parent) {
     var sortedCards = [];
     parent.find('.bList-cards-list').children('li').each(function () {
         sortedCards.push($(this).attr('data-id'));
     });
+    return sortedCards;
+}
 
-    var form = buildForm('sortedCards', sortedCards);
+function cardsSorted(parent) {
+    var form = buildForm('sortedCards', sortCardUtil(parent));
     postAndProcessForm('/card/sort', form, false);
+}
+
+function cardMoved($bList1, $bList2, whichCard) {
+    var $bList1Container = $bList1.find('.bList-card-container'),
+        $bList2Container = $bList2.find('.bList-card-container'),
+        bList1ID = $bList1.attr('id').replace(/[^0-9]/g, ''),
+        bList2ID = $bList2.attr('id').replace(/[^0-9]/g, ''),
+        form = $('<form/>');
+
+    buildInput(form, 'sortedCards1', sortCardUtil($bList1Container));
+    buildInput(form, 'sortedCards2', sortCardUtil($bList2Container));
+    buildInput(form, 'list1IDFrom', bList1ID);
+    buildInput(form, 'list2IDTo', bList2ID);
+    buildInput(form, 'movedCardID', whichCard);
+
+    postAndProcessForm('/bList/movedCard', form, true);
 }
 
 function buildForm(name, value) {
     var form = $('<form/>');
+    buildInput(form, name, value);
+    return form;
+}
+
+function buildInput(form, name, value) {
     form.append(
         $('<input/>',
             {
@@ -231,5 +252,4 @@ function buildForm(name, value) {
             }
         )
     );
-    return form;
 }

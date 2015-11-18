@@ -21,11 +21,12 @@ POST        /bList/add               controllers.boards.BListController.add()
 POST        /bList/edit              controllers.boards.BListController.edit()
 POST        /bList/delete            controllers.boards.BListController.delete()
 POST        /bList/sort              controllers.boards.BListController.sort()
+POST        /bList/movedCard         controllers.boards.BListController.moveCard()
 
 POST        /card/add                controllers.boards.CardController.add()
 POST        /card/sort               controllers.boards.CardController.sort()
 POST        /card/edit               controllers.boards.CardController.edit()
-POST        /card/delete               controllers.boards.CardController.delete()
+POST        /card/delete             controllers.boards.CardController.delete()
 
 GET         /rest/users              controllers.rest.RestUser.list()
 GET         /rest/users/clean        controllers.rest.RestUser.clean()

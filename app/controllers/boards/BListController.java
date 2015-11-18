@@ -3,6 +3,7 @@ package controllers.boards;
 import com.avaje.ebean.Ebean;
 import models.BList;
 import models.Board;
+import models.Card;
 import models.HistoryItem;
 import models.HistoryItem.Action;
 import models.HistoryItem.Element;
@@ -21,6 +22,8 @@ import utils.validators.CheckBListOwnerValidator;
 import utils.validators.CheckBoardOwnerValidator;
 import utils.validators.CheckStringIsLongValidator;
 import utils.validators.UniqueBListNameValidator;
+
+import java.util.stream.Stream;
 
 public class BListController extends Controller {
 
@@ -121,6 +124,64 @@ public class BListController extends Controller {
             BList bList = BList.find.byId(id);
             bList.sortPosition = sortPos;
             bList.save();
+
+            sortPos++;
+        }
+
+        Ebean.commitTransaction();
+        Ebean.endTransaction();
+        return ok();
+    }
+
+    @Security.Authenticated(LoggedInAuthenticator.class)
+    public static Result moveCard() {
+        Ebean.beginTransaction();
+
+        String[] sortedCards1 = Form.form().bindFromRequest().get("sortedCards1").split(",");
+        String[] sortedCards2 = Form.form().bindFromRequest().get("sortedCards2").split(",");
+        String[] sortedCards = Stream.of(sortedCards1, sortedCards2).flatMap(Stream::of).toArray(String[]::new);
+        String list1IDFrom = Form.form().bindFromRequest().get("list1IDFrom");
+        String list2IDTo = Form.form().bindFromRequest().get("list2IDTo");
+        String movedCardID = Form.form().bindFromRequest().get("movedCardID");
+
+        Logger logger = LoggerFactory.getLogger(BListController.class);
+        logger.info(sortedCards.length + "");
+        logger.info(sortedCards1.length + "");
+        logger.info(sortedCards2.length + "");
+
+        BList bList1 = BList.find.byId(Long.valueOf(list1IDFrom));
+        BList bList2 = BList.find.byId(Long.valueOf(list2IDTo));
+        Card movedCard = Card.find.byId(Long.valueOf(movedCardID));
+
+        if (!bList1.cards.contains(movedCard)) {
+            Ebean.rollbackTransaction();
+            return badRequest(Messages.get("page.badRequest"));
+        }
+
+        if (!checkBListOwnerValidator.isValid(Long.valueOf(list1IDFrom))
+                || !checkBListOwnerValidator.isValid(Long.valueOf(list2IDTo))) {
+            Ebean.rollbackTransaction();
+            return unauthorized(Messages.get("page.unauthorized"));
+        }
+
+        movedCard.list = bList2;
+        movedCard.save();
+
+        long sortPos = 0;
+        for (String idString : sortedCards) {
+            if (idString.isEmpty()) {
+                continue;
+            }
+            Long id = Long.valueOf(idString);
+            Card card = Card.find.byId(id);
+
+            if (!bList1.cards.contains(card) && !bList2.cards.contains(card)) {
+                Ebean.rollbackTransaction();
+                return badRequest(Messages.get("page.badRequest"));
+            }
+
+            card.sortPosition = sortPos;
+            card.save();
 
             sortPos++;
         }
