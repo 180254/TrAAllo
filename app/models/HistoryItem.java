@@ -5,6 +5,7 @@ import play.i18n.Messages;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 public class HistoryItem extends Model {
@@ -109,6 +110,10 @@ public class HistoryItem extends Model {
                         param2);
         }
         return "";
+    }
+
+    public String getFormattedDateTime() {
+        return DateTimeFormatter.ofPattern("yyy-MM-dd hh:mm:ss").format(dateTime);
     }
 }
 
