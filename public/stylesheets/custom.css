@@ -294,7 +294,7 @@ nav, footer, .footer-copyright, .other-nav ul, .other-nav li {
 }
 
 .history-item {
-    background-color: rgba(121, 232, 192, 0.65);
+    background-color: hsla(54, 100%, 62%, 0.9);
     border-top: 1px solid red;
     font-size: 0.7em;
     padding: 0.3em;
