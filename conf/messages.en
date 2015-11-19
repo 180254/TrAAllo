@@ -63,6 +63,14 @@ page.board.card.add.label.name=Card name
 page.board.card.add.button.submit=Save
 page.board.card.edit.button.submit=Rename
 
+card.modal.close.button=Close
+card.modal.comments.header=Comments
+
+card.modal.attachment.header=Attachments
+card.modal.attachment.file=Select file
+card.modal.attachment.submit=Add selected file
+card.modal.attachment.not.found=Attachment not found
+
 history.with.name=with name
 history.created=created
 history.in.bList=in BList
@@ -121,3 +129,6 @@ error.expected.enumstring=String value expected
 error.path.empty=Empty path
 error.path.missing=Missing path
 error.path.result.multiple=Multiple results for the given path
+
+error.cannot.upload.file=Internal error, file upload failed
+error.cannot.download.file=Internal error, file download failed

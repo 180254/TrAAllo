@@ -1,0 +1,34 @@
+@(card: Card, hasEditRights: Boolean)
+
+<h6>@Messages("card.modal.attachment.header")</h6>
+<hr/>
+
+<ul>
+@for( attachment <- card.attachments) {
+    <li data-id="@attachment.id">
+        @if(hasEditRights) {
+            <a href="#" class="attachment-delete">[X]</a>
+        }
+
+    <a target="_blank" href="@controllers.boards.routes.AttachmentController.download(attachment.id)">
+    @attachment.fileName
+    </a>
+    </li>
+}
+</ul>
+@if(hasEditRights) {
+    @helper.form(action = controllers.boards.routes.AttachmentController.add,
+        'class -> "modal-add-attachment",
+        'method -> "post", 'enctype -> "multipart/form-data") {
+
+        <input type="hidden" name="cardId" value="@card.id"/>
+
+
+        <div>
+            <label for="file">@Messages("card.modal.attachment.file")</label>
+            <input name="file" id="file" type="file"/>
+            <input type="submit" value="@Messages("card.modal.attachment.submit")">
+        </div>
+
+    }
+}

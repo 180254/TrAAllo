@@ -317,3 +317,10 @@ nav, footer, .footer-copyright, .other-nav ul, .other-nav li {
     padding-bottom: 1em;
 }
 
+.card-model-header {
+    margin-bottom: 40px;
+}
+
+.attachment-delete {
+    color: black;
+}

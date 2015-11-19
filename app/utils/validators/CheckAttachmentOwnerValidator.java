@@ -1,19 +1,19 @@
 package utils.validators;
 
-import models.BList;
+import models.Attachment;
 import models.User;
 import play.data.validation.Constraints;
 import play.libs.F;
 
 import java.util.Objects;
 
-public class CheckBListOwnerValidator extends Constraints.Validator<Long> {
+public class CheckAttachmentOwnerValidator extends Constraints.Validator<Long> {
 
     @Override
-    public boolean isValid(Long bListID) {
-        return bListID == null ||
+    public boolean isValid(Long attID) {
+        return attID == null ||
                 (User.isLoggedIn() &&
-                        Objects.equals(BList.find.byId(bListID).board.owner.id, User.loggedInUser().id));
+                        Objects.equals(Attachment.find.byId(attID).card.list.board.owner.id, User.loggedInUser().id));
 
     }
 

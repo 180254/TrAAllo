@@ -1,0 +1,22 @@
+@(card: Card, hasEditRights: Boolean)
+
+<div id="card-modal-@card.id" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <h5 class="card-model-header">@card.name</h5>
+
+        <div class="card-modal-sector">
+            <h6>@Messages("card.modal.comments.header")</h6>
+            <hr/>
+        </div>
+
+        <div class="card-modal-sector">
+        @attachment(card, hasEditRights)
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">
+        @Messages("card.modal.close.button")
+        </a>
+    </div>
+</div>

@@ -11,8 +11,9 @@ public class CheckCardOwnerValidator extends Constraints.Validator<Long> {
 
     @Override
     public boolean isValid(Long cardId) {
-        return cardId == null
-                || Objects.equals(Card.find.byId(cardId).list.board.owner.id, User.loggedInUser().id);
+        return cardId == null ||
+                (User.isLoggedIn() &&
+                        Objects.equals(Card.find.byId(cardId).list.board.owner.id, User.loggedInUser().id));
     }
 
     @Override

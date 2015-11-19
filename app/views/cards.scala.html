@@ -12,7 +12,8 @@
     <ul class="bList-cards-list @sortable @sortable2">
         @for(card <- bList.cards) {
             <li class="bList-card ui-state-default" data-id="@card.id">
-                <a class="card-name-js">@card.name</a>
+                <a class="modal-trigger waves-effect waves-light card-name-js" href="#card-modal-@card.id">@card.name</a>
+
                 @if(hasEditRights) {
                     <form class="card-edit-form card-edit-form-js pure-form" style="display: none">
                         <input type="hidden" name="listId" value="@bList.id"/>
@@ -32,6 +33,8 @@
                     </form>
                 }
             </li>
+
+            @cardmodal(card, hasEditRights)
         }
     </ul>
     @if(hasEditRights){

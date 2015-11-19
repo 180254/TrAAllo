@@ -107,8 +107,87 @@ $(document).ready(function () {
 
     $('.sortable2').sortable({
         connectWith: '.sortable2'
-    })
+    });
+
+    initAttachmentDelete($('.attachment-delete'));
+    initAttachmentUpload();
 });
+
+//<li data-id="@attachment.id">
+//    <a href="#" class="attachment-delete">[X]</a>
+//    <a target="_blank" href="@controllers.boards.routes.AttachmentController.download(attachment.id)">
+//@attachment.fileName
+//</a>
+//</li>
+function initAttachmentUpload() {
+    $('.modal-add-attachment').each(function () {
+        $(this).on('submit', function (event) {
+            event.preventDefault();
+
+            var dis = $(this);
+            var formData = new FormData($(this)[0]);
+
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr('action'),
+                data: formData,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    var dataArr = data.split("\n");
+
+                    var $li = $('<li/>').attr('data-id', dataArr[0])
+
+                        .append($('<a>', {
+                            href: '#',
+                            class: 'attachment-delete'
+                        }).append('[X]'))
+
+                        .append(' ')
+
+                        .append($('<a>', {
+                            target: '_blank',
+                            href: '/attachment/download?id=' + dataArr[0]
+                        }).append(dataArr[1]))
+
+                        .appendTo(dis.prev());
+
+                    Materialize.toast('Successfully done!', 1000, 'succ-done');
+                    initAttachmentDelete($li.find('.attachment-delete'));
+                },
+                error: function (xhr) {
+                    Materialize.toast(xhr.responseText, 1500);
+                }
+
+
+            });
+        });
+    })
+}
+
+function initAttachmentDelete($element) {
+    $element.click(function (event) {
+        event.preventDefault();
+
+        var $li = $(this).closest('li'),
+            attachmentid = $li.attr('data-id');
+
+        $.ajax({
+            type: 'POST',
+            url: '/attachment/delete',
+            data: 'id=' + attachmentid,
+            success: function () {
+                Materialize.toast('Successfully done!', 1000, 'succ-done');
+                $li.remove();
+            },
+            error: function (xhr) {
+                Materialize.toast(xhr.responseText, 1500);
+            }
+        });
+    });
+}
 
 function boardAdd() {
     postAndProcessForm('/board/add', $('#new-board-modal'), true)

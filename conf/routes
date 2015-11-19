@@ -3,33 +3,37 @@
 # ~~~~
 
 # Home page
-GET         /                        controllers.Application.index()
+GET         /                           controllers.Application.index()
 
-GET         /login                   controllers.authentication.AuthLogin.login()
-POST        /login                   controllers.authentication.AuthLogin.authenticate()
-GET         /logout                  controllers.authentication.AuthLogout.logout()
-GET         /signup                  controllers.authentication.AuthSignUp.signup()
-POST        /signup                  controllers.authentication.AuthSignUp.register()
-GET         /welcome                 controllers.authentication.AuthSignUp.welcome()
+GET         /login                      controllers.authentication.AuthLogin.login()
+POST        /login                      controllers.authentication.AuthLogin.authenticate()
+GET         /logout                     controllers.authentication.AuthLogout.logout()
+GET         /signup                     controllers.authentication.AuthSignUp.signup()
+POST        /signup                     controllers.authentication.AuthSignUp.register()
+GET         /welcome                    controllers.authentication.AuthSignUp.welcome()
 
-GET         /board/show/:id          controllers.boards.BoardController.show(id: Long)
-POST        /board/add               controllers.boards.BoardController.add()
-POST        /board/edit              controllers.boards.BoardController.edit()
-POST        /board/delete            controllers.boards.BoardController.delete()
+GET         /board/show/:id             controllers.boards.BoardController.show(id: Long)
+POST        /board/add                  controllers.boards.BoardController.add()
+POST        /board/edit                 controllers.boards.BoardController.edit()
+POST        /board/delete               controllers.boards.BoardController.delete()
 
-POST        /bList/add               controllers.boards.BListController.add()
-POST        /bList/edit              controllers.boards.BListController.edit()
-POST        /bList/delete            controllers.boards.BListController.delete()
-POST        /bList/sort              controllers.boards.BListController.sort()
-POST        /bList/movedCard         controllers.boards.BListController.moveCard()
+POST        /bList/add                  controllers.boards.BListController.add()
+POST        /bList/edit                 controllers.boards.BListController.edit()
+POST        /bList/delete               controllers.boards.BListController.delete()
+POST        /bList/sort                 controllers.boards.BListController.sort()
+POST        /bList/movedCard            controllers.boards.BListController.moveCard()
 
-POST        /card/add                controllers.boards.CardController.add()
-POST        /card/sort               controllers.boards.CardController.sort()
-POST        /card/edit               controllers.boards.CardController.edit()
-POST        /card/delete             controllers.boards.CardController.delete()
+POST        /card/add                   controllers.boards.CardController.add()
+POST        /card/sort                  controllers.boards.CardController.sort()
+POST        /card/edit                  controllers.boards.CardController.edit()
+POST        /card/delete                controllers.boards.CardController.delete()
 
-GET         /rest/users              controllers.rest.RestUser.list()
-GET         /rest/users/clean        controllers.rest.RestUser.clean()
+POST        /attachment/add             controllers.boards.AttachmentController.add()
+GET         /attachment/download        controllers.boards.AttachmentController.download(id: Long)
+POST        /attachment/delete          controllers.boards.AttachmentController.delete()
+
+GET         /rest/users                 controllers.rest.RestUser.list()
+GET         /rest/users/clean           controllers.rest.RestUser.clean()
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /*file                   controllers.Assets.versioned(path="/public", file: Asset)
+GET         /*file                      controllers.Assets.versioned(path="/public", file: Asset)
