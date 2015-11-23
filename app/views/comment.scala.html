@@ -1,0 +1,30 @@
+@(card: Card, hasEditRights: Boolean)
+
+@if(hasEditRights) {
+    @helper.form(action = controllers.boards.routes.CommentController.add,
+        'class -> "modal-add-comment",
+        'method -> "post", 'enctype -> "multipart/form-data") {
+
+        <input type="hidden" name="cardId" value="@card.id"/>
+
+        <div>
+            <label for="commentText">@Messages("card.modal.comments.writeComment")</label>
+            <input name="commentText" id="commentText" type="text"/>
+            <button class=" waves-effect waves-green btn-flat" type="submit" name="action">
+                @Messages("card.modal.comments.submit")
+            </button>
+        </div>
+    }
+}
+
+<h6>@Messages("card.modal.comments.header")</h6>
+<hr/>
+
+<ul class="js-comments">
+@for( comment <- card.comments) {
+    <li data-id="@comment.id">
+        @comment.getFormattedDateTime <br/>
+        @comment.author:  @comment.text <br/>
+    </li>
+}
+</ul>

@@ -111,6 +111,7 @@ $(document).ready(function () {
 
     initAttachmentDelete($('.attachment-delete'));
     initAttachmentUpload();
+    initComments();
 });
 
 //<li data-id="@attachment.id">
@@ -187,6 +188,35 @@ function initAttachmentDelete($element) {
             }
         });
     });
+}
+
+function initComments() {
+    $('.modal-add-comment').each(function () {
+        $(this).on('submit', function (event) {
+            event.preventDefault();
+
+            var comments = $(this).closest(".js-card-modal-content").find("ul.js-comments");
+            var input = $(this).closest(".js-card-modal-content").find("#commentText");
+
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr('action'),
+                data: $(this).serialize(),
+
+                success: function (data) {
+                    var comment = data;
+                    var row = '<li data-id="' + comment.id + '">' + comment.formattedDateTime + "<br/>" + comment.author + ": " + comment.text + '</li>';
+                    comments.prepend(row);
+
+                    input.val('');
+                    Materialize.toast('Successfully done!', 1000, 'succ-done');
+                },
+                error: function (xhr) {
+                    Materialize.toast(xhr.responseText, 1500);
+                }
+            });
+        });
+    })
 }
 
 function boardAdd() {

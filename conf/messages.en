@@ -65,6 +65,9 @@ page.board.card.edit.button.submit=Rename
 
 card.modal.close.button=Close
 card.modal.comments.header=Comments
+card.modal.comments.writeComment=Write a comment...
+card.modal.comments.submit=Add comment
+card.modal.comments.not.found=Comment not found
 
 card.modal.attachment.header=Attachments
 card.modal.attachment.file=Select file

@@ -24,6 +24,10 @@ public class Card extends Model {
     @JsonIgnore
     public List<Attachment> attachments;
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "card")
+    @JsonIgnore
+    public List<Comment> comments;
+
     protected Card() {
     }
 

@@ -1,16 +1,15 @@
 @(card: Card, hasEditRights: Boolean)
 
 <div id="card-modal-@card.id" class="modal modal-fixed-footer">
-    <div class="modal-content">
+    <div class="modal-content js-card-modal-content">
         <h5 class="card-model-header">@card.name</h5>
 
         <div class="card-modal-sector">
-            <h6>@Messages("card.modal.comments.header")</h6>
-            <hr/>
+            @comment(card, hasEditRights)
         </div>
 
         <div class="card-modal-sector">
-        @attachment(card, hasEditRights)
+            @attachment(card, hasEditRights)
         </div>
 
     </div>
