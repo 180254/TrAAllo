@@ -205,7 +205,7 @@ function initComments() {
 
                 success: function (data) {
                     var comment = data;
-                    var row = '<li data-id="' + comment.id + '">' + comment.formattedDateTime + "<br/>" + comment.author + ": " + comment.text + '</li>';
+                    var row = '<li data-id="' + comment.id + '" class="card-modal-comment">' + comment.formattedDateTime + "<br/>" + comment.author + ": " + comment.text + '</li>';
                     comments.prepend(row);
 
                     input.val('');

@@ -324,3 +324,11 @@ nav, footer, .footer-copyright, .other-nav ul, .other-nav li {
 .attachment-delete {
     color: black;
 }
+
+.card-modal-sector {
+    margin-top: 50px;
+}
+
+.card-modal-comment {
+    margin-top: 10px;
+}
