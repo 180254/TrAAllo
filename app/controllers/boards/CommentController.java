@@ -1,7 +1,5 @@
 package controllers.boards;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.Card;
 import models.Comment;
 import models.User;
@@ -11,12 +9,14 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import utils.validators.CheckCardOwnerValidator;
+import utils.validators.CheckCommentOwnerValidator;
 import utils.validators.CheckStringIsLongValidator;
 
 public class CommentController extends Controller {
 
     private static CheckStringIsLongValidator checkStringIsLongValidator = new CheckStringIsLongValidator();
     private static CheckCardOwnerValidator checkCardOwnerValidator = new CheckCardOwnerValidator();
+    private static CheckCommentOwnerValidator checkCommentOwnerValidator = new CheckCommentOwnerValidator();
 
     public static Result add() {
 
@@ -39,5 +39,25 @@ public class CommentController extends Controller {
         Comment comment = Comment.create(card, User.loggedInUser().username,text);
 
         return ok(Json.toJson(comment));
+    }
+
+    public static Result delete() {
+        String commentIdasString = Form.form().bindFromRequest().get("commentId");
+        if (!checkStringIsLongValidator.isValid(commentIdasString)) {
+            return badRequest(Messages.get("page.badRequest"));
+        }
+
+        Long id = Long.parseLong(commentIdasString);
+        Comment comment = Comment.find.byId(id);
+
+        if (comment == null) {
+            return badRequest(Messages.get("card.modal.comments.not.found"));
+        }
+        if (!checkCommentOwnerValidator.isValid(comment.id)) {
+            return unauthorized(Messages.get("page.unauthorized"));
+        }
+
+        comment.delete();
+        return ok();
     }
 }

@@ -197,6 +197,9 @@ function initComments() {
 
             var comments = $(this).closest(".js-card-modal-content").find("ul.js-comments");
             var input = $(this).closest(".js-card-modal-content").find("#commentText");
+            var cardId = $(this).closest(".js-card-modal-content").find("input[name='cardId']").val();
+
+            if(!input.val()) return;
 
             $.ajax({
                 type: 'POST',
@@ -205,7 +208,9 @@ function initComments() {
 
                 success: function (data) {
                     var comment = data;
-                    var row = '<li data-id="' + comment.id + '" class="card-modal-comment">' + comment.formattedDateTime + "<br/>" + comment.author + ": " + comment.text + '</li>';
+                    var row = '<li data-id="' + comment.id + '" class="card-modal-comment js-comment">'
+                        + comment.text + "<br/>" + comment.author + " &nbsp;&nbsp;&nbsp; " + comment.formattedDateTime +
+                        '&nbsp;&nbsp;&nbsp; <a class="delete-comment" href="" onclick="deleteComment(this, ' + cardId + ', ' + comment.id + '); return false;">Delete</a></li>';
                     comments.prepend(row);
 
                     input.val('');
@@ -217,6 +222,25 @@ function initComments() {
             });
         });
     })
+}
+
+function deleteComment(sender, cardId, commentId){
+    if(!cardId || !commentId) return;
+
+    $.ajax({
+        type: 'POST',
+        url: '/comment/delete',
+        data: { cardId: cardId, commentId: commentId },
+
+        success: function (data) {
+            $(sender).closest(".js-comment").remove();
+
+            Materialize.toast('Successfully done!', 1000, 'succ-done');
+        },
+        error: function (xhr) {
+            Materialize.toast(xhr.responseText, 1500);
+        }
+    });
 }
 
 function boardAdd() {

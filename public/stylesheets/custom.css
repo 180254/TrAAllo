@@ -332,3 +332,7 @@ nav, footer, .footer-copyright, .other-nav ul, .other-nav li {
 .card-modal-comment {
     margin-top: 10px;
 }
+
+.delete-comment:hover {
+    text-decoration: underline;
+}

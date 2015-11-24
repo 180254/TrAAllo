@@ -33,6 +33,8 @@ GET         /attachment/download        controllers.boards.AttachmentController.
 POST        /attachment/delete          controllers.boards.AttachmentController.delete()
 
 POST        /comment/add             controllers.boards.CommentController.add()
+POST        /comment/delete             controllers.boards.CommentController.delete()
+
 
 GET         /rest/users                 controllers.rest.RestUser.list()
 GET         /rest/users/clean           controllers.rest.RestUser.clean()

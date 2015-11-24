@@ -21,10 +21,12 @@
 <hr/>
 
 <ul class="js-comments">
-@for( comment <- card.comments) {
-    <li data-id="@comment.id" class="card-modal-comment">
-        @comment.getFormattedDateTime <br/>
-        @comment.author:  @comment.text
+@for( comment <- card.comments.sortWith((x, y) => (x.dateTime.isAfter(y.dateTime)))) {
+    <li data-id="@comment.id" class="card-modal-comment js-comment">
+        @comment.text <br/>
+        @comment.author &nbsp;&nbsp;&nbsp; @comment.getFormattedDateTime
+        &nbsp;&nbsp;&nbsp;
+        <a class="delete-comment" href="" onclick="deleteComment(this, @card.id,@comment.id); return false;">Delete</a>
     </li>
 }
 </ul>
