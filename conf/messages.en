@@ -68,6 +68,9 @@ card.modal.comments.header=Comments
 card.modal.comments.writeComment=Write a comment...
 card.modal.comments.submit=Add comment
 card.modal.comments.not.found=Comment not found
+card.modal.comments.save.button=Save
+card.modal.comments.delete.button=Delete
+card.modal.comments.edit.button=Edit
 
 card.modal.attachment.header=Attachments
 card.modal.attachment.file=Select file

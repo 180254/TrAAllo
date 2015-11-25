@@ -6,7 +6,6 @@
         'method -> "post", 'enctype -> "multipart/form-data") {
 
         <input type="hidden" name="cardId" value="@card.id"/>
-
         <div class="input-field">
             <label for="commentText">@Messages("card.modal.comments.writeComment")</label>
             <input name="commentText" id="commentText" type="text" autofocus="autofocus"/>
@@ -23,10 +22,24 @@
 <ul class="js-comments">
 @for( comment <- card.comments.sortWith((x, y) => (x.dateTime.isAfter(y.dateTime)))) {
     <li data-id="@comment.id" class="card-modal-comment js-comment">
-        @comment.text <br/>
-        @comment.author &nbsp;&nbsp;&nbsp; @comment.getFormattedDateTime
-        &nbsp;&nbsp;&nbsp;
-        <a class="delete-comment" href="" onclick="deleteComment(this, @card.id,@comment.id); return false;">Delete</a>
+        <input type="hidden" name="commentId" value="@comment.id"/>
+        <input type="hidden" name="cardId" value="@card.id"/>
+        <input type="text" name="commentText" value="@comment.text" style="display: none" />
+
+        <span class="js-comment-text">@comment.text </span> <br/>
+        <span>Created by: </span>
+        <span class="comment-text">@comment.author </span>
+        <span class="comment-text">@comment.getFormattedDateTime </span>
+
+        <a class="delete-comment" href="" onclick="deleteComment(this, @card.id,@comment.id); return false;">
+            @Messages("card.modal.comments.delete.button")
+        </a>
+        <a class="edit-comment" href="" onclick="editComment(this); return false;">
+            @Messages("card.modal.comments.edit.button")
+        </a>
+        <a class="save-comment" href="" style="display: none" onclick="saveComment(this, @card.id,@comment.id); return false;">
+            @Messages("card.modal.comments.save.button")
+        </a>
     </li>
 }
 </ul>

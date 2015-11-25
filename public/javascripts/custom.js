@@ -209,9 +209,18 @@ function initComments() {
                 success: function (data) {
                     var comment = data;
                     var row = '<li data-id="' + comment.id + '" class="card-modal-comment js-comment">'
-                        + comment.text + "<br/>" + comment.author + " &nbsp;&nbsp;&nbsp; " + comment.formattedDateTime +
-                        '&nbsp;&nbsp;&nbsp; <a class="delete-comment" href="" onclick="deleteComment(this, ' + cardId + ', ' + comment.id + '); return false;">Delete</a></li>';
-                    comments.prepend(row);
+                        + '<input type="hidden" name="commentId" value="' + comment.id + '/>'
+                        + '<input type="hidden" name="cardId" value=' + cardId + '/>'
+                        + '<input type="text" name="commentText" value="' + comment.text + '"style="display: none" />'
+                        + '<span class="js-comment-text">' + comment.text + '</span> <br/>'
+                        + '<span>Created by: </span>'
+                        + '<span class="comment-text">' + comment.author + '</span>'
+                        + '<span class="comment-text">' + comment.formattedDateTime + '</span>'
+                        + '<a class="delete-comment" href="" onclick="deleteComment(this, ' + cardId + ', ' + comment.id + '); return false;">Delete</a>'
+                        + '<a class="edit-comment" href="" onclick="editComment(this); return false;">Edit</a>'
+                        + '<a class="save-comment" href="" style="display: none" onclick="saveComment(this, ' + cardId + ',' + comment.id + '); return false;">Save</a>'
+                        + '</li>'
+                        comments.prepend(row);
 
                     input.val('');
                     Materialize.toast('Successfully done!', 1000, 'succ-done');
@@ -235,6 +244,33 @@ function deleteComment(sender, cardId, commentId){
         success: function (data) {
             $(sender).closest(".js-comment").remove();
 
+            Materialize.toast('Successfully done!', 1000, 'succ-done');
+        },
+        error: function (xhr) {
+            Materialize.toast(xhr.responseText, 1500);
+        }
+    });
+}
+
+function editComment(sender){
+    $(sender).closest(".js-comment").find("input[name='commentText']").toggle();
+    $(sender).closest(".js-comment").find(".js-comment-text").toggle();
+    $(sender).closest(".js-comment").find(".edit-comment").toggle();
+    $(sender).closest(".js-comment").find(".save-comment").toggle();
+}
+
+function saveComment(sender, cardId, commentId){
+    if(!cardId || !commentId) return;
+
+    var commentText = $(sender).closest(".js-comment").find("input[name='commentText']").val();
+    $.ajax({
+        type: 'POST',
+        url: '/comment/edit',
+        data: { cardId: cardId, commentId: commentId, commentText: commentText},
+
+        success: function (data) {
+            editComment(sender);
+            $(sender).closest(".js-comment").find(".js-comment-text").text(data);
             Materialize.toast('Successfully done!', 1000, 'succ-done');
         },
         error: function (xhr) {

@@ -18,7 +18,7 @@ public class Comment extends Model {
 
     @Id public Long id;
     @Column(nullable = false) public String author;
-    @Column(nullable = false) public String text;
+    @Column(nullable = false, length = 1024) public String text;
     @Column(nullable = false) public LocalDateTime dateTime;
 
     protected Comment() {

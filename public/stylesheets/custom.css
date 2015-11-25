@@ -333,6 +333,22 @@ nav, footer, .footer-copyright, .other-nav ul, .other-nav li {
     margin-top: 10px;
 }
 
+.delete-comment, .edit-comment, .save-comment {
+    margin-left: 15px;
+}
+
 .delete-comment:hover {
     text-decoration: underline;
+}
+
+.edit-comment:hover {
+    text-decoration: underline;
+}
+
+.save-comment:hover {
+    text-decoration: underline;
+}
+
+.comment-text {
+    margin-right:15px;
 }

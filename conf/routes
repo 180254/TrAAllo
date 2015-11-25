@@ -32,9 +32,9 @@ POST        /attachment/add             controllers.boards.AttachmentController.
 GET         /attachment/download        controllers.boards.AttachmentController.download(id: Long)
 POST        /attachment/delete          controllers.boards.AttachmentController.delete()
 
-POST        /comment/add             controllers.boards.CommentController.add()
+POST        /comment/add                controllers.boards.CommentController.add()
 POST        /comment/delete             controllers.boards.CommentController.delete()
-
+POST        /comment/edit               controllers.boards.CommentController.edit()
 
 GET         /rest/users                 controllers.rest.RestUser.list()
 GET         /rest/users/clean           controllers.rest.RestUser.clean()
