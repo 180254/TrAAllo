@@ -42,7 +42,8 @@ public class TeamController extends Controller {
 
         }
     }
-
+    
+    @Security.Authenticated(LoggedInAuthenticator.class)
     public static Result editName() {
         Form<EditTeamName> editTeamNameForm = Form.form(EditTeamName.class).bindFromRequest();
 
