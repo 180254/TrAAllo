@@ -5,6 +5,7 @@ page.index.title=Main page
 navbar.action.login=Login
 navbar.action.logout=Logout
 navbar.action.boards=Boards
+navbar.action.Teams=Teams
 navbar.action.addNewBoard=Add new board
 
 page.validation.error=Something went wrong!
@@ -34,6 +35,24 @@ page.welcome.title=Welcome
 page.welcome.msg=Successfully registered. You are welcome!
 page.welcome.start=You can log in and start using TrAAllo. Click
 page.welcome.go=GO!
+
+page.team.title=Teams
+page.team.edit=[Edit team name]
+page.team.delete=[Delete team]
+page.team.member.delete=[del member]
+page.tem.add.teamName.placeholder=next team name
+page.tem.add.teamName.label=team name
+page.team.add.member.username.placeholder=next team member
+page.team.add.member.username.label=team member
+page.team.add.submit.value=Add team member
+page.team.crud.label.teamName=Team name
+page.team.validate.alreadyExist=Team with given name already exist!
+page.team.validate.suchTeamDoesNotExist=
+page.team.validate.suchUsernameDoesNotExist=User with given username is not registered.
+page.team.validate.alreadyMember=User with given username is already member of this team.
+page.team.validate.cannotDeleteSelf=You cannot delete self. Ask other member for it.
+page.team.notFound=Team not found
+page.team.memberNotFound=Team member not found
 
 page.board.notFound=Board not found
 

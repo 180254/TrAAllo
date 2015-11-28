@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static play.mvc.Controller.session;
 
@@ -25,6 +26,9 @@ public class User extends Model {
     @OrderBy("name ASC, id ASC")
     public List<Board> boards;
 
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "users")
+    public List<Team> teams;
+
     protected User() {
     }
 
@@ -37,6 +41,7 @@ public class User extends Model {
         user.password = hashPw;
         user.registerTime = LocalDateTime.now();
         user.boards = new ArrayList<>(10);
+        user.teams = new ArrayList<>(10);
         user.save();
 
         return user;
@@ -56,5 +61,18 @@ public class User extends Model {
         Long id = Long.valueOf(sid);
 
         return find.byId(id);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

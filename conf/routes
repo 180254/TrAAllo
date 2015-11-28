@@ -39,5 +39,12 @@ POST        /comment/edit               controllers.boards.CommentController.edi
 GET         /rest/users                 controllers.rest.RestUser.list()
 GET         /rest/users/clean           controllers.rest.RestUser.clean()
 
+GET         /team/list                  controllers.others.TeamController.list()
+POST        /team/add                   controllers.others.TeamController.add()
+POST        /team/edit                  controllers.others.TeamController.edit()
+POST        /team/delete                controllers.others.TeamController.delete()
+POST        /team/member/add            controllers.others.TeamController.addMember()
+POST        /team/member/delete         controllers.others.TeamController.deleteMember()
+
 # Map static resources from the /public folder to the /assets URL path
 GET         /*file                      controllers.Assets.versioned(path="/public", file: Asset)

@@ -26,6 +26,10 @@
                     <a href="#new-board-modal" class="modal-trigger"> @Messages("navbar.action.addNewBoard")</a>
                 </li>
             </ul>
+            <a class="btn boards-btn teams-button" href="@others.routes.TeamController.list()">
+                <i class="material-icons left board-icon">dashboard</i>
+                @Messages("navbar.action.Teams")
+            </a>
         }
 
         <ul id="nav-mobile" class="right hide-on-med-and-down">

@@ -6,6 +6,7 @@ import play.i18n.Messages;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 @Entity
 public class HistoryItem extends Model {
@@ -114,6 +115,19 @@ public class HistoryItem extends Model {
 
     public String getFormattedDateTime() {
         return DateTimeFormatter.ofPattern("yyy-MM-dd hh:mm:ss").format(dateTime);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        HistoryItem that = (HistoryItem) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
 

@@ -350,5 +350,41 @@ nav, footer, .footer-copyright, .other-nav ul, .other-nav li {
 }
 
 .comment-text {
-    margin-right:15px;
+    margin-right: 15px;
+}
+
+.teams-button {
+    background-color: forestgreen;
+}
+
+.team-main {
+    margin: 3em;
+}
+
+.team-one, .team-add {
+    background-color: rgba(255, 255, 255, 0.87);
+    padding: 0.6em;
+    border-radius: 3px;
+    margin-bottom: 1em;
+}
+
+#team-add {
+    background-color: #4E4E4E;
+}
+
+#team-add input[type="text"] {
+    color: white;
+}
+
+.team-one ul {
+    margin-left: 1em;
+    margin-top: 0.5em;
+}
+
+.team-one a {
+    font-size: 0.8em;
+}
+
+.team-one .team-name {
+    font-size: 1.6em;
 }
