@@ -27,6 +27,7 @@ public class User extends Model {
     public List<Board> boards;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "users")
+    @OrderBy("id ASC")
     public List<Team> teams;
 
     protected User() {
