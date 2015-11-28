@@ -1,0 +1,31 @@
+@(team: Team)
+
+<div class="team-one">
+    <a href="#" data-type="text" data-pk="@team.id" data-url="/team/edit-name" class="team-name">@team.name</a>
+
+    <br/>
+
+    @*<a data-team-id="@team.id" href="#" class="team-editName">@Messages("page.team.editName")</a>*@
+    <a data-team-id="@team.id" href="#" class="team-delete">@Messages("page.team.delete")</a>
+
+    <ul>
+    @for( user <- team.users) {
+        @teamOneMember(team, user)
+    }
+    </ul>
+
+    <form class="team-one-add-member-form col s12">
+        <div class="row">
+            <div class="input-field col s6">
+                <input type="hidden" name="teamID" value="@team.id"/>
+
+                <label for="username">@Messages("page.team.add.member.username.label")</label>
+
+                <input placeholder="@Messages("page.team.add.member.username.placeholder")"
+                id="username" name="username" type="text" class="validate"/>
+
+                @*<input type="submit" value="@Messages("page.team.add.submit.value")"/>*@
+            </div>
+        </div>
+    </form>
+</div>

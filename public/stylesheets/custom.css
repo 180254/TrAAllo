@@ -388,3 +388,15 @@ nav, footer, .footer-copyright, .other-nav ul, .other-nav li {
 .team-one .team-name {
     font-size: 1.6em;
 }
+
+.team-name {
+    color: black;
+}
+
+.editable-clear-x {
+    display: none !important;
+}
+
+.editable-input input {
+    all: unset !important;
+}

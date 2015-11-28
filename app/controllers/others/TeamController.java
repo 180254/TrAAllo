@@ -43,8 +43,32 @@ public class TeamController extends Controller {
         }
     }
 
-    public static Result edit() {
-        return play.mvc.Results.TODO;
+    public static Result editName() {
+        Form<EditTeamName> editTeamNameForm = Form.form(EditTeamName.class).bindFromRequest();
+
+        if (editTeamNameForm.hasErrors()) {
+            return badRequest(
+                    new ValidationErrorsHelper("page.team.crud.label.", editTeamNameForm).getWithNLAsBR());
+        }
+
+        if (!checkStringIsLongValidator.isValid(editTeamNameForm.get().pk)) {
+            return badRequest(Messages.get("page.badRequest"));
+        }
+
+        Long teamId = Long.parseLong(editTeamNameForm.get().pk);
+        Team team = Team.find.byId(teamId);
+
+        if (team == null) {
+            return badRequest(Messages.get("page.team.notFound"));
+        }
+        if (!checkIAmTeamUserValidator.isValid(team.id)) {
+            return unauthorized(Messages.get("page.unauthorized"));
+        }
+
+        team.name = editTeamNameForm.get().value;
+        team.save();
+
+        return ok();
     }
 
     @Security.Authenticated(LoggedInAuthenticator.class)
@@ -140,5 +164,22 @@ public class TeamController extends Controller {
         @Constraints.ValidateWith(UniqueTeamNameValidator.class)
         public String teamName;
 
+        public AddTeam() {
+        }
+    }
+
+    public static class EditTeamName {
+
+        public String pk;
+
+        @Constraints.Required
+        @Constraints.MinLength(4)
+        @Constraints.MaxLength(15)
+        @Constraints.Pattern(value = "^[A-Za-z0-9- ]+$", message = "page.validation.onlyAlphanumericAndSpace")
+        @Constraints.ValidateWith(UniqueTeamNameValidator.class)
+        public String value;
+
+        public EditTeamName() {
+        }
     }
 }

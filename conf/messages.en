@@ -46,6 +46,7 @@ page.team.add.member.username.placeholder=next team member
 page.team.add.member.username.label=team member
 page.team.add.submit.value=Add team member
 page.team.crud.label.teamName=Team name
+page.team.crud.label.value=Team name
 page.team.validate.alreadyExist=Team with given name already exist!
 page.team.validate.suchTeamDoesNotExist=
 page.team.validate.suchUsernameDoesNotExist=User with given username is not registered.

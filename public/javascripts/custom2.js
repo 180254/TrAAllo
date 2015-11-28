@@ -20,9 +20,9 @@ $(document).ready(function () {
         return false;
     });
 
-    $('.team-edit').click(function () {
-        teamEditHandler($(this));
-    });
+    $.fn.editable.defaults.mode = 'inline';
+
+    initTeamNameEditable($('.team-name'));
 
 });
 
@@ -57,6 +57,8 @@ function teamAddFormHandler() {
                 teamDeleteMemberHandler($(this));
                 return false;
             });
+
+            initTeamNameEditable(lastTeamOne.find('.team-name'));
 
             lastTeamOne.find('input').focus();
 
@@ -134,6 +136,14 @@ function teamDeleteMemberHandler($delMemberEl) {
     });
 }
 
-function teamEditHandler($editLink) {
+function initTeamNameEditable($teamNames) {
+    $teamNames.editable({
+        error: function (errors) {
+            Materialize.toast(errors.responseText, 1500);
+        },
 
+        success: function (response) {
+            Materialize.toast('Successfully done!', 1000, 'succ-done');
+        }
+    });
 }

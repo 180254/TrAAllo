@@ -1,0 +1,8 @@
+@(team: Team, user: User)
+
+<li>
+    <a data-user-id="@user.id" data-team-id="@team.id"
+    href="#" class="team-member-delete">@Messages("page.team.member.delete")</a>
+
+    <span>@user.username</span>
+</li>
