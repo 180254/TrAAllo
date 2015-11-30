@@ -13,7 +13,8 @@ public class CheckBListOwnerValidator extends Constraints.Validator<Long> {
     public boolean isValid(Long bListID) {
         return bListID == null ||
                 (User.isLoggedIn() &&
-                        Objects.equals(BList.find.byId(bListID).board.owner.id, User.loggedInUser().id));
+                        (Objects.equals(BList.find.byId(bListID).board.owner.id, User.loggedInUser().id))||
+                        (BList.find.byId(bListID).board.team.users.contains(User.loggedInUser())));
 
     }
 

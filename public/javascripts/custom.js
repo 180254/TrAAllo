@@ -422,3 +422,13 @@ function buildInput(form, name, value) {
         )
     );
 }
+
+function selectTeam(name, id, context){
+
+    $(context.closest(".input-field")).find(".dropdown-button").text(name);
+
+    var element =  $(context.closest(".input-field"));
+    element.find("[name='typeCode']").removeAttr("checked");
+    $(element.find("#team")).prop("checked", true)
+    $(context.closest(".row")).find(".js-selected-team-id").val(id);
+}

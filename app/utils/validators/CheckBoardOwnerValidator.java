@@ -10,7 +10,7 @@ public class CheckBoardOwnerValidator extends Constraints.Validator<Long> {
     public boolean isValid(Long boardID) {
         return boardID == null ||
                 (User.isLoggedIn() &&
-                        User.loggedInUser().boards.stream().anyMatch(board -> board.id.equals(boardID)));
+                        User.loggedInUser().getAllBoards().stream().anyMatch(board -> board.id.equals(boardID)));
 
     }
 

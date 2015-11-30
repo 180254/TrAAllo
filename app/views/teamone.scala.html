@@ -10,7 +10,7 @@
 
     <ul>
     @for( user <- team.users) {
-        @teamOneMember(team, user)
+        @teamonemember(team, user)
     }
     </ul>
 
@@ -28,4 +28,13 @@
             </div>
         </div>
     </form>
+
+    <h5>Boards</h5>
+    <ul>
+    @for( board <- team.boards) {
+        <li>
+            <span>@board.name</span>
+        </li>
+    }
+    </ul>
 </div>

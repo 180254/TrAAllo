@@ -4,6 +4,7 @@ import models.Board;
 import models.HistoryItem;
 import models.HistoryItem.Action;
 import models.HistoryItem.Element;
+import models.Team;
 import models.User;
 import play.data.Form;
 import play.data.validation.Constraints;
@@ -24,7 +25,7 @@ public class BoardController extends Controller {
     private static CheckStringIsLongValidator checkStringIsLongValidator = new CheckStringIsLongValidator();
 
     private static boolean hasViewAccess(Board bord) {
-        return !bord.isPrivate() || checkBoardOwnerValidator.isValid(bord.id);
+        return bord.isPublic() || checkBoardOwnerValidator.isValid(bord.id);
     }
 
     @Security.Authenticated(LoggedInAuthenticator.class)
@@ -36,7 +37,13 @@ public class BoardController extends Controller {
                     new ValidationErrorsHelper("modal.board.crud.label.", boardForm).getWithNLAsBR());
 
         } else {
-            Board board = Board.create(User.loggedInUser(), boardForm.get().name, boardForm.get().typeCode);
+            Team team = null;
+
+            if(boardForm.get().teamId != null){
+                team = Team.find.byId(boardForm.get().teamId);
+            }
+
+            Board board = Board.create(User.loggedInUser(), boardForm.get().name, boardForm.get().typeCode, team);
             HistoryItem.create(board, Element.BOARD, Action.CREATED, boardForm.get().name, null);
         }
 
@@ -78,14 +85,7 @@ public class BoardController extends Controller {
             HistoryItem.create(board, Element.BOARD, Action.RENAMED, board.name, boardForm.get().name);
         }
 
-        Board.Type newType = Board.Type.fromCode(boardForm.get().typeCode);
-        if (!board.type.equals(newType)) {
-            HistoryItem.create(board, Element.BOARD, Action.TYPECHANGED,
-                    board.type.getTypeName(), newType.getTypeName());
-        }
-
         board.name = boardForm.get().name;
-        board.type = newType;
         board.save();
 
         return ok();
@@ -124,8 +124,10 @@ public class BoardController extends Controller {
 
         @Constraints.Required
         @Constraints.Min(0)
-        @Constraints.Max(1)
+        @Constraints.Max(2)
         public int typeCode;
+
+        public Long teamId;
     }
 
     public static class EditBoard {
@@ -138,11 +140,6 @@ public class BoardController extends Controller {
         @Constraints.MaxLength(15)
         @Constraints.Pattern(value = "^[A-Za-z0-9- ]+$", message = "page.validation.onlyAlphanumericAndSpace")
         public String name;
-
-        @Constraints.Required
-        @Constraints.Min(0)
-        @Constraints.Max(1)
-        public int typeCode;
 
         public String validate() {
             if (!Board.find.byId(modifiedID).name.equalsIgnoreCase(name)) {

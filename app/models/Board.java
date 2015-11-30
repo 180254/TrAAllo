@@ -29,18 +29,23 @@ public class Board extends Model {
     @JsonIgnore
     public List<HistoryItem> historyItems;
 
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @Column(nullable = true) public Team team;
+
     protected Board() {
     }
 
-    public static Board create(User owner, String name, int typeCode) {
-        return create(owner, name, Board.Type.fromCode(typeCode));
+    public static Board create(User owner, String name, int typeCode, Team team) {
+        return create(owner, name, Board.Type.fromCode(typeCode), team);
     }
 
-    public static Board create(User owner, String name, Board.Type type) {
+    public static Board create(User owner, String name, Board.Type type, Team team) {
         Board board = new Board();
         board.name = name;
         board.type = type;
         board.owner = owner;
+        board.team = team;
         board.save();
 
         return board;
@@ -49,6 +54,11 @@ public class Board extends Model {
     @JsonIgnore
     public boolean isPrivate() {
         return type == Board.Type.Private;
+    }
+
+    @JsonIgnore
+    public boolean isPublic() {
+        return type == Board.Type.Public;
     }
 
     public List<HistoryItem> getHistoryItems(int count) {

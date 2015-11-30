@@ -9,13 +9,17 @@
                 @Messages("navbar.action.boards")
             </a>
             <ul id="board-dropdown" class="dropdown-content boards-btn">
-                @for(board <- User.loggedInUser().boards) {
+                @for(board <- User.loggedInUser().getAllBoards) {
                     <li>
                         <a href="@controllers.boards.routes.BoardController.show(board.id)">
-                            @if(board.isPrivate) {
-                                <i class="material-icons left board-icon">lock</i>
-                            } else {
-                                <i class="material-icons left board-icon">lock_open</i>
+                            @{
+                                if(board.isPrivate) {
+                                        <i class="material-icons left board-icon">lock</i>
+                                } else if(board.isPublic){
+                                        <i class="material-icons left board-icon">lock_open</i>
+                                } else{
+                                        <i class="material-icons left board-icon">supervisor_account</i>
+                                }
                             }
                             @board.name
                         </a>
@@ -46,6 +50,7 @@
         </ul>
     </div>
 </nav>
+@if(User.isLoggedIn) {
 
 <form id="new-board-modal" class="modal">
     <div class="modal-content">
@@ -58,13 +63,27 @@
                 <label for="name">@Messages("modal.board.crud.label.name")</label>
             </div>
         </div>
-
         <div class="row">
+            <input name="teamId" value="" class="js-selected-team-id" hidden></input>
             <div class="input-field">
                 <input name="typeCode" type="radio" id="private" value="1" checked="checked"/>
                 <label class="radio-btn-margin" for="private">@Messages("modal.board.crud.label.private")</label>
                 <input name="typeCode" type="radio" id="public" value="0"/>
                 <label class="radio-btn-margin" for="public">@Messages("modal.board.crud.label.public")</label>
+                @if(User.loggedInUser().teams.size() > 0){
+                    <input name="typeCode" type="radio" id="team" value="2"/>
+                    <label class="radio-btn-margin dropdown-button" for="team" data-activates='team-dropdown'>team</label>
+                    <ul id="team-dropdown" class="dropdown-content radio-btn-margin">
+
+                        @for(team <- User.loggedInUser().teams) {
+                        <li>
+                            <a href="#" onclick="selectTeam('@team.name','@team.id', this)">
+                            @team.name
+                            </a>
+                        </li>
+                    }
+                    </ul>
+                }
             </div>
         </div>
     </div>
@@ -80,4 +99,4 @@
     </div>
 </form>
 
-
+}

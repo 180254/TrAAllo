@@ -1,6 +1,7 @@
 package models;
 
 import com.avaje.ebean.Model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -21,6 +22,11 @@ public class Team extends Model {
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
     public List<User> users;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "team")
+    @OrderBy("name ASC")
+    @JsonIgnore
+    public List<Board> boards;
 
     protected Team() {
     }

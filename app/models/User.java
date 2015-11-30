@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import static play.mvc.Controller.session;
 
@@ -59,9 +61,18 @@ public class User extends Model {
 
     public static User loggedInUser() {
         String sid = session().get("user.id");
+        if(sid == null)
+            return  null;
         Long id = Long.valueOf(sid);
 
         return find.byId(id);
+    }
+
+    public List<Board> getAllBoards(){
+        List<Board> allBoards = teams.stream().flatMap(x -> x.boards.stream()).collect(Collectors.toList());
+        allBoards.addAll(boards);
+        List<Board> allBoarsdWithoutDuplication = allBoards.stream().distinct().collect(Collectors.toList());
+        return allBoarsdWithoutDuplication;
     }
 
     @Override
