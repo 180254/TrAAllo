@@ -433,9 +433,10 @@ function selectTeam(name, id, context){
     $(context.closest(".row")).find(".js-selected-team-id").val(id);
 }
 
-function addMemberToCard(cardId , userId, context){
+function addMemberToCard(cardId , userId, loggegUserId, context){
     var nameOfMember = $(context.closest(".js-card-member")).find(".js-card-member")
     var deleteBtn = $(context.closest(".js-card-member")).find(".js-delete-member")
+    var row = $(context.closest(".bList-cards-list")).find(".bList-card[data-id='" + cardId + "']");
 
     $.ajax({
         type: 'POST',
@@ -445,6 +446,10 @@ function addMemberToCard(cardId , userId, context){
             Materialize.toast('Successfully done!', 1000, 'succ-done');
             nameOfMember.text(data);
             deleteBtn.show();
+            $(row).removeClass("owner-card");
+            if(userId == loggegUserId){
+                $(row).addClass("owner-card");
+            }
         },
 
         error: function (xhr) {
@@ -454,6 +459,7 @@ function addMemberToCard(cardId , userId, context){
 }
 function deleteMemberFromCard(cardId, context){
     var nameOfMember = $(context.closest(".js-card-member")).find(".js-card-member")
+    var row = $(context.closest(".bList-cards-list")).find(".bList-card[data-id='" + cardId + "']");
 
     $.ajax({
         type: 'POST',
@@ -463,6 +469,7 @@ function deleteMemberFromCard(cardId, context){
             Materialize.toast('Successfully done!', 1000, 'succ-done');
             $(context).hide();
             nameOfMember.text("Assign to");
+            $(row).removeClass("owner-card");
         },
 
         error: function (xhr) {
