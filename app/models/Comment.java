@@ -18,14 +18,17 @@ public class Comment extends Model {
     @Column(nullable = false) public Card card;
 
     @Id public Long id;
-    @Column(nullable = false) public String author;
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @Column(nullable = false) public User author;
+
     @Column(nullable = false, length = 1024) public String text;
     @Column(nullable = false) public LocalDateTime dateTime;
 
     protected Comment() {
     }
 
-    public static Comment create(Card card, String author, String text) {
+    public static Comment create(Card card, User author, String text) {
         Comment comment = new Comment();
         comment.dateTime = LocalDateTime.now();
         comment.card = card;

@@ -13,8 +13,8 @@ public class CheckAttachmentOwnerValidator extends Constraints.Validator<Long> {
     public boolean isValid(Long attID) {
         return attID == null ||
                 (User.isLoggedIn() &&
-                        Objects.equals(Attachment.find.byId(attID).card.list.board.owner.id, User.loggedInUser().id));
-
+                         (Objects.equals(Attachment.find.byId(attID).card.list.board.owner.id, User.loggedInUser().id)) ||
+                         (Attachment.find.byId(attID).card.list.board.team.users.contains(User.loggedInUser())));
     }
 
     @Override

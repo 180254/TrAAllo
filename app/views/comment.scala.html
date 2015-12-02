@@ -28,18 +28,20 @@
 
         <span class="js-comment-text">@comment.text </span> <br/>
         <span>Created by: </span>
-        <span class="comment-text">@comment.author </span>
+        <span class="comment-text">@comment.author.username </span>
         <span class="comment-text">@comment.getFormattedDateTime </span>
 
-        <a class="delete-comment" href="" onclick="deleteComment(this, @card.id,@comment.id); return false;">
+        @if(comment.author.id == User.loggedInUser().id){
+            <a class="delete-comment" href="" onclick="deleteComment(this, @card.id,@comment.id); return false;">
             @Messages("card.modal.comments.delete.button")
-        </a>
-        <a class="edit-comment" href="" onclick="editComment(this); return false;">
+            </a>
+            <a class="edit-comment" href="" onclick="editComment(this); return false;">
             @Messages("card.modal.comments.edit.button")
-        </a>
-        <a class="save-comment" href="" style="display: none" onclick="saveComment(this, @card.id,@comment.id); return false;">
+            </a>
+            <a class="save-comment" href="" style="display: none" onclick="saveComment(this, @card.id,@comment.id); return false;">
             @Messages("card.modal.comments.save.button")
-        </a>
+            </a>
+        }
     </li>
 }
 </ul>

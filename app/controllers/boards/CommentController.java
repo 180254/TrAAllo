@@ -1,5 +1,7 @@
 package controllers.boards;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.Card;
 import models.Comment;
 import models.User;
@@ -32,9 +34,11 @@ public class CommentController extends Controller {
             return badRequest(Messages.get("card.modal.comments.not.found"));
         }
 
-        Comment comment = Comment.create(card, User.loggedInUser().username, commentForm.get().commentText);
+        Comment comment = Comment.create(card, User.loggedInUser(), commentForm.get().commentText);
 
-        return ok(Json.toJson(comment));
+        JsonNode commentJson = Json.toJson(comment);
+        ((ObjectNode)commentJson).put("author", comment.author.username);
+        return ok(commentJson);
     }
 
     public static Result delete() {

@@ -13,8 +13,8 @@ public class CheckCommentOwnerValidator extends Constraints.Validator<Long> {
     public boolean isValid(Long commentId) {
         return commentId == null ||
                 (User.isLoggedIn() &&
-                        Objects.equals(Comment.find.byId(commentId).card.list.board.owner.id, User.loggedInUser().id));
-
+                        (Objects.equals(Comment.find.byId(commentId).card.list.board.owner.id, User.loggedInUser().id)) ||
+                        (Comment.find.byId(commentId).card.list.board.team.users.contains(User.loggedInUser())));
     }
 
     @Override
