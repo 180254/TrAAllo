@@ -432,3 +432,41 @@ function selectTeam(name, id, context){
     $(element.find("#team")).prop("checked", true)
     $(context.closest(".row")).find(".js-selected-team-id").val(id);
 }
+
+function addMemberToCard(cardId , userId, context){
+    var nameOfMember = $(context.closest(".js-card-member")).find(".js-card-member")
+    var deleteBtn = $(context.closest(".js-card-member")).find(".js-delete-member")
+
+    $.ajax({
+        type: 'POST',
+        url: '/card/addMember',
+        data: {cardId:cardId, userId:userId},
+        success: function (data) {
+            Materialize.toast('Successfully done!', 1000, 'succ-done');
+            nameOfMember.text(data);
+            deleteBtn.show();
+        },
+
+        error: function (xhr) {
+            Materialize.toast(xhr.responseText, 1500);
+        }
+    });
+}
+function deleteMemberFromCard(cardId, context){
+    var nameOfMember = $(context.closest(".js-card-member")).find(".js-card-member")
+
+    $.ajax({
+        type: 'POST',
+        url: '/card/deleteMember',
+        data: {cardId:cardId},
+        success: function () {
+            Materialize.toast('Successfully done!', 1000, 'succ-done');
+            $(context).hide();
+            nameOfMember.text("Add member");
+        },
+
+        error: function (xhr) {
+            Materialize.toast(xhr.responseText, 1500);
+        }
+    });
+}

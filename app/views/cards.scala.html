@@ -11,10 +11,16 @@
 <div class="bList-card-container">
     <ul class="bList-cards-list @sortable @sortable2">
         @for(card <- bList.cards) {
-            <li class="bList-card ui-state-default" data-id="@card.id">
-                <a class="modal-trigger waves-effect waves-light card-name-js" href="#card-modal-@card.id">@card.name</a>
 
-                @if(hasEditRights) {
+            @if(card.cardMember != null && card.cardMember.id == User.loggedInUser().id){
+                <li class="bList-card ui-state-default owner-card" data-id="@card.id">
+            } else {
+                <li class="bList-card ui-state-default" data-id="@card.id">
+            }
+
+            <a class="modal-trigger waves-effect waves-light card-name-js" href="#card-modal-@card.id">@card.name</a>
+
+            @if(hasEditRights) {
                     <form class="card-edit-form card-edit-form-js pure-form" style="display: none">
                         <input type="hidden" name="listId" value="@bList.id"/>
                         <input type="hidden" name="cardId" value="@card.id"/>

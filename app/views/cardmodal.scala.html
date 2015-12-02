@@ -5,6 +5,10 @@
         <h5 class="card-model-header">@card.name</h5>
 
         <div class="">
+            @cardMember(card, hasEditRights)
+        </div>
+
+        <div class="">
             @comment(card, hasEditRights)
         </div>
 

@@ -32,6 +32,10 @@ public class User extends Model {
     @OrderBy("id ASC")
     public List<Team> teams;
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "cardMember")
+    @OrderBy("name ASC, id ASC")
+    public List<Card> cards;
+
     protected User() {
     }
 

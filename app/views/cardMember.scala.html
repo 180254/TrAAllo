@@ -1,0 +1,26 @@
+@(card: Card, hasEditRights: Boolean)
+<div class = "js-card-member">
+    @if(hasEditRights){
+        @if(card.cardMember != null) {
+            <h6>Assigned to</h6>
+            <hr/>
+            <a class='dropdown-button btn js-card-member' href='#' data-activates='addMemberToCard-@card.id'>@card.cardMember.username</a>
+            <a class='dropdown-button btn red js-delete-member' href='#' style="display:inline-block;" onclick="deleteMemberFromCard(@card.id, this)">Delete</a>
+        } else{
+            <a class='dropdown-button btn js-card-member' href='#' data-activates='addMemberToCard-@card.id'>Add member</a>
+            <a class='dropdown-button btn red js-delete-member' href='#' style="display:none;" onclick="deleteMemberFromCard(@card.id, this)">Delete</a>
+        }
+
+        <ul id='addMemberToCard-@card.id' class='dropdown-content'>
+        @for(user <- card.list.board.team.users){
+            <li><a href="#!" onclick="addMemberToCard(@card.id,'@user.id', this)">@user.username</a></li>
+        }
+        </ul>
+    } else{
+        @if(card.cardMember != null) {
+            <h6>Assigned to</h6>
+            <hr/>
+            <span>@card.cardMember.username</span>
+        }
+    }
+</div>

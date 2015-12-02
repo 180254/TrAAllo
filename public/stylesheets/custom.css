@@ -400,3 +400,7 @@ nav, footer, .footer-copyright, .other-nav ul, .other-nav li {
 .editable-input input {
     all: unset !important;
 }
+
+.owner-card{
+    background-color: #ee6e73;
+}

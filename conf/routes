@@ -27,6 +27,8 @@ POST        /card/add                   controllers.boards.CardController.add()
 POST        /card/sort                  controllers.boards.CardController.sort()
 POST        /card/edit                  controllers.boards.CardController.edit()
 POST        /card/delete                controllers.boards.CardController.delete()
+POST        /card/addMember             controllers.boards.CardController.addMember()
+POST        /card/deleteMember          controllers.boards.CardController.deleteMember()
 
 POST        /attachment/add             controllers.boards.AttachmentController.add()
 GET         /attachment/download        controllers.boards.AttachmentController.download(id: Long)

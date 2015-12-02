@@ -29,6 +29,10 @@ public class Card extends Model {
     @JsonIgnore
     public List<Comment> comments;
 
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @Column(nullable = true) public User cardMember;
+
     protected Card() {
     }
 

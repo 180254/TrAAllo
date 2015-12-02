@@ -6,6 +6,7 @@ import models.Card;
 import models.HistoryItem;
 import models.HistoryItem.Action;
 import models.HistoryItem.Element;
+import models.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import play.data.Form;
@@ -124,6 +125,59 @@ public class CardController extends Controller {
 
         card.delete();
         return redirect(controllers.routes.Application.index());
+    }
+
+    @Security.Authenticated(LoggedInAuthenticator.class)
+    public static Result addMember() {
+
+        String cardIdAsString = Form.form().bindFromRequest().get("cardId");
+        if (!checkStringIsLongValidator.isValid(cardIdAsString)) {
+            return badRequest(Messages.get("page.badRequest"));
+        }
+
+        Long cardId = Long.parseLong(cardIdAsString);
+        Card card = Card.find.byId(cardId);
+
+        if (card == null) {
+            return badRequest(Messages.get("page.board.notFound"));
+        }
+        if (!checkCardOwnerValidator.isValid(card.id)) {
+            return unauthorized(Messages.get("page.unauthorized"));
+        }
+
+        String userIdAsString = Form.form().bindFromRequest().get("userId");
+        Long userId = Long.parseLong(userIdAsString);
+        User user = User.find.byId(userId);
+
+        card.cardMember = user;
+        card.save();
+
+        return ok(card.cardMember.username);
+    }
+
+
+    @Security.Authenticated(LoggedInAuthenticator.class)
+    public static Result deleteMember() {
+
+        String cardIdAsString = Form.form().bindFromRequest().get("cardId");
+        if (!checkStringIsLongValidator.isValid(cardIdAsString)) {
+            return badRequest(Messages.get("page.badRequest"));
+        }
+
+        Long cardId = Long.parseLong(cardIdAsString);
+        Card card = Card.find.byId(cardId);
+
+        if (card == null) {
+            return badRequest(Messages.get("page.board.notFound"));
+        }
+        if (!checkCardOwnerValidator.isValid(card.id)) {
+            return unauthorized(Messages.get("page.unauthorized"));
+        }
+
+        card.cardMember = null;
+        card.save();
+
+        return ok();
     }
 
     public static class NewCard {
