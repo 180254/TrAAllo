@@ -98,7 +98,7 @@ function teamAddMemberHandler($memberAddForm) {
         data: $memberAddForm.serialize(),
 
         success: function (data) {
-            $memberAddForm.parent().find('ul').append(data);
+            $memberAddForm.parent().find('ul').first().append(data);
             $memberAddForm.find('input[type="text"]').val('');
 
             $memberAddForm.parent().find('.team-member-delete').last().click(function () {
