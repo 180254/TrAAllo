@@ -13,8 +13,8 @@ import utils.other.ValidationErrorsHelper;
 import utils.validators.CheckIAmTeamUserValidator;
 import utils.validators.CheckStringIsLongValidator;
 import utils.validators.UniqueTeamNameValidator;
+import views.html.teamOneMember;
 import views.html.teamone;
-import views.html.teamonemember;
 import views.html.teams;
 
 public class TeamController extends Controller {
@@ -119,7 +119,7 @@ public class TeamController extends Controller {
         team.users.add(user);
         team.save();
 
-        return ok(teamonemember.render(team, user));
+        return ok(teamOneMember.render(team, user));
     }
 
     @Security.Authenticated(LoggedInAuthenticator.class)
