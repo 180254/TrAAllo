@@ -20,7 +20,7 @@
 
         <ul id='addMemberToCard-@card.id' class='dropdown-content'>
         @for(user <- card.list.board.team.users){
-            <li><a href="#!" onclick="addMemberToCard(@card.id,'@user.id', this)">@user.username</a></li>
+            <li><a href="#!" onclick="addMemberToCard(@card.id,'@user.id', @User.loggedInUser().id, this)">@user.username</a></li>
         }
         </ul>
     } else{

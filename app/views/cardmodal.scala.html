@@ -4,9 +4,11 @@
     <div class="modal-content js-card-modal-content">
         <h5 class="card-model-header">@card.name</h5>
 
-        <div class="">
+        @if(card.list.board.team != null){
+            <div class="">
             @cardMember(card, hasEditRights)
-        </div>
+            </div>
+        }
 
         <div class="">
             @comment(card, hasEditRights)
