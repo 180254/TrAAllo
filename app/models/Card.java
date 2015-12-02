@@ -30,7 +30,7 @@ public class Card extends Model {
     public List<Comment> comments;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     @Column(nullable = true) public User cardMember;
 
     protected Card() {
