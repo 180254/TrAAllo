@@ -34,7 +34,9 @@ function teamAddFormHandler() {
 
         success: function (data) {
             var teamMainOnes,
-                lastTeamOne;
+                lastTeamOne,
+                teamName,
+                teamID;
 
             $('#team-add-form').find('input[type="text"]').val('');
 
@@ -62,6 +64,17 @@ function teamAddFormHandler() {
 
             lastTeamOne.find('input').focus();
 
+            teamName = lastTeamOne.find('.team-name').html();
+            teamID = lastTeamOne.find('.team-name').attr('data-pk');
+
+            $('#new-board-select-visible').show();
+            $('#team-dropdown').append('<li>' +
+                '<a href="#" onclick="selectTeam(\'' + teamName + '  \',\'' + teamID + ' \', this)">' +
+                teamName +
+                '</a>' +
+                '</li>'
+            );
+
             Materialize.toast('Successfully done!', 1000, 'succ-done');
 
         },
@@ -80,6 +93,11 @@ function teamDeleteHandler($delElement) {
         data: 'teamID=' + $delElement.attr('data-team-id'),
 
         success: function (data) {
+            var teamName;
+
+            teamName = $delElement.closest('.team-one').find('.team-name').html();
+            $('#team-dropdown').find('li:contains("' + teamName + '")').remove();
+
             $delElement.closest('.team-one').remove();
             Materialize.toast('Successfully done!', 1000, 'succ-done');
         },

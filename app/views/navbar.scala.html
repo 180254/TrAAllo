@@ -50,6 +50,11 @@
         </ul>
     </div>
 </nav>
+
+@boardAssignVisible() = @{
+    if(User.loggedInUser().teams.size() > 0) "" else "display: none";
+}
+
 @if(User.isLoggedIn) {
 
 <form id="new-board-modal" class="modal">
@@ -64,13 +69,13 @@
             </div>
         </div>
         <div class="row">
-            <input name="teamId" value="" class="js-selected-team-id" hidden></input>
+            <input name="teamId" value="" class="js-selected-team-id" hidden="hidden" />
             <div class="input-field">
                 <input name="typeCode" type="radio" id="private" value="1" checked="checked"/>
                 <label class="radio-btn-margin" for="private">@Messages("modal.board.crud.label.private")</label>
                 <input name="typeCode" type="radio" id="public" value="0"/>
                 <label class="radio-btn-margin" for="public">@Messages("modal.board.crud.label.public")</label>
-                @if(User.loggedInUser().teams.size() > 0){
+                <span id="new-board-select-visible" style="@boardAssignVisible()">
                     <input name="typeCode" type="radio" id="team" value="2"/>
                     <label class="radio-btn-margin dropdown-button" for="team" data-activates='team-dropdown'>team</label>
                     <ul id="team-dropdown" class="dropdown-content radio-btn-margin">
@@ -83,7 +88,7 @@
                         </li>
                     }
                     </ul>
-                }
+                </span>
             </div>
         </div>
     </div>
