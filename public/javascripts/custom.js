@@ -462,7 +462,7 @@ function deleteMemberFromCard(cardId, context){
         success: function () {
             Materialize.toast('Successfully done!', 1000, 'succ-done');
             $(context).hide();
-            nameOfMember.text("Add member");
+            nameOfMember.text("Assign to");
         },
 
         error: function (xhr) {

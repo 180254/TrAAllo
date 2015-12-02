@@ -84,6 +84,10 @@ page.board.card.add.button.submit=Save
 page.board.card.edit.button.submit=Rename
 
 card.modal.close.button=Close
+card.modal.member.assigned=Assigned to
+card.modal.member.assign=Assign to
+card.modal.member.unassign=Unassign
+
 card.modal.comments.header=Comments
 card.modal.comments.writeComment=Write a comment...
 card.modal.comments.submit=Add comment
