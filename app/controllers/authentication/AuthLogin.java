@@ -29,7 +29,7 @@ public class AuthLogin extends Controller {
             user.lastLoginTime = LocalDateTime.now();
             user.save();
 
-            session().clear();
+            session().remove("user.id");
             session("user.id", Long.toString(user.id));
             return redirect(controllers.routes.Application.index());
         }

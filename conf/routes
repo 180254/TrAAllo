@@ -3,14 +3,17 @@
 # ~~~~
 
 # Home page
-GET         /                           controllers.Application.index()
+GET         /                 controllers.Application.index()
+GET         /css              controllers.others.CssController.css()
+GET         /css-next         controllers.others.CssController.nextCss()
+GET         /css-reset        controllers.others.CssController.resetCss()
 
-GET         /login                      controllers.authentication.AuthLogin.login()
-POST        /login                      controllers.authentication.AuthLogin.authenticate()
-GET         /logout                     controllers.authentication.AuthLogout.logout()
-GET         /signup                     controllers.authentication.AuthSignUp.signup()
-POST        /signup                     controllers.authentication.AuthSignUp.register()
-GET         /welcome                    controllers.authentication.AuthSignUp.welcome()
+GET         /login            controllers.authentication.AuthLogin.login()
+POST        /login            controllers.authentication.AuthLogin.authenticate()
+GET         /logout           controllers.authentication.AuthLogout.logout()
+GET         /signup           controllers.authentication.AuthSignUp.signup()
+POST        /signup           controllers.authentication.AuthSignUp.register()
+GET         /welcome          controllers.authentication.AuthSignUp.welcome()
 
 GET         /board/show/:id             controllers.boards.BoardController.show(id: Long)
 POST        /board/add                  controllers.boards.BoardController.add()

@@ -294,7 +294,7 @@ nav, footer, .footer-copyright, .other-nav ul, .other-nav li {
 }
 
 .history-item {
-    background-color: hsla(54, 100%, 62%, 0.9);
+    background-color: rgba(255, 236, 61, 0.90);
     border-top: 1px solid red;
     font-size: 0.7em;
     padding: 0.3em;
@@ -401,6 +401,6 @@ nav, footer, .footer-copyright, .other-nav ul, .other-nav li {
     all: unset !important;
 }
 
-.owner-card{
+.owner-card {
     background-color: #ee6e73;
 }

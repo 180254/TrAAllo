@@ -11,14 +11,13 @@ public class LoggedInAuthenticator extends Security.Authenticator {
     public String getUsername(Http.Context ctx) {
         String userIDs = ctx.session().get("user.id");
         if (userIDs == null) {
-            ctx.session().clear();
             return null;
         }
 
         Long userID = Long.valueOf(userIDs);
         User user = User.find.byId(userID);
         if (user == null) {
-            ctx.session().clear();
+            ctx.session().remove("user.id");
             return null;
         }
 
