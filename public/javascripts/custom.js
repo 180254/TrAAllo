@@ -403,7 +403,7 @@ function cardMoved($bList1, $bList2, whichCard) {
     buildInput(form, 'list2IDTo', bList2ID);
     buildInput(form, 'movedCardID', whichCard);
 
-    postAndProcessForm('/bList/movedCard', form, true);
+    postAndProcessForm('/bList/movedCard', form, false);
 }
 
 function buildForm(name, value) {
