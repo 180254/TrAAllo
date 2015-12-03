@@ -22,6 +22,7 @@ main {
 footer .footer-copyright {
     text-align: right;
     padding-right: 1em;
+    float: right;
 }
 
 .brand-logo {
